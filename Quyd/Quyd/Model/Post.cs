@@ -8,5 +8,6 @@ namespace Quyd.Model
 {
     class Post
     {
+
     }
 }
