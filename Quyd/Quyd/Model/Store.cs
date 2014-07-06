@@ -49,7 +49,7 @@ namespace Quyd.Model
         public async Task<ParseObject> getStore(ParseUser owner)
         {
             var query = from store_t in ParseObject.GetQuery("Store")
-                        where store_t["owner"] == owner
+                        where store_t.Get<ParseUser>("owner").Equals(owner)
                         select store_t;
 
             var store = await query.FirstAsync();
@@ -62,7 +62,7 @@ namespace Quyd.Model
             try
             {
                 var findByNameQuery = from store_t in ParseObject.GetQuery("Store")
-                                      where store_t["name"] == storeName
+                                      where store_t.Get<string>("name").Equals(storeName)
                                       select store_t;
                 ParseObject storeObject = await findByNameQuery.FirstAsync();
                 return true;

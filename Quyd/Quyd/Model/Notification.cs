@@ -12,18 +12,41 @@ namespace Quyd.Model
     {
         private IEnumerable<ParseObject> notifications;
 
+        enum type { bid, select, confirm, cancle };
+
         public Notification()
         {
         }
 
-        public async void send(ParseUser toUser, bool isForStore, Post fromPost, string type)
+        public async void send(ParseUser toUser, bool isForStore, Post fromPost, type type)
         {
-            var notification = new ParseObject("Notification");
+            ParseObject notification = new ParseObject("Notification");;
+            if (type == type.bid)
+            {
+                var query = from notification_t in ParseObject.GetQuery("Notification")
+                            where notification_t.Get<ParseUser>("receiver").Equals(toUser)
+                            where notification_t.Get<bool>("read") == false
+                            where notification_t.Get<int>("type") == (int)type.bid
+                            orderby notification_t.UpdatedAt descending
+                            select notification_t;
+                try
+                {
+                    notification = await query.FirstAsync();
+                }
+                catch (ParseException ex)
+                {
+                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                    {
+                        //if not found bid notification for this user don't update
+                    }
+                }
+            }
 
             notification["toUser"] = toUser;
             notification["forStore"] = isForStore;
             notification["fromPost"] = fromPost;
             notification["type"] = type;
+            notification["read"] = false;
 
             await notification.SaveAsync();
         }
@@ -33,7 +56,8 @@ namespace Quyd.Model
             var user = ParseUser.CurrentUser;
 
             var query = from notification in ParseObject.GetQuery("Notification")
-                        where notification["receiver"] == user
+                        where notification.Get<ParseUser>("receiver").Equals(user)
+                        where notification.Get<bool>("read") == false
                         select notification;
 
             notifications = await query.FindAsync();
