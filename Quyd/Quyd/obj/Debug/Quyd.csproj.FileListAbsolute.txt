@@ -30,3 +30,35 @@ D:\Project\visual studio 2013\WPApp\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Task
 D:\Project\visual studio 2013\WPApp\Quyd\Quyd\Bin\Debug\Facebook.Client.xml
 D:\Project\visual studio 2013\WPApp\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
 D:\Project\visual studio 2013\WPApp\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.Phone.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\ApplicationIcon.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileSmall.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\IconicTileMediumLarge.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\IconicTileSmall.png
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd.pdb
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\AppManifest.xaml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Properties\WMAppManifest.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Facebook.Client.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.Phone.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Parse.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Parse.Phone.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Facebook.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Facebook.Client.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Microsoft.Threading.Tasks.Extensions.Phone.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Parse.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Parse.Phone.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\Bin\Debug\Facebook.xml
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.csprojResolveAssemblyReference.cache
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\App.g.cs
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\MainPage.g.cs
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.g.resources
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.Resources.AppResources.resources
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.csproj.GenerateResource.Cache
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.pdb
+D:\WP_project_CU\Quyd_App\Quyd\Quyd\obj\Debug\XapCacheFile.xml

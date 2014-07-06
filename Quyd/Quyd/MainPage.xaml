@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="clr-namespace:Facebook.Client.Controls;assembly=Facebook.Client"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -40,19 +41,13 @@
          -->
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28"/>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBlock Name="status" HorizontalAlignment="Left" Margin="10,223,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="282" Width="436"/>
-            <Button Content="Store" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-            <TextBlock Name="error" HorizontalAlignment="Left" Margin="10,510,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="87" Width="436" Foreground="#FFFF3A00"/>
-            <TextBlock Name="username" HorizontalAlignment="Left" Margin="109,10,0,0" TextWrapping="Wrap" Text="{Binding ParseUser.CurrentUser.Name}" VerticalAlignment="Top" Height="50" Width="187"/>
+            <Controls:LoginButton Margin="89,457,0,78" Height="72" Width="268" FontSize="24" ApplicationId="1455137148069161" SessionStateChanged="OnSessionStateChanged" />
+            
         </Grid>
-        <phone:WebBrowser Name="browser" HorizontalAlignment="Left" Margin="0,72,0,0" VerticalAlignment="Top" Height="525" Width="456"/>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to

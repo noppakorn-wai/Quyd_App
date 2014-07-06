@@ -27,23 +27,23 @@ namespace Quyd
             login();
         }
 
-        private async void login()
+        private void login()
         {
             try
             {
-                ParseUser user = await ParseFacebookUtils.LogInAsync(browser, null);
+               
+                //ParseUser user = await ParseFacebookUtils.LogInAsync(browser, null);
                 //await ParseUser.LogInAsync("wai", "wai");
                 // Login was successful.
                 //status.Text += "login complete - User : " + ParseUser.CurrentUser.Username + "\n";
             }
             catch (ParseException ex)
             {
-                error.Text += ex.Message;
-                error.Text += (int)(ex.Code) + "\n";
+               
             }
             catch (Exception ex)
             {
-                error.Text += ex.Message + "\n";
+                
             }
         }
 
@@ -58,17 +58,20 @@ namespace Quyd
                 ParseGeoPoint location = new ParseGeoPoint(-41, -10);
                 Store new_store = new Store("testingStore", location, phones);
                 await new_store.save();
-                status.Text += "Create complete - Store : " + new_store.getName() + "\n";
             }
             catch (QuydException ex)
             {
-                error.Text += ex.Message + "\n";
+                
             }
             catch (ParseException ex)
             {
-                error.Text += ex.Message;
-                error.Text += (int)(ex.Code) + "\n";
+                
             }
+        }
+
+        private void OnSessionStateChanged(object sender, Facebook.Client.Controls.SessionStateChangedEventArgs e)
+        {
+
         }
 
         // Sample code for building a localized ApplicationBar
