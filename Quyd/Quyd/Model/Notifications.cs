@@ -9,14 +9,14 @@ using Quyd.Resources;
 
 namespace Quyd.Model
 {
-    class Notifications
+    class NotificationSet
     {
         //Don't forget pined post
         private List<Notification> notifications;
 
         public enum type { bid, select, confirm, cancle };
 
-        public Notifications()
+        public NotificationSet()
         {
             notifications = new List<Notification>();
         }
@@ -55,7 +55,7 @@ namespace Quyd.Model
             await notification.SaveAsync();
         }
 
-        public async Task getUnread()
+        public async Task loadUnread()
         {
             var user = ParseUser.CurrentUser;
 
@@ -75,7 +75,7 @@ namespace Quyd.Model
             }
         }
 
-        public async Task getMore(int limit)
+        public async Task loadMore(int limit)
         {
             var user = ParseUser.CurrentUser;
 
@@ -106,12 +106,14 @@ namespace Quyd.Model
                     if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                     {
                         //no older notification found
-                        throw new QuydException(QuydException.ErrorCode.notification_NoMore, "No more notification");
                     }
                 }
             }
+        }
 
-
+        public Notification get(int i)
+        {
+            return notifications[i];
         }
 
         public int size()
@@ -128,9 +130,9 @@ namespace Quyd.Model
             notification = notification_t;
         }
 
-        public Notifications.type getType()
+        public NotificationSet.type getType()
         {
-            return notification.Get<Notifications.type>("type");
+            return notification.Get<NotificationSet.type>("type");
         }
 
         public bool isRead()

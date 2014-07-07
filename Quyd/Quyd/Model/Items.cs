@@ -84,10 +84,6 @@ namespace Quyd.Model
         {
             return item.Get<string>("icon");
         }
-        public string getMaterialType(int i)
-        {
-            return item.Get<string>("materialType");
-        }
 
         public async Task<Photos> getPhotos()
         {

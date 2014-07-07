@@ -118,7 +118,7 @@ namespace Quyd
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures
@@ -129,6 +129,22 @@ namespace Quyd
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+
+            /*RootFrame.Navigating += async (sender, e) =>
+            {
+                if (ParseFacebookUtils.IsLogInRedirect(e.Uri))
+                {
+                    // This code is called when the Facebook app returns control to your app.
+                    // You must provide a landing page URI, which ParseFacebookUtils will
+                    // navigate to as it waits for the user to be created or logged into
+                    // your Parse app.
+                    var user = await ParseFacebookUtils.EndLogInAsync(sender,
+                        e, new Uri("/MainPage.xaml", UriKind.Relative));
+
+                    // If you await the return value of this method, you can begin using the
+                    // new user once it becomes available or catch any errors.
+                }
+            };*/
         }
 
         // Do not add any additional code to this method

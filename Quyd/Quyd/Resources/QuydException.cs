@@ -8,7 +8,7 @@ namespace Quyd.Resources
 {
     class QuydException : Exception
     {
-        public enum ErrorCode { store_nameTooShort, store_nameExist, store_locationInvalid, store_phoneInvalid, notification_NoMore }
+        public enum ErrorCode { store_nameTooShort, store_nameExist, store_locationInvalid, store_phoneInvalid }
 
         ErrorCode errorCode;
         public QuydException(ErrorCode errorCode, string message) : base(message) { this.errorCode = errorCode; }

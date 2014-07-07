@@ -11,6 +11,7 @@ using Quyd.Resources;
 
 using Parse;
 using Quyd.Model;
+using Facebook;
 
 namespace Quyd
 {
@@ -21,73 +22,53 @@ namespace Quyd
         {
             InitializeComponent();
 
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
+            NavigationInTransition navigateInTransition = new NavigationInTransition();
+            navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
 
-            login();
+            NavigationOutTransition navigateOutTransition = new NavigationOutTransition();
+            navigateOutTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+            navigateOutTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+            TransitionService.SetNavigationInTransition(this, navigateInTransition);
+            TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
         }
 
-        private void login()
+        private async void loginFace_Click(object sender, RoutedEventArgs e)
         {
+            loginGrid.Visibility = Visibility.Collapsed;
+            browserGrid.Visibility = Visibility.Visible;
             try
             {
-               
-                //ParseUser user = await ParseFacebookUtils.LogInAsync(browser, null);
-                //await ParseUser.LogInAsync("wai", "wai");
-                // Login was successful.
-                //status.Text += "login complete - User : " + ParseUser.CurrentUser.Username + "\n";
+                var permissionRequests = new[] { "email", "public_profile", "user_friends" };
+                ParseUser user = await ParseFacebookUtils.LogInAsync(browser, permissionRequests);
+
+                var fb = new Facebook.FacebookClient();
+                fb.AccessToken = ParseFacebookUtils.AccessToken;
+                var me = await fb.GetTaskAsync("me");
+
+                var fbData = new Facebook.Client.GraphUser(me);
+
+                user = ParseUser.CurrentUser;
+
+                user["name"] = fbData.UserName;
+                user["profilePicture"] = fbData.ProfilePictureUrl.ToString();
+
+                await user.SaveAsync();
+
+                NavigationService.Navigate(new Uri("/PivotPage1.xaml", UriKind.Relative));
             }
-            catch (ParseException ex)
+            catch(Exception ex)
             {
-               
-            }
-            catch (Exception ex)
-            {
-                
+                error.Text = ex.Message;
+                loginGrid.Visibility = Visibility.Visible;
+                browserGrid.Visibility = Visibility.Collapsed;
             }
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void browser_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            try
-            {
-
-                IList<string> phones = new List<string>();
-                phones.Add("12345678");
-                phones.Add("12345679");
-                ParseGeoPoint location = new ParseGeoPoint(-41, -10);
-                Store new_store = new Store("testingStore", location, phones);
-                await new_store.save();
-            }
-            catch (QuydException ex)
-            {
-                
-            }
-            catch (ParseException ex)
-            {
-                
-            }
+            loginGrid.Visibility = Visibility.Visible;
+            browserGrid.Visibility = Visibility.Collapsed;
         }
-
-        private void OnSessionStateChanged(object sender, Facebook.Client.Controls.SessionStateChangedEventArgs e)
-        {
-
-        }
-
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
-
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
-
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
     }
 }
