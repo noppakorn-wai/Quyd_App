@@ -23,22 +23,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28"/>
-
-        <Grid x:Name="loginGrid" Grid.Row="1" Margin="12,0,12,0" Visibility="Visible">
-            <Grid.Background>
-                <ImageBrush Stretch="UniformToFill" ImageSource="Resources\stockvault-bottle121297.jpg"/>
-            </Grid.Background>
-            <Button x:Name="loginFace" Content="" HorizontalAlignment="Left" Height="77" Margin="71,566,0,0" VerticalAlignment="Top" Width="323" Click="loginFace_Click" BorderThickness="0">
+        <Grid x:Name="loginGrid" Visibility="Visible" Width="480" Background="#FFE65101">
+            <Button x:Name="loginFace" Content="" HorizontalAlignment="Center" Height="77" Margin="0,566,0,0" VerticalAlignment="Top" Width="323" Click="loginFace_Click" BorderThickness="0">
                 <Button.Background>
                     <ImageBrush Stretch="UniformToFill" ImageSource="Resources/fb_button_login.png"/>
                 </Button.Background>
             </Button>
-            <TextBlock Name="error" HorizontalAlignment="Left" Margin="188,539,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+            <TextBlock Name="error" HorizontalAlignment="Center" Margin="0,648,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         </Grid>
+        <Image VerticalAlignment="Top" Source="/Resources/Images/Logo.jpg"/>
 
-        <Grid x:Name="browserGrid" Grid.Row="0" Grid.Column="0" Margin="12,0,12,0" Visibility="Collapsed">
-            <phone:WebBrowser Name="browser" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Padding="0" MinWidth="456" MinHeight="768" NavigationFailed="browser_NavigationFailed"/>
+        <Grid x:Name="browserGrid" Grid.Row="0" Grid.Column="0" Margin="0" Visibility="Collapsed" Background="#FFE65101">
+            <phone:WebBrowser Name="browser" Margin="0" Padding="0" MinWidth="456" MinHeight="768" NavigationFailed="browser_NavigationFailed"/>
         </Grid>
 
     </Grid>
