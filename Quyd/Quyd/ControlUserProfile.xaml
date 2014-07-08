@@ -12,6 +12,7 @@
 	<Grid x:Name="LayoutRoot">
 		<TextBlock x:Name="usernameBox" HorizontalAlignment="Left" Margin="89,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" Foreground="Black" Height="40" Width="127" FontFamily="Tahoma" RenderTransformOrigin="0.496,0.889" Text="ชื่อผู้ใช้"/>
 		<Image x:Name="profilePicture" HorizontalAlignment="Left" Height="84" VerticalAlignment="Top" Width="84" Source="Resources/Images/user1.png" />
+		<local:ControlStar HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,55,0,0"/>
 
 	</Grid>
 </UserControl>
