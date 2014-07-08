@@ -1,26 +1,23 @@
-﻿<UserControl x:Class="Quyd.Controls.ControlPost"
+﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Quyd="clr-namespace:Quyd" x:Class="Quyd.Controls.ControlPost"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="105" HorizontalContentAlignment="Stretch" Width="auto" Height="125" Margin="5,5,5,0" VerticalAlignment="Top">
+    Foreground="{StaticResource PhoneForegroundBrush}" HorizontalContentAlignment="Stretch" Width="400" Height="115">
     
-    <Grid x:Name="LayoutRoot" Background="#CCFFFFFF">
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/pin_map_icon&amp;24.png" Margin="10,10,0,0"/>
-    	<TextBlock Name="locationBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="สถานที่" VerticalAlignment="Top" Foreground="Black" Margin="39,10,0,0" FontFamily="Tahoma" Height="25" Width="61"/>
-    	<TextBlock Name="timeBox" HorizontalAlignment="Right" TextWrapping="Wrap" Text="เวลา" VerticalAlignment="Top" Foreground="Black" FontFamily="Tahoma" Height="25" Width="39" Margin="0,10,10,0"/>
-    	<Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="/Resources/Images/attention_icon&amp;48.png" Margin="10,39,0,0"/>
-    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="24,87,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
-    	<Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="/Resources/Images/attention_icon&amp;48.png" Margin="63,39,0,0"/>
-    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="77,87,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
-    	<Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="/Resources/Images/attention_icon&amp;48.png" Margin="116,39,0,0"/>
-    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="130,87,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
-    	<Image HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="/Resources/Images/attention_icon&amp;48.png" Margin="169,39,0,0"/>
-    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="183,87,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
-        <Image Source="/Resources/Images/push_pin_icon&amp;48.png" Margin="0,0,10,10" Height="48" HorizontalAlignment="Right" Width="48" VerticalAlignment="Bottom"/>
-    </Grid>
+	<Grid x:Name="LayoutRoot" Background="#CCFFFFFF">
+		<Image x:Name="ImagePin" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/pin_map_icon&amp;24.png" Margin="10,10,0,0"/>
+		<TextBlock x:Name="locationBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="สถานที่" VerticalAlignment="Top" Foreground="Black" Margin="39,10,0,0" FontFamily="Tahoma" Height="25" Width="61"/>
+		<TextBlock x:Name="timeBox" HorizontalAlignment="Right" TextWrapping="Wrap" Text="เวลา" VerticalAlignment="Top" Foreground="Black" FontFamily="Tahoma" Height="25" Width="39" Margin="0,10,10,0"/>
+		<Button x:Name="ButtonBid" Content="BID" Margin="340,0,0,0" Foreground="Black" BorderBrush="Black" FontSize="16" FontFamily="Tahoma" Padding="0" BorderThickness="2" Width="60" Height="55" VerticalAlignment="Bottom"/>
+		<Quyd:ControlItem HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,39,0,0"/>
+		<Quyd:ControlItem HorizontalAlignment="Left" VerticalAlignment="Top" Margin="63,40,0,0"/>
+		<Quyd:ControlItem HorizontalAlignment="Left" VerticalAlignment="Top" Margin="116,39,0,0"/>
+		<Quyd:ControlItem HorizontalAlignment="Left" VerticalAlignment="Top" Margin="169,39,0,0"/>
+		<Quyd:ControlItem HorizontalAlignment="Left" VerticalAlignment="Top" Margin="222,39,0,0"/>
+	</Grid>
 </UserControl>
