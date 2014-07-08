@@ -1,5 +1,5 @@
-﻿<xapCache source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="7/7/2014 6:49:38 PM">
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll" archivePath="Quyd.dll" lastWriteTime="7/7/2014 6:47:00 PM" />
+﻿<xapCache source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="7/8/2014 8:33:41 AM">
+  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll" archivePath="Quyd.dll" lastWriteTime="7/8/2014 8:33:39 AM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="7/5/2014 3:06:12 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\README_FIRST.txt" archivePath="README_FIRST.txt" lastWriteTime="7/7/2014 3:57:42 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Resources\login_background.jpg" archivePath="Resources\login_background.jpg" lastWriteTime="7/6/2014 4:47:28 PM" />
@@ -14,7 +14,7 @@
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Check.png" archivePath="Toolkit.Content\ApplicationBar.Check.png" lastWriteTime="7/7/2014 3:57:42 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Delete.png" archivePath="Toolkit.Content\ApplicationBar.Delete.png" lastWriteTime="7/7/2014 3:57:42 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Select.png" archivePath="Toolkit.Content\ApplicationBar.Select.png" lastWriteTime="7/7/2014 3:57:42 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="7/7/2014 6:49:37 PM" />
+  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="7/7/2014 10:14:50 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="7/5/2014 3:06:12 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="7/5/2014 3:06:12 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Facebook.Client.0.9.0-alpha\lib\wp8\Facebook.Client.dll" archivePath="Facebook.Client.dll" lastWriteTime="7/5/2014 9:21:24 PM" />

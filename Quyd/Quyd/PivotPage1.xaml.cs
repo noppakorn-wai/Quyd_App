@@ -21,11 +21,11 @@ namespace Quyd
             loadComponentAsync();
         }
 
-        public async void loadComponentAsync()
+        public void loadComponentAsync()
         {
-            //Notification Section
-            NotificationSet notifications = new NotificationSet();
-            await notifications.loadUnread();
+            /*//Notification Section
+            NotificationList notifications = new NotificationList();
+            await notifications.loadUnreadAsync();
             if (notifications.size() > 0)
             {
                 notificationBox.Text = notifications.get(0).ToString();
@@ -33,7 +33,7 @@ namespace Quyd
             else
             {
                 notificationBox.Text = "No new notification";
-            }
+            }*/
 
             //User section
             var username = ParseUser.CurrentUser.Get<string>("name");

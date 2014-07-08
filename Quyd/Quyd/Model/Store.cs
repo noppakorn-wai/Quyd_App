@@ -11,14 +11,20 @@ namespace Quyd.Model
 {
     class Store
     {
-        public ParseObject store;
+        public ParseObject store { get; private set; }
+
+        public ItemList items { get; private set; }
 
         public Store()
         {
-            store = new ParseObject("Store");
+            store = null;
+        }
+        public Store(ParseObject store)
+        {
+            this.store = store;
         }
 
-        public Store(string name, ParseGeoPoint location, IList<string> phones)
+        public Store(string name, ParseGeoPoint location, IList<string> phones, ItemList items)
         {
             store = new ParseObject("Store");
             store["name"] = name;
@@ -28,12 +34,15 @@ namespace Quyd.Model
             store["phones"] = phones;
         }
 
-        public async Task save()
+        public async Task saveAsync()
         {
             try
             {
-                await this.valid();
+                await this.validAsync();
                 await store.SaveAsync();
+
+
+                //edit to save items
             }
             catch(Exception ex)
             {
@@ -41,23 +50,31 @@ namespace Quyd.Model
             }
         }
 
-        public async Task load(ParseUser owner)
-        {
-            store = await this.getStore(owner);
-        }
-
-        public async Task<ParseObject> getStore(ParseUser owner)
+        public async Task loadAsync(ParseUser owner)
         {
             var query = from store_t in ParseObject.GetQuery("Store")
                         where store_t.Get<ParseUser>("owner").Equals(owner)
                         select store_t;
+            try
+            {
+                store = await query.FirstAsync();
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    throw new QuydException(QuydException.ErrorCode.store_notFound, "Store not found");
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
 
-            var store = await query.FirstAsync();
-
-            return store;
+            items = new ItemList(new Store(store));
         }
 
-        private async Task<bool> isNameExist(string storeName)
+        private async Task<bool> isNameExistAsync(string storeName)
         {
             try
             {
@@ -80,7 +97,7 @@ namespace Quyd.Model
             }
         }
 
-        private async Task<bool> valid()
+        private async Task<bool> validAsync()
         {
             //put validation here
             if(getName().Length==0)
@@ -97,7 +114,7 @@ namespace Quyd.Model
             }
             else
             {
-                bool nameExist = await isNameExist(store.Get<string>("name"));
+                bool nameExist = await isNameExistAsync(store.Get<string>("name"));
                 if(nameExist)
                 {
                     throw new QuydException(QuydException.ErrorCode.store_nameExist, "Store name is already exist.");
@@ -109,7 +126,7 @@ namespace Quyd.Model
             }
         }
 
-        #region Getter Setter
+        #region Store Getter Setter
 
         public void setName(string name)
         {
@@ -141,16 +158,12 @@ namespace Quyd.Model
             return store.Get<IList<string>>("phones");
         }
 
-        public string getOwner()
+        public string getOwnerId()
         {
             return store.Get<string>("owner");
         }
 
-        public ParseObject getObject()
-        {
-            return store;
-        }
-
         #endregion
+
     }
 }

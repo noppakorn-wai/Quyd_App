@@ -97,8 +97,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Items.cs" />
-    <Compile Include="Model\Notifications.cs" />
+    <Compile Include="Model\Bid.cs" />
+    <None Include="Model\BK\ItemList" />
+    <None Include="Model\BK\NotificationList" />
+    <None Include="Model\BK\PostList" />
+    <None Include="Model\BK\StoreList" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Notification.cs" />
+    <Compile Include="Model\Photo.cs" />
     <Compile Include="Model\Post.cs" />
     <Compile Include="Model\Store.cs" />
     <Compile Include="PivotPage1.xaml.cs">

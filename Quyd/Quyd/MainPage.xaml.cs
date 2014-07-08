@@ -22,6 +22,9 @@ namespace Quyd
         {
             InitializeComponent();
 
+            Item item = new StoreItem();
+            error.Text = (item as StoreItem).getPrice().ToString();
+
             NavigationInTransition navigateInTransition = new NavigationInTransition();
             navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
             navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };

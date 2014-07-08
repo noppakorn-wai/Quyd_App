@@ -44,6 +44,7 @@ namespace Quyd
             catch (ParseException ex)
             {
                 // The login failed. Check the error to see why.
+                throw ex;
             }
         }
 

@@ -9,53 +9,23 @@ using Quyd.Resources;
 
 namespace Quyd.Model
 {
-    class NotificationSet
+    enum notificationType {bid, select, confirm, cancle };
+
+    class NotificationList
+    {
+       class NotificationList
     {
         //Don't forget pined post
         private List<Notification> notifications;
 
         public enum type { bid, select, confirm, cancle };
 
-        public NotificationSet()
+        public NotificationList()
         {
             notifications = new List<Notification>();
         }
 
-        public async void send(ParseUser toUser, bool isForStore, Post fromPost, type type, bool pined)
-        {
-            ParseObject notification = new ParseObject("Notification"); ;
-            /*if (type == type.bid)
-            {
-                var query = from notification_t in ParseObject.GetQuery("Notification")
-                            where notification_t.Get<ParseUser>("receiver").Equals(toUser)
-                            where notification_t.Get<bool>("read") == false
-                            where notification_t.Get<int>("type") == (int)type.bid
-                            orderby notification_t.UpdatedAt descending
-                            select notification_t;
-                try
-                {
-                    notification = await query.FirstAsync();
-                }
-                catch (ParseException ex)
-                {
-                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                    {
-                        //if not found bid notification for this user don't update
-                    }
-                }
-            }*/
-
-            notification["toUser"] = toUser;
-            notification["forStore"] = isForStore;
-            notification["fromPost"] = fromPost;
-            notification["type"] = type;
-            notification["pined"] = pined;
-            notification["read"] = false;
-
-            await notification.SaveAsync();
-        }
-
-        public async Task loadUnread()
+        public async Task loadUnreadAsync()
         {
             var user = ParseUser.CurrentUser;
 
@@ -75,7 +45,7 @@ namespace Quyd.Model
             }
         }
 
-        public async Task loadMore(int limit)
+        public async Task loadMoreAsync(int limit)
         {
             var user = ParseUser.CurrentUser;
 
@@ -121,18 +91,21 @@ namespace Quyd.Model
             return notifications.Count;
         }
     }
+
     class Notification
     {
         ParseObject notification;
+        Post post;
 
         public Notification(ParseObject notification_t)
         {
             notification = notification_t;
+            post = null;
         }
 
-        public NotificationSet.type getType()
+        public NotificationList.type getType()
         {
-            return notification.Get<NotificationSet.type>("type");
+            return notification.Get<NotificationList.type>("type");
         }
 
         public bool isRead()
@@ -140,10 +113,10 @@ namespace Quyd.Model
             return notification.Get<bool>("read");
         }
 
-        public async Task setRead()
+        public async Task setReadAsync()
         {
             notification["read"] = true;
-            await save();
+            await saveAsync();
         }
 
         public bool getIsForStore()
@@ -151,9 +124,13 @@ namespace Quyd.Model
             return notification.Get<bool>("isForStore");
         }
 
-        public Post getFromPost()
+        public async Task<Post> getPostAsync()
         {
-            return notification.Get<Post>("fromPost");
+            if (post == null)
+            {
+                await post.loadPostAsync(notification.Get<string>("fromPost"));
+            }
+            return post;
         }
 
         public ParseObject getObject()
@@ -161,9 +138,24 @@ namespace Quyd.Model
             return notification;
         }
 
-        private async Task save()
+        private async Task saveAsync()
         {
             await notification.SaveAsync();
         }
+
+        public async void sendAsync(ParseUser toUser, bool isForStore, Post fromPost, NotificationList.type type, bool pined)
+        {
+            ParseObject notification = new ParseObject("Notification"); ;
+
+            notification["toUser"] = toUser;
+            notification["forStore"] = isForStore;
+            notification["fromPost"] = fromPost;
+            notification["type"] = type;
+            notification["pined"] = pined;
+            notification["read"] = false;
+
+            await notification.SaveAsync();
+        }
+    }
     }
 }
