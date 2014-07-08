@@ -23,9 +23,15 @@ namespace Quyd
 
         public void loadComponentAsync()
         {
+<<<<<<< HEAD
             /*//Notification Section
             NotificationList notifications = new NotificationList();
             await notifications.loadUnreadAsync();
+=======
+            //Notification Section
+           /* NotificationSet notifications = new NotificationSet();
+            await notifications.loadUnread();
+>>>>>>> origin/master
             if (notifications.size() > 0)
             {
                 notificationBox.Text = notifications.get(0).ToString();
@@ -33,14 +39,19 @@ namespace Quyd
             else
             {
                 notificationBox.Text = "No new notification";
+<<<<<<< HEAD
             }*/
 
+=======
+            }
+            */
+>>>>>>> origin/master
             //User section
-            var username = ParseUser.CurrentUser.Get<string>("name");
-            usernameBox.Text = username.Split('.')[0];
+            //var username = ParseUser.CurrentUser.Get<string>("name");
+            //usernameBox.Text = username;//.Split('.')[0];
             //+ParseUser.CurrentUser.Get<string>("profilePicture")
-            Uri uri = new Uri("http://graph.facebook.com/" + username + "/picture", UriKind.Absolute);
-            profilePicture.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+            //Uri uri = new Uri("http://graph.facebook.com/" + username + "/picture", UriKind.Absolute);
+            //profilePicture.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
         }
 
     }

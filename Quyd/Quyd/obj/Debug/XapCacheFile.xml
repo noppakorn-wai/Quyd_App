@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<xapCache source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="7/8/2014 8:33:41 AM">
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll" archivePath="Quyd.dll" lastWriteTime="7/8/2014 8:33:39 AM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="7/5/2014 3:06:12 PM" />
@@ -19,18 +20,46 @@
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="7/5/2014 3:06:12 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Facebook.Client.0.9.0-alpha\lib\wp8\Facebook.Client.dll" archivePath="Facebook.Client.dll" lastWriteTime="7/5/2014 9:21:24 PM" />
   <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Facebook.6.6.0\lib\wp8\Facebook.dll" archivePath="Facebook.dll" lastWriteTime="7/5/2014 6:32:18 PM" />
+=======
+﻿<xapCache source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="7/7/2014 10:36:16 PM">
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll" archivePath="Quyd.dll" lastWriteTime="7/7/2014 10:36:14 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\ApplicationIcon.png" archivePath="Assets\ApplicationIcon.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\README_FIRST.txt" archivePath="README_FIRST.txt" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\Images\Logo.jpg" archivePath="Resources\Images\Logo.jpg" lastWriteTime="5/30/2014 10:56:45 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\Images\Logo_lanscape.png" archivePath="Resources\Images\Logo_lanscape.png" lastWriteTime="5/30/2014 11:37:17 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\Images\Logo_low.png" archivePath="Resources\Images\Logo_low.png" lastWriteTime="5/30/2014 11:06:25 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\login_background.jpg" archivePath="Resources\login_background.jpg" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\Tiles\FlipCycleTileLarge.png" archivePath="Assets\Tiles\FlipCycleTileLarge.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\Tiles\FlipCycleTileMedium.png" archivePath="Assets\Tiles\FlipCycleTileMedium.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\Tiles\FlipCycleTileSmall.png" archivePath="Assets\Tiles\FlipCycleTileSmall.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\Tiles\IconicTileMediumLarge.png" archivePath="Assets\Tiles\IconicTileMediumLarge.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Assets\Tiles\IconicTileSmall.png" archivePath="Assets\Tiles\IconicTileSmall.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\fb_button_login.png" archivePath="Resources\fb_button_login.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\stockvault-bottle121297.jpg" archivePath="Resources\stockvault-bottle121297.jpg" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Add.png" archivePath="Toolkit.Content\ApplicationBar.Add.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Cancel.png" archivePath="Toolkit.Content\ApplicationBar.Cancel.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Check.png" archivePath="Toolkit.Content\ApplicationBar.Check.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Delete.png" archivePath="Toolkit.Content\ApplicationBar.Delete.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Toolkit.Content\ApplicationBar.Select.png" archivePath="Toolkit.Content\ApplicationBar.Select.png" lastWriteTime="7/7/2014 5:32:31 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="7/7/2014 5:33:17 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Facebook.Client.0.9.0-alpha\lib\wp8\Facebook.Client.dll" archivePath="Facebook.Client.dll" lastWriteTime="7/7/2014 5:32:33 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Facebook.6.6.0\lib\wp8\Facebook.dll" archivePath="Facebook.dll" lastWriteTime="7/7/2014 5:32:32 PM" />
+>>>>>>> origin/master
   <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\ExtensionSDKs\MSAdvertising\6.1\References\CommonConfiguration\neutral\Microsoft.Advertising.Mobile.dll" archivePath="Microsoft.Advertising.Mobile.dll" lastWriteTime="9/16/2013 11:09:00 AM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="7/7/2014 3:57:42 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.dll" archivePath="Microsoft.Threading.Tasks.Extensions.dll" lastWriteTime="7/5/2014 9:21:24 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll" archivePath="Microsoft.Threading.Tasks.Extensions.Phone.dll" lastWriteTime="7/5/2014 9:21:24 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\parse.1.2.15\lib\wp8\Parse.dll" archivePath="Parse.dll" lastWriteTime="7/5/2014 3:42:31 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Parse.1.2.15\lib\wp8\Parse.Phone.dll" archivePath="Parse.Phone.dll" lastWriteTime="7/5/2014 3:42:31 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Facebook.6.6.0\lib\wp8\Facebook.xml" archivePath="Facebook.xml" lastWriteTime="7/5/2014 6:32:18 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Facebook.Client.0.9.0-alpha\lib\wp8\Facebook.Client.xml" archivePath="Facebook.Client.xml" lastWriteTime="7/5/2014 9:21:24 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="7/7/2014 5:32:34 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.dll" archivePath="Microsoft.Threading.Tasks.Extensions.dll" lastWriteTime="7/7/2014 5:32:34 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll" archivePath="Microsoft.Threading.Tasks.Extensions.Phone.dll" lastWriteTime="7/7/2014 5:32:34 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\parse.1.2.15\lib\wp8\Parse.dll" archivePath="Parse.dll" lastWriteTime="7/7/2014 5:32:35 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Parse.1.2.15\lib\wp8\Parse.Phone.dll" archivePath="Parse.Phone.dll" lastWriteTime="7/7/2014 5:32:35 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Facebook.6.6.0\lib\wp8\Facebook.xml" archivePath="Facebook.xml" lastWriteTime="7/7/2014 5:32:32 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Facebook.Client.0.9.0-alpha\lib\wp8\Facebook.Client.xml" archivePath="Facebook.Client.xml" lastWriteTime="7/7/2014 5:32:33 PM" />
   <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\ExtensionSDKs\MSAdvertising\6.1\References\CommonConfiguration\neutral\Microsoft.Advertising.Mobile.xml" archivePath="Microsoft.Advertising.Mobile.xml" lastWriteTime="9/16/2013 11:13:06 AM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.xml" archivePath="Microsoft.Threading.Tasks.Extensions.xml" lastWriteTime="7/5/2014 9:21:24 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.xml" archivePath="Microsoft.Threading.Tasks.Extensions.Phone.xml" lastWriteTime="7/5/2014 9:21:24 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\parse.1.2.15\lib\wp8\Parse.xml" archivePath="Parse.xml" lastWriteTime="7/5/2014 3:42:31 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\packages\Parse.1.2.15\lib\wp8\Parse.Phone.xml" archivePath="Parse.Phone.xml" lastWriteTime="7/5/2014 3:42:31 PM" />
-  <file source="D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="7/7/2014 6:47:02 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.xml" archivePath="Microsoft.Threading.Tasks.Extensions.xml" lastWriteTime="7/7/2014 5:32:34 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Microsoft.Bcl.Async.1.0.11-beta\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.xml" archivePath="Microsoft.Threading.Tasks.Extensions.Phone.xml" lastWriteTime="7/7/2014 5:32:34 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\parse.1.2.15\lib\wp8\Parse.xml" archivePath="Parse.xml" lastWriteTime="7/7/2014 5:32:35 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\packages\Parse.1.2.15\lib\wp8\Parse.Phone.xml" archivePath="Parse.Phone.xml" lastWriteTime="7/7/2014 5:32:35 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\Images\Logo_160.png" archivePath="Resources\Images\Logo_160.png" lastWriteTime="5/30/2014 11:09:22 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Resources\Images\Logo_340.png" archivePath="Resources\Images\Logo_340.png" lastWriteTime="5/30/2014 11:11:05 PM" />
+  <file source="C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="7/7/2014 7:39:51 PM" />
 </xapCache>
