@@ -94,35 +94,34 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConrtolStar.xaml.cs">
+    <Compile Include="Controls\ConrtolStar.xaml.cs">
       <DependentUpon>ConrtolStar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ControlPost.xaml.cs">
+    <Compile Include="Controls\ControlPost.xaml.cs">
       <DependentUpon>ControlPost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ControlStar.xaml.cs">
+    <Compile Include="Controls\ControlStar.xaml.cs">
       <DependentUpon>ControlStar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ControlUserDetail.xaml.cs">
+    <Compile Include="Controls\ControlUserDetail.xaml.cs">
       <DependentUpon>ControlUserDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ControlUserProfile.xaml.cs">
+    <Compile Include="Controls\ControlUserProfile.xaml.cs">
       <DependentUpon>ControlUserProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Bid.cs" />
-    <None Include="Model\BK\ItemList" />
-    <None Include="Model\BK\NotificationList" />
-    <None Include="Model\BK\PostList" />
-    <None Include="Model\BK\StoreList" />
-    <Compile Include="Model\Item.cs" />
-    <Compile Include="Model\Notification.cs" />
-    <Compile Include="Model\Photo.cs" />
-    <Compile Include="Model\Post.cs" />
-    <Compile Include="Model\Store.cs" />
+    <None Include="Models\BK\ItemList" />
+    <None Include="Models\BK\NotificationList" />
+    <None Include="Models\BK\PostList" />
+    <None Include="Models\BK\StoreList" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Photo.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Store.cs" />
     <Compile Include="PivotPage1.xaml.cs">
       <DependentUpon>PivotPage1.xaml</DependentUpon>
     </Compile>
@@ -139,27 +138,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="ConrtolStar.xaml">
+    <Page Include="Controls\ConrtolStar.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ControlPost.xaml">
+    <Page Include="Controls\ControlPost.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ControlStar.xaml">
+    <Page Include="Controls\ControlStar.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ControlUserDetail.xaml">
+    <Page Include="Controls\ControlUserDetail.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ControlUserProfile.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
+    <Page Include="Controls\ControlUserProfile.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,7 +179,6 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="README_FIRST.txt" />
     <Content Include="Resources\Images\Logo.jpg" />
     <Content Include="Resources\Images\Logo_160.png" />
     <Content Include="Resources\Images\Logo_340.png" />
@@ -202,7 +200,6 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Note.cs" />
     <Content Include="Resources\fb_button_login.png" />
     <Content Include="Resources\stockvault-bottle121297.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
@@ -243,9 +240,6 @@
     <Reference Include="Parse.Phone">
       <HintPath>..\packages\Parse.1.2.15\lib\wp8\Parse.Phone.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\appbar.chromakey.png" />

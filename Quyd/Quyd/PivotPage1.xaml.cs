@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Quyd.Model;
+using Quyd.Models;
 
 using Parse;
 
@@ -23,36 +23,28 @@ namespace Quyd
 
         public void loadComponentAsync()
         {
-<<<<<<< HEAD
-            /*//Notification Section
-            NotificationList notifications = new NotificationList();
-            await notifications.loadUnreadAsync();
-=======
-            //Notification Section
-           /* NotificationSet notifications = new NotificationSet();
-            await notifications.loadUnread();
->>>>>>> origin/master
-            if (notifications.size() > 0)
-            {
-                notificationBox.Text = notifications.get(0).ToString();
-            }
-            else
-            {
-                notificationBox.Text = "No new notification";
-<<<<<<< HEAD
-            }*/
-
-=======
-            }
-            */
->>>>>>> origin/master
-            //User section
-            //var username = ParseUser.CurrentUser.Get<string>("name");
-            //usernameBox.Text = username;//.Split('.')[0];
-            //+ParseUser.CurrentUser.Get<string>("profilePicture")
-            //Uri uri = new Uri("http://graph.facebook.com/" + username + "/picture", UriKind.Absolute);
-            //profilePicture.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+            UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
         }
 
+        public void generatePost()
+        {
+            PostList posts = new PostList();
+
+            if (posts.size() > 0)
+            {
+                UserPosts.Children.Clear();
+            }
+
+            foreach(var post in posts.posts)
+            {
+                var controlPost = new Quyd.Controls.ControlPost();
+                controlPost.Margin = new System.Windows.Thickness(5,5,5,0);
+                controlPost.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                controlPost.Height = 125;
+                controlPost.Width = 480;
+                controlPost.setLocation("Test1");
+                UserPosts.Children.Add(controlPost);
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:Quyd"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     x:Class="Quyd.PivotPage1"
+    xmlns:Quyd="clr-namespace:Quyd.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -16,57 +17,59 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot" Background="#FFE65101">
-		<!--Pivot Control-->
-		<phone:Pivot Title="ขอขวดแอปพลิเคชั่น" Background="#33FFFFFF" FontFamily="Tahoma" Margin="0,50,0,0">
+    <Grid x:Name="LayoutRoot" Background="#FFE65101">
+        <!--Pivot Control-->
+        <phone:Pivot Title="ขอขวดแอปพลิเคชั่น" Background="#33FFFFFF" FontFamily="Tahoma" Margin="0,50,0,0">
 
-			<phone:PivotItem x:Name="User" Header="ผู้ใช้" Margin="0,28,0,0">
-				<Grid Background="#66FFFFFF">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="0*"/>
-						<RowDefinition/>
-					</Grid.RowDefinitions>
-					<StackPanel Orientation="Vertical" Grid.RowSpan="2" VerticalAlignment="Top" Height="160">
-						<local:ControlUserProfile VerticalAlignment="Top" Margin="10,10,10,0" Height="84"/>
-						<local:ControlUserDetail Margin="105,0,10,0" VerticalAlignment="Top"/>
-					</StackPanel>
-					<ScrollViewer Grid.RowSpan="2" Margin="0,160,0,0" Background="#33FFFFFF">
-						<Grid>
-							<local:ControlPost Margin="5,5,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
-							<local:ControlPost Margin="5,135,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
-							<local:ControlPost Margin="5,265,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
-						</Grid>
-					</ScrollViewer>
-				</Grid>
-			</phone:PivotItem>
+            <phone:PivotItem x:Name="User" Header="ผู้ใช้" Margin="0,28,0,0">
+                <Grid Background="#66FFFFFF">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.RowSpan="2" VerticalAlignment="Top" Height="160">
+                        <Quyd:ControlUserProfile Name="UserProfile" VerticalAlignment="Top" Margin="10,10,10,0" Height="84"/>
+                        <Quyd:ControlUserDetail Margin="105,0,10,0" VerticalAlignment="Top"/>
+                    </StackPanel>
+                    <ScrollViewer Grid.RowSpan="2" Margin="0,160,0,0" Background="#33FFFFFF">
+                        <Grid>
+                            <StackPanel Name="UserPosts" Height="auto" Width="auto">
+                                <Canvas Margin="5,5,5,5" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                    <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                                </Canvas>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </phone:PivotItem>
 
-			<phone:PivotItem x:Name="Feeds" Header="ข่าว" Margin="0,28,0,0">
-				<ScrollViewer Background="#66FFFFFF">
-					<Grid Height="553" Width="480" HorizontalAlignment="Left" VerticalAlignment="Top">
-						<StackPanel Height="265" VerticalAlignment="Top" Margin="5,5,5,0">
-							<toolkit:WrapPanel Height="210">
-								<local:ControlUserProfile VerticalAlignment="Top" Margin="0,0,23,0"/>
-							</toolkit:WrapPanel>
-						</StackPanel>
-					</Grid>
-				</ScrollViewer>
-			</phone:PivotItem>
+            <phone:PivotItem x:Name="Feeds" Header="ข่าว" Margin="0,28,0,0">
+                <ScrollViewer Background="#66FFFFFF">
+                    <Grid Height="553" Width="480" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <StackPanel Height="265" VerticalAlignment="Top" Margin="5,5,5,0">
+                            <toolkit:WrapPanel Height="210">
+                                <Quyd:ControlUserProfile VerticalAlignment="Top" Margin="0,0,23,0"/>
+                            </toolkit:WrapPanel>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </phone:PivotItem>
 
-			<phone:PivotItem x:Name="Notifications" Header="แจ้งเตือน" Margin="0,28,0,0" Background="Transparent">
-				<Grid Background="#66FFFFFF">
-					<TextBlock x:Name="notificationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="583" Width="436" Foreground="Black"/>
-				</Grid>
-			</phone:PivotItem>
-			<phone:PivotItem x:Name="Search" Header="ค้นหา" Margin="0,28,0,0" Background="Transparent">
-				<Grid/>
-			</phone:PivotItem>
+            <phone:PivotItem x:Name="Notifications" Header="แจ้งเตือน" Margin="0,28,0,0" Background="Transparent">
+                <Grid Background="#66FFFFFF">
+                    <TextBlock x:Name="notificationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="583" Width="436" Foreground="Black"/>
+                </Grid>
+            </phone:PivotItem>
+            <phone:PivotItem x:Name="Search" Header="ค้นหา" Margin="0,28,0,0" Background="Transparent">
+                <Grid/>
+            </phone:PivotItem>
 
-			<phone:PivotItem x:Name="Store" Header="ร้าน" Margin="0,28,0,0" Background="Transparent">
-				<Grid/>
-			</phone:PivotItem>
-		</phone:Pivot>
-		<Image x:Name="AppLogo" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="/Resources/Images/Logo_low.png"/>
-		<TextBlock x:Name="Appname" TextWrapping="Wrap" Text="Quyd" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="32" Margin="50,2,346,0" FontWeight="Bold"/>
-	</Grid>
+            <phone:PivotItem x:Name="Store" Header="ร้าน" Margin="0,28,0,0" Background="Transparent">
+                <Grid/>
+            </phone:PivotItem>
+        </phone:Pivot>
+        <Image x:Name="AppLogo" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="/Resources/Images/Logo_low.png"/>
+        <TextBlock x:Name="Appname" TextWrapping="Wrap" Text="Quyd" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="32" Margin="50,2,346,0" FontWeight="Bold"/>
+    </Grid>
 
 </phone:PhoneApplicationPage>
