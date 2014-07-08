@@ -97,6 +97,9 @@
     <Compile Include="ConrtolStar.xaml.cs">
       <DependentUpon>ConrtolStar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ControlPost.xaml.cs">
+      <DependentUpon>ControlPost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ControlStar.xaml.cs">
       <DependentUpon>ControlStar.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="ConrtolStar.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ControlPost.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -235,10 +242,21 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Images\appbar.chromakey.png" />
+    <Resource Include="Resources\Images\appbar.location.checkin.png" />
+    <Resource Include="Resources\Images\appbar.location.png" />
+    <Resource Include="Resources\Images\appbar.money.png" />
+    <Resource Include="Resources\Images\appbar.phone.png" />
+    <Resource Include="Resources\Images\appbar.tag.label.png" />
+    <Resource Include="Resources\Images\appbar.tag.png" />
+    <Resource Include="Resources\Images\appbar.warning.png" />
+    <Resource Include="Resources\Images\attention_icon&amp;48.png" />
     <Resource Include="Resources\Images\mail_icon&amp;16.png" />
     <Resource Include="Resources\Images\mail_icon&amp;24.png" />
     <Resource Include="Resources\Images\phone_2_icon&amp;16.png" />
     <Resource Include="Resources\Images\phone_2_icon&amp;24.png" />
+    <Resource Include="Resources\Images\pin_map_icon&amp;24.png" />
+    <Resource Include="Resources\Images\push_pin_icon&amp;48.png" />
     <Resource Include="Resources\Images\star_fav_empty_icon&amp;16.png" />
     <Resource Include="Resources\Images\star_fav_empty_icon&amp;24.png" />
     <Resource Include="Resources\Images\star_fav_icon&amp;16.png" />

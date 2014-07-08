@@ -31,7 +31,13 @@
 						<local:ControlStar VerticalAlignment="Top" Margin="-124,70,-16,0" Height="24" HorizontalAlignment="Left"/>
 						<local:ControlUserDetail Margin="-124,99,-92,-53" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 					</toolkit:WrapPanel>
-					<StackPanel Grid.RowSpan="2" Margin="0,160,0,0" Background="#99FFFFFF"/>
+					<ScrollViewer Grid.RowSpan="2" Margin="0,160,0,0" Background="#33FFFFFF">
+						<Grid>
+							<local:ControlPost Margin="5,5,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
+							<local:ControlPost Margin="5,135,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
+							<local:ControlPost Margin="5,265,5,0" VerticalAlignment="Top" Height="125" Width="Auto"/>
+						</Grid>
+					</ScrollViewer>
 				</Grid>
 			</phone:PivotItem>
 

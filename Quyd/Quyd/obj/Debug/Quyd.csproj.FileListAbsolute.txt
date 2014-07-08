@@ -248,3 +248,4 @@ C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlUserProfile.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlStar.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ConrtolStar.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlUserDetail.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlPost.g.cs
