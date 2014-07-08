@@ -10,11 +10,10 @@
     d:DesignHeight="24" d:DesignWidth="140">
     
     <Grid x:Name="LayoutRoot">
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png" Margin="29,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png" Margin="58,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_empty_icon&amp;24.png" Margin="87,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_empty_icon&amp;24.png" Margin="116,0,0,0"/>
-
+    	<Image Name="Star1" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/star_fav_icon_24.png" MouseLeftButtonUp="Star1_MouseLeftButtonUp"/>
+        <Image Name="Star2" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/star_fav_icon_24.png" Margin="29,0,0,0" MouseLeftButtonUp="Star2_MouseLeftButtonUp"/>
+        <Image Name="Star3" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/star_fav_icon_24.png" Margin="58,0,0,0" MouseLeftButtonUp="Star3_MouseLeftButtonUp"/>
+        <Image Name="Star4" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/star_fav_empty_icon_24.png" Margin="87,0,0,0" MouseLeftButtonUp="Star4_MouseLeftButtonUp"/>
+        <Image Name="Star5" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/star_fav_empty_icon_24.png" Margin="116,0,0,0" MouseLeftButtonUp="Star5_MouseLeftButtonUp"/>
     </Grid>
 </UserControl>

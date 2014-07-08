@@ -39,7 +39,7 @@ namespace Quyd
             browserGrid.Visibility = Visibility.Visible;
             try
             {
-                var permissionRequests = new[] { "email", "public_profile", "user_friends" };
+                /*var permissionRequests = new[] { "email", "public_profile", "user_friends" };
                 ParseUser user = await ParseFacebookUtils.LogInAsync(browser, permissionRequests);
 
                 loginGrid.Visibility = Visibility.Visible;
@@ -56,7 +56,9 @@ namespace Quyd
 
                 user["name"] = fbData.Name;
 
-                await user.SaveAsync();
+                await user.SaveAsync();*/
+
+                await ParseUser.LogInAsync("Ur5cHHrA03wppzQkahZ00ARV6", "1234");
 
                 NavigationService.Navigate(new Uri("/PivotPage1.xaml", UriKind.Relative));
             }

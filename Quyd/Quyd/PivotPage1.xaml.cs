@@ -30,6 +30,13 @@ namespace Quyd
 
         public async void generatePost()
         {
+
+            var fb = new Facebook.FacebookClient();
+            fb.AccessToken = ParseFacebookUtils.AccessToken;
+            var me = await fb.GetTaskAsync("me");
+
+            var fbData = new Facebook.Client.GraphUser(me);
+
             PostList posts = new PostList();
 
             await posts.loadAsync(ParseUser.CurrentUser);
