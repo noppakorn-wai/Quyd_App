@@ -51,7 +51,7 @@ namespace Quyd.Models
 
             if (notifications.Count > 0)
             {
-                lastNotification = notifications[notifications.Count - 1].getObject();
+                lastNotification = notifications[notifications.Count - 1].Object;
                 var query = from notification in ParseObject.GetQuery("Notification").Limit(limit)
                             where notification.Get<ParseUser>("receiver").Equals(user)
                             where notification.UpdatedAt > lastNotification.UpdatedAt
@@ -84,9 +84,12 @@ namespace Quyd.Models
             return notifications[i];
         }
 
-        public int size()
+        public int Size
         {
-            return notifications.Count;
+            get
+            {
+                return notifications.Count;
+            }
         }
     }
 
@@ -101,25 +104,10 @@ namespace Quyd.Models
             post = null;
         }
 
-        public NotificationList.type getType()
-        {
-            return notification.Get<NotificationList.type>("type");
-        }
-
-        public bool isRead()
-        {
-            return notification.Get<bool>("read");
-        }
-
         public async Task setReadAsync()
         {
             notification["read"] = true;
             await saveAsync();
-        }
-
-        public bool getIsForStore()
-        {
-            return notification.Get<bool>("isForStore");
         }
 
         public async Task<Post> getPostAsync()
@@ -129,11 +117,6 @@ namespace Quyd.Models
                 await post.loadPostAsync(notification.Get<string>("fromPost"));
             }
             return post;
-        }
-
-        public ParseObject getObject()
-        {
-            return notification;
         }
 
         private async Task saveAsync()
@@ -154,5 +137,35 @@ namespace Quyd.Models
 
             await notification.SaveAsync();
         }
+
+        public NotificationList.type Type
+        {
+            get
+            {
+                return notification.Get<NotificationList.type>("type");
+            }
+        }
+
+        public bool isRead()
+        {
+            return notification.Get<bool>("read");
+        }
+
+        public bool IsForStore
+        {
+            get
+            {
+                return notification.Get<bool>("isForStore");
+            }
+        }
+
+        public ParseObject Object
+        {
+            get
+            {
+                return notification;
+            }
+        }
+
     }
 }

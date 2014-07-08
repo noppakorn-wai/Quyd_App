@@ -248,7 +248,6 @@ C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlStar.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ConrtolStar.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlUserDetail.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlPost.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ConrtolStar.g.cs
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlPost.g.cs
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlStar.g.cs
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserDetail.g.cs

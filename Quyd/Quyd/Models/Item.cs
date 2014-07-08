@@ -11,35 +11,101 @@ namespace Quyd.Models
     class ItemList
     {
         public IList<Item> itemList { get; private set; }
+
         public bool imutable { get; private set; }
 
         public ItemList()
         {
             itemList = new List<Item>();
-            imutable = false;
         }
 
-        public ItemList(Store store)
+        public async Task loadItemListAsync()
         {
-            itemList = new List<Item>();
             imutable = false;
 
-            if(store.getOwnerId().Equals(ParseUser.CurrentUser))
+            try
             {
-                imutable = true;
+                IEnumerable<ParseObject> items_t = await ParseObject.GetQuery("Item").FindAsync();
+
+                foreach (var item in items_t)
+                {
+                    itemList.Add(new Item(item));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no data found
+                }
             }
         }
 
-        public ItemList(Post post)
+        public async Task loadUserItemAsync(Post post)
         {
-            itemList = new List<Item>();
             imutable = false;
+
+            var query = from userItem in ParseObject.GetQuery("UserItem").Include("item")
+                        where userItem.ObjectId == post.Object.ObjectId
+                        select userItem;
+            try
+            {
+                var userItems = await query.FindAsync();
+                foreach (var userItem in userItems)
+                {
+                    itemList.Add(new UserItem(userItem));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no data found
+                }
+            }
+        }
+
+        public async Task loadStoreItemAsync(Store store)
+        {
+            imutable = false;
+
+            if (store.OwnerId.Equals(ParseUser.CurrentUser))
+            {
+                imutable = true;
+            }
+
+            var query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
+                        where storeItem.ObjectId == store.Object.ObjectId
+                        select storeItem;
+            try
+            {
+                var storeItems = await query.FindAsync();
+                foreach (var storeItem in storeItems)
+                {
+                    itemList.Add(new StoreItem(storeItem));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no data found
+                }
+            }
+        }
+
+        public int Size 
+        { 
+            get
+            {
+                return itemList.Count;
+            }
         }
     }
 
     class Item
     {
-        public ParseObject item { get; protected set; }
+        public ParseObject item { get; private set; }
 
         public Item()
         {
@@ -51,49 +117,78 @@ namespace Quyd.Models
             this.item = item;
         }
 
-        public string getType()
+        #region get set method
+        public string Type
         {
-            return item.Get<string>("type");
+            get
+            {
+                return item.Get<string>("type");
+            }
         }
 
-        public string getName()
+        public string Name
         {
-            return item.Get<string>("name");
+            get
+            {
+                return item.Get<string>("name");
+            }
         }
 
-        public string getDescription()
+        public string Description
         {
-            return item.Get<string>("description");
+            get
+            {
+                return item.Get<string>("description");
+            }
         }
 
-        public string getMaterial()
+        public string Material
         {
-            return item.Get<string>("material");
+            get
+            {
+                return item.Get<string>("material");
+            }
         }
 
-        public string getMaterialType()
+        public string MaterialType
         {
-            return item.Get<string>("materialType");
+            get
+            {
+                return item.Get<string>("materialType");
+            }
         }
 
-        public string getIcon()
+        public string Icon
         {
-            return item.Get<string>("icon");
+            get
+            {
+                return item.Get<string>("icon");
+            }
         }
+        #endregion
+
     }
 
     class UserItem : Item, Quantifiable
     {
         public ParseObject userItem { get; private set; }
 
-        public UserItem()
+        public UserItem(ParseObject userItem)
         {
-
+            this.userItem = userItem;
         }
 
-        public double getQuantity()
+        public double Quantity
         {
-            return userItem.Get<double>("quantity");
+            get
+            {
+                return userItem.Get<double>("quantity");
+            }
+
+            set
+            {
+                userItem["quantity"] = value;
+            }
         }
 
     }
@@ -102,26 +197,42 @@ namespace Quyd.Models
     {
         public ParseObject storeItem { get; private set; }
 
-        public StoreItem()
+        public StoreItem(ParseObject storeItem)
         {
-
+            this.storeItem = storeItem;
         }
 
-        public double getPrice()
+        public double Price
         {
-            return storeItem.Get<double>("price");
+            get
+            {
+                return storeItem.Get<double>("price");
+            }
+
+            set
+            {
+                storeItem["price"] = value;
+            }
         }
     }
 
-#region interface
+    #region interface
     interface Quantifiable
     {
-        double getQuantity();
+        double Quantity
+        {
+            get;
+            set;
+        }
     }
 
     interface Priceable
     {
-        double getPrice();
+        double Price
+        {
+            get;
+            set;
+        }
     }
-#endregion
+    #endregion
 }

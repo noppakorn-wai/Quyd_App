@@ -10,11 +10,11 @@
     d:DesignHeight="24" d:DesignWidth="140">
     
     <Grid x:Name="LayoutRoot">
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="Resources/Images/star_fav_icon&amp;24.png"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="Resources/Images/star_fav_icon&amp;24.png" Margin="29,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="Resources/Images/star_fav_icon&amp;24.png" Margin="58,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="Resources/Images/star_fav_empty_icon&amp;24.png" Margin="87,0,0,0"/>
-    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="Resources/Images/star_fav_empty_icon&amp;24.png" Margin="116,0,0,0"/>
+    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png"/>
+    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png" Margin="29,0,0,0"/>
+    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_icon&amp;24.png" Margin="58,0,0,0"/>
+    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_empty_icon&amp;24.png" Margin="87,0,0,0"/>
+    	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/star_fav_empty_icon&amp;24.png" Margin="116,0,0,0"/>
 
     </Grid>
 </UserControl>

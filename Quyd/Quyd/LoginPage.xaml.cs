@@ -42,6 +42,10 @@ namespace Quyd
                 var permissionRequests = new[] { "email", "public_profile", "user_friends" };
                 ParseUser user = await ParseFacebookUtils.LogInAsync(browser, permissionRequests);
 
+                loginGrid.Visibility = Visibility.Visible;
+                browserGrid.Visibility = Visibility.Collapsed;
+                loginFace.Visibility = Visibility.Collapsed;
+
                 var fb = new Facebook.FacebookClient();
                 fb.AccessToken = ParseFacebookUtils.AccessToken;
                 var me = await fb.GetTaskAsync("me");
@@ -60,6 +64,7 @@ namespace Quyd
             {
                 loginGrid.Visibility = Visibility.Visible;
                 browserGrid.Visibility = Visibility.Collapsed;
+                loginFace.Visibility = Visibility.Visible;
             }
         }
 
@@ -67,6 +72,7 @@ namespace Quyd
         {
             loginGrid.Visibility = Visibility.Visible;
             browserGrid.Visibility = Visibility.Collapsed;
+            loginFace.Visibility = Visibility.Visible;
         }
     }
 }

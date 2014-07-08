@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Parse;
+using Quyd.Resources;
 
 namespace Quyd.Models
 {
@@ -20,19 +21,61 @@ namespace Quyd.Models
             posts = new List<Post>();
         }
 
-        public int size()
+        public async Task loadAsync(ParseUser user)
         {
-            return posts.Count;
+            var query = from post in ParseObject.GetQuery("Post")
+                        where post.Get<ParseUser>("postBy") == user
+                        select post;
+            try
+            {
+                IEnumerable<ParseObject> posts_t = await query.FindAsync();
+                foreach (ParseObject post in posts_t)
+                {
+                    posts.Add(new Post(post));
+                }
+            }
+            catch(ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public int Size
+        {
+            get
+            {
+                return posts.Count;
+            }
         }
     }
 
     class Post
     {
-        ParseObject post;
+        public ParseObject post { get; private set; }
 
         public Post()
         {
             post = null;
+        }
+
+        public Post(ParseObject post)
+        {
+            this.post = post;
+        }
+
+        public ParseObject Object
+        {
+            get
+            {
+                return post;
+            }
         }
 
         public async Task loadPostAsync(string postId)
@@ -52,6 +95,30 @@ namespace Quyd.Models
                     //no older notification found
                     post = null;
                 }
+            }
+        }
+
+        public postStatus Status
+        {
+            get
+            {
+                return post.Get<postStatus>("status");
+            }
+            set
+            {
+                post["status"] = value;
+            }
+        }
+
+        public postStatus Description
+        {
+            get
+            {
+                return post.Get<postStatus>("description");
+            }
+            set
+            {
+                post["description"] = value;
             }
         }
     }

@@ -24,13 +24,17 @@ namespace Quyd
         public void loadComponentAsync()
         {
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
+            FeedsProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
+            generatePost();
         }
 
-        public void generatePost()
+        public async void generatePost()
         {
             PostList posts = new PostList();
 
-            if (posts.size() > 0)
+            await posts.loadAsync(ParseUser.CurrentUser);
+
+            if (posts.Size > 0)
             {
                 UserPosts.Children.Clear();
             }
@@ -38,10 +42,6 @@ namespace Quyd
             foreach(var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
-                controlPost.Margin = new System.Windows.Thickness(5,5,5,0);
-                controlPost.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-                controlPost.Height = 125;
-                controlPost.Width = 480;
                 controlPost.setLocation("Test1");
                 UserPosts.Children.Add(controlPost);
             }

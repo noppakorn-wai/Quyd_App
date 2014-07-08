@@ -11,7 +11,7 @@ namespace Quyd.Models
 {
     class Store
     {
-        public ParseObject store { get; private set; }
+        private ParseObject store;
 
         public ItemList items { get; private set; }
 
@@ -19,6 +19,7 @@ namespace Quyd.Models
         {
             store = null;
         }
+
         public Store(ParseObject store)
         {
             this.store = store;
@@ -58,6 +59,8 @@ namespace Quyd.Models
             try
             {
                 store = await query.FirstAsync();
+                items = new ItemList();
+                await items.loadStoreItemAsync(new Store(store));
             }
             catch (ParseException ex)
             {
@@ -70,8 +73,6 @@ namespace Quyd.Models
                     throw ex;
                 }
             }
-
-            items = new ItemList(new Store(store));
         }
 
         private async Task<bool> isNameExistAsync(string storeName)
@@ -100,15 +101,15 @@ namespace Quyd.Models
         private async Task<bool> validAsync()
         {
             //put validation here
-            if(getName().Length==0)
+            if(this.Name.Length==0)
             {
                 throw new QuydException(QuydException.ErrorCode.store_nameTooShort, "Store name is too short.");
             }
-            else if(getLocation().Equals(new ParseGeoPoint(0,0)))
+            else if(this.Location.Equals(new ParseGeoPoint(0,0)))
             {
                 throw new QuydException(QuydException.ErrorCode.store_locationInvalid, "Location is invalid.");
             }
-            else if(getPhones().Count == 0)
+            else if(this.Phones.Count == 0)
             {
                 throw new QuydException(QuydException.ErrorCode.store_phoneInvalid, "Phone number is invalid.");
             }
@@ -128,39 +129,56 @@ namespace Quyd.Models
 
         #region Store Getter Setter
 
-        public void setName(string name)
+        public string Name
         {
-            store["name"] = name;
+            get
+            {
+                return store.Get<string>("name");
+            }
+            set
+            {
+                store["name"] = value;
+            }
         }
 
-        public string getName()
+        public ParseGeoPoint Location
         {
-            return store.Get<string>("name");
+            get
+            {
+                return store.Get<ParseGeoPoint>("location");
+            }
+            set
+            {
+                store["location"] = value;
+            }
         }
 
-        public void setLocation(ParseGeoPoint location)
+        public IList<string> Phones
         {
-            store["location"] = location;
+            get
+            {
+                return store.Get<IList<string>>("phones");
+            }
+            set
+            {
+                store["phones"] = value;
+            }
         }
 
-        public ParseGeoPoint getLocation()
+        public string OwnerId
         {
-            return store.Get<ParseGeoPoint>("location");
+            get
+            {
+                return store.Get<string>("owner");
+            }
         }
 
-        public void setPhones(IList<string> phones)
+        public ParseObject Object
         {
-            store["phones"] = phones;
-        }
-
-        public IList<string> getPhones()
-        {
-            return store.Get<IList<string>>("phones");
-        }
-
-        public string getOwnerId()
-        {
-            return store.Get<string>("owner");
+            get
+            {
+                return store;
+            }
         }
 
         #endregion

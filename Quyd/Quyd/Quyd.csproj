@@ -94,9 +94,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ConrtolStar.xaml.cs">
-      <DependentUpon>ConrtolStar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ControlPost.xaml.cs">
       <DependentUpon>ControlPost.xaml</DependentUpon>
     </Compile>
@@ -113,10 +110,6 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <None Include="Models\BK\ItemList" />
-    <None Include="Models\BK\NotificationList" />
-    <None Include="Models\BK\PostList" />
-    <None Include="Models\BK\StoreList" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Photo.cs" />
@@ -138,10 +131,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Controls\ConrtolStar.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\ControlPost.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>

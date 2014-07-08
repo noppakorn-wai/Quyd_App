@@ -10,7 +10,7 @@ namespace Quyd.Models
 {
     class PhotoList
     {
-        private List<Photo> photos;
+        public List<Photo> photos { get; private set; }
 
         public PhotoList()
         {
@@ -40,9 +40,12 @@ namespace Quyd.Models
             }
         }
 
-        public int size()
+        public int Size
         {
-            return photos.Count;
+            get
+            {
+                return photos.Count;
+            }
         }
     }
 
@@ -55,14 +58,20 @@ namespace Quyd.Models
             this.photo = photo;
         }
 
-        public string getDescription(int i)
+        public string Description
         {
-            return photo.Get<string>("description");
+            get
+            {
+                return photo.Get<string>("description");
+            }
         }
 
-        public string getLink(int i)
+        public string Link
         {
-            return photo.Get<string>("link");
+            get
+            {
+                return photo.Get<string>("link");
+            }
         }
     }
 }

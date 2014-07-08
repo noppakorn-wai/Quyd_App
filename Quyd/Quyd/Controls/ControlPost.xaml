@@ -7,7 +7,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="105" HorizontalContentAlignment="Stretch" Width="400" Height="125">
+    d:DesignHeight="105" HorizontalContentAlignment="Stretch" Width="auto" Height="125" Margin="5,5,5,0" VerticalAlignment="Top">
     
     <Grid x:Name="LayoutRoot" Background="#CCFFFFFF">
     	<Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="/Resources/Images/pin_map_icon&amp;24.png" Margin="10,10,0,0"/>

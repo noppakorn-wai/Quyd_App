@@ -24,21 +24,21 @@
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="loginGrid" Visibility="Visible" Width="480" Background="#FFE65101">
-            <Button x:Name="loginFace" Content="" HorizontalAlignment="Center" Height="179" Margin="10,471,10,0" VerticalAlignment="Top" Width="460" Click="loginFace_Click" BorderThickness="0">
+            <Image VerticalAlignment="Top" Source="/Resources/Images/Logo.jpg"/>
+            <Button x:Name="loginFace" Content="" HorizontalAlignment="Center" Height="227" Margin="10,482,10,0" VerticalAlignment="Top" Width="460" Click="loginFace_Click" BorderThickness="0">
                 <Button.Foreground>
-                    <ImageBrush Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="Resources/fb_button_login.png" Stretch="Uniform"/>
                 </Button.Foreground>
                 <Button.Background>
-                    <ImageBrush ImageSource="Resources/fb_button_login.png" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="Resources/fb_button_login.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
         </Grid>
-        <Image VerticalAlignment="Top" Source="/Resources/Images/Logo.jpg"/>
 
         <Grid x:Name="browserGrid" Grid.Row="0" Grid.Column="0" Margin="0" Visibility="Collapsed" Background="#FFE65101">
-            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Browser" VerticalAlignment="Top" Width="460" Height="60" Foreground="#FFE65101" FontSize="48" FontFamily="Tahoma"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Facebook login" VerticalAlignment="Top" Width="460" Height="60" Foreground="#FFE65101" FontSize="48" FontFamily="Tahoma"/>
             <Canvas HorizontalAlignment="Left"  Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="460" Background="White" Canvas.ZIndex="-1"/>
-            <phone:WebBrowser Name="browser" Margin="10,60,10,10" Padding="20" MinWidth="456" MinHeight="768" NavigationFailed="browser_NavigationFailed"/>
+            <phone:WebBrowser Name="browser" Margin="10,75,10,10" Padding="20" MinWidth="456" MinHeight="20" NavigationFailed="browser_NavigationFailed"/>
         </Grid>
 
     </Grid>
