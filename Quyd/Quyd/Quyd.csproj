@@ -94,6 +94,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlItem.xaml.cs">
+      <DependentUpon>ControlItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConrtolStar.xaml.cs">
       <DependentUpon>ConrtolStar.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\ControlItem.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ConrtolStar.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -250,7 +257,7 @@
     <Resource Include="Resources\Images\appbar.tag.label.png" />
     <Resource Include="Resources\Images\appbar.tag.png" />
     <Resource Include="Resources\Images\appbar.warning.png" />
-    <Resource Include="Resources\Images\attention_icon&amp;48.png" />
+    <Resource Include="Resources\Images\attention.png" />
     <Resource Include="Resources\Images\mail_icon&amp;16.png" />
     <Resource Include="Resources\Images\mail_icon&amp;24.png" />
     <Resource Include="Resources\Images\phone_2_icon&amp;16.png" />

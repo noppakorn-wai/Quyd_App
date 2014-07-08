@@ -37,6 +37,7 @@
                                 <Canvas Margin="5,5,5,5" Height="125" Width="Auto" Background="#CCFFFFFF">
                                     <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
                                 </Canvas>
+                                <Quyd:ControlPost Width="Auto" d:LayoutOverrides="Height"/>
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>

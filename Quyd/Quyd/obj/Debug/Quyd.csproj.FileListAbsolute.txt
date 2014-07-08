@@ -136,6 +136,12 @@ D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\uz-Latn-UZ\Microsoft.
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\vi-VN\Microsoft.Phone.Controls.Toolkit.resources.dll
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\zh-CN\Microsoft.Phone.Controls.Toolkit.resources.dll
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\zh-TW\Microsoft.Phone.Controls.Toolkit.resources.dll
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ConrtolStar.g.cs
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlPost.g.cs
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlStar.g.cs
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserDetail.g.cs
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserProfile.g.cs
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\LoginPage.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\ApplicationIcon.png
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileLarge.png
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\Assets\Tiles\FlipCycleTileMedium.png
@@ -233,9 +239,14 @@ C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\uz-Latn-UZ\Microsoft.Phone.
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\vi-VN\Microsoft.Phone.Controls.Toolkit.resources.dll
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\zh-CN\Microsoft.Phone.Controls.Toolkit.resources.dll
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\Bin\Debug\zh-TW\Microsoft.Phone.Controls.Toolkit.resources.dll
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.csprojResolveAssemblyReference.cache
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\App.g.cs
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\MainPage.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlItem.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ConrtolStar.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlPost.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlStar.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserDetail.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserProfile.g.cs
+C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\LoginPage.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\PivotPage1.g.cs
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.g.resources
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.Resources.AppResources.resources
@@ -243,14 +254,3 @@ C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.csproj.GenerateResourc
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.dll
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.pdb
 C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\XapCacheFile.xml
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlUserProfile.g.cs
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlStar.g.cs
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ConrtolStar.g.cs
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlUserDetail.g.cs
-C:\Users\duckky\Desktop\Quyd_App\Quyd\Quyd\obj\Debug\ControlPost.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ConrtolStar.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlPost.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlStar.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserDetail.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Controls\ControlUserProfile.g.cs
-D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\LoginPage.g.cs

@@ -24,6 +24,7 @@ namespace Quyd
         public void loadComponentAsync()
         {
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
+            generatePost();
         }
 
         public void generatePost()
