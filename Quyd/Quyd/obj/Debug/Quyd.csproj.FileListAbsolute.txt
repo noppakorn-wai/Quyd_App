@@ -252,3 +252,4 @@ D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\AppManifest.xaml
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Properties\WMAppManifest.xml
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\Bin\Debug\Quyd_Debug_AnyCPU.xap
 D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\XapCacheFile.xml
+D:\Project\visual studio 2013\Quyd_App\Quyd\Quyd\obj\Debug\Quyd.csprojResolveAssemblyReference.cache
