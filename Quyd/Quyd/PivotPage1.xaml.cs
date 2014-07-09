@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using Quyd.Models;
 
 using Parse;
+using System.Windows.Media.Imaging;
 
 namespace Quyd
 {
@@ -21,13 +22,25 @@ namespace Quyd
             loadComponentAsync();
         }
 
-        public void loadComponentAsync()
+        public async void loadComponentAsync()
         {
-            UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
-            FeedsProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
+            //var fb = new Facebook.FacebookClient();
+            //fb.AccessToken = ParseFacebookUtils.AccessToken;
+            //var me = await fb.GetTaskAsync("me");
+
+            //var fbData = new Facebook.Client.GraphUser(me);
+            //UserProfile.usernameBox.Text = fbData.Name;
+            var fb = new Facebook.FacebookClient();
+            fb.AccessToken = ParseFacebookUtils.AccessToken;
+            dynamic me = await fb.GetTaskAsync("me");
+            UserProfile.usernameBox.Text = me.id;
+            UserDetail.BoxMail.Text = me.email;
+            dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
+            Uri uri = new Uri(photo.data.url, UriKind.Absolute);
+            UserProfile.profilePictureBox.Source = new BitmapImage(uri);
+
             generatePost();
         }
-
         public async void generatePost()
         {
             var fb = new Facebook.FacebookClient();
