@@ -94,6 +94,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlFeed.xaml.cs">
+      <DependentUpon>ControlFeed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ControlItem.xaml.cs">
+      <DependentUpon>ControlItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlPost.xaml.cs">
       <DependentUpon>ControlPost.xaml</DependentUpon>
     </Compile>
@@ -131,6 +137,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\ControlFeed.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ControlItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\ControlPost.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>

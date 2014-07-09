@@ -13,11 +13,12 @@ namespace Quyd.Models
     {
         private ParseObject store;
 
-        public ItemList items { get; private set; }
+        public ItemList storeItems { get; private set; }
 
         public Store()
         {
             store = null;
+            storeItems = null;
         }
 
         public Store(ParseObject store)
@@ -25,14 +26,11 @@ namespace Quyd.Models
             this.store = store;
         }
 
-        public Store(string name, ParseGeoPoint location, IList<string> phones, ItemList items)
+        public async Task createNewStore()
         {
             store = new ParseObject("Store");
-            store["name"] = name;
-            var owner = ParseUser.CurrentUser;
-            store["owner"] = owner;
-            store["location"] = location;
-            store["phones"] = phones;
+            storeItems = new ItemList();
+            await storeItems.createStoreItemsAsync(new Store(store));
         }
 
         public async Task saveAsync()
@@ -41,9 +39,7 @@ namespace Quyd.Models
             {
                 await this.validAsync();
                 await store.SaveAsync();
-
-
-                //edit to save items
+                await storeItems.saveAsync();
             }
             catch(Exception ex)
             {
@@ -59,8 +55,8 @@ namespace Quyd.Models
             try
             {
                 store = await query.FirstAsync();
-                items = new ItemList();
-                await items.loadStoreItemAsync(new Store(store));
+                storeItems = new ItemList();
+                await storeItems.loadStoreItemsAsync(new Store(store));
             }
             catch (ParseException ex)
             {
@@ -112,7 +108,7 @@ namespace Quyd.Models
             else if(this.Phones.Count == 0)
             {
                 throw new QuydException(QuydException.ErrorCode.store_phoneInvalid, "Phone number is invalid.");
-            }
+            }            
             else
             {
                 bool nameExist = await isNameExistAsync(store.Get<string>("name"));

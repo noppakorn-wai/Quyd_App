@@ -1,0 +1,19 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Quyd="clr-namespace:Quyd.Controls" x:Class="Quyd.Controls.ControlFeed"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="240" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot">
+
+        <Quyd:ControlUserProfile VerticalAlignment="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Width="Auto" Height="84"/>
+        <Quyd:ControlPost Height="Auto" Width="Auto" Margin="0,89,0,0"/>
+
+    </Grid>
+</UserControl>

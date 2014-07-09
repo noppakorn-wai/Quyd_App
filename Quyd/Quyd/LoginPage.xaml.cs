@@ -60,7 +60,7 @@ namespace Quyd
 
                 NavigationService.Navigate(new Uri("/PivotPage1.xaml", UriKind.Relative));
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 loginGrid.Visibility = Visibility.Visible;
                 browserGrid.Visibility = Visibility.Collapsed;

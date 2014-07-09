@@ -7,12 +7,16 @@
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}" HorizontalContentAlignment="Stretch" Width="400" Height="115">
+    Foreground="{StaticResource PhoneForegroundBrush}" HorizontalContentAlignment="Stretch" Width="auto" Height="165" Margin="5,5,5,0">
 
     <Grid x:Name="LayoutRoot" Background="#CCFFFFFF">
         <Image x:Name="ImagePin" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/pin_map_icon.png" Margin="10,10,0,0"/>
         <TextBlock x:Name="locationBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="สถานที่" VerticalAlignment="Top" Foreground="Black" Margin="39,10,0,0" FontFamily="Tahoma" Height="25" Width="61"/>
         <TextBlock x:Name="timeBox" HorizontalAlignment="Right" TextWrapping="Wrap" Text="เวลา" VerticalAlignment="Top" Foreground="Black" FontFamily="Tahoma" Height="25" Width="39" Margin="0,10,10,0"/>
-        <Button x:Name="ButtonBid" Content="BID" Margin="340,0,0,0" Foreground="Black" BorderBrush="Black" FontSize="16" FontFamily="Tahoma" Padding="0" BorderThickness="2" Width="60" Height="55" VerticalAlignment="Bottom"/>
+        <StackPanel x:Name="StackItem" Height="76" VerticalAlignment="Top" Margin="0,39,0,0" Orientation="Horizontal">
+            <Quyd:ControlItem Margin="5,0,0,0" Height="73" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+        <Button x:Name="BtnBid" Content="BID" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Tahoma" BorderBrush="Black" Foreground="Black" Width="70" Height="50" FontSize="16" Padding="0"/>
+        <TextBlock x:Name="SumBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Margin="10,0,0,10" Height="35" Text="total deal xxx"/>
     </Grid>
 </UserControl>

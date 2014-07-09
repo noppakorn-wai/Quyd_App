@@ -60,6 +60,8 @@ namespace Quyd.Models
     {
         public ParseObject post { get; private set; }
 
+        public ItemList userItems { get; private set; }
+
         public Post()
         {
             post = null;
@@ -80,12 +82,14 @@ namespace Quyd.Models
 
         public async Task loadPostAsync(string postId)
         {
-            var query = from post in ParseObject.GetQuery("Post")
+            var query = from post in ParseObject.GetQuery("Post").Include("selectedStore")
                         where post.ObjectId == postId
                         select post;
             try
             {
                 post = await query.FirstAsync();
+                userItems = new ItemList();
+                await userItems.loadUserItemsAsync(new Post(post));
             }
             catch (ParseException ex)
             {
@@ -95,8 +99,10 @@ namespace Quyd.Models
                     //no older notification found
                     post = null;
                 }
-            }
+            }            
         }
+
+        #region get set
 
         public postStatus Status
         {
@@ -110,16 +116,55 @@ namespace Quyd.Models
             }
         }
 
-        public postStatus Description
+        public string Description
         {
             get
             {
-                return post.Get<postStatus>("description");
+                return post.Get<string>("description");
             }
             set
             {
                 post["description"] = value;
             }
         }
+
+        public ParseGeoPoint Location
+        {
+            get
+            {
+                return post.Get<ParseGeoPoint>("location");
+            }
+            set
+            {
+                post["location"] = value;
+            }
+        }
+
+        public ParseUser PostBy
+        {
+            get
+            {
+                return post.Get<ParseUser>("user");
+            }
+            set
+            {
+                post["user"] = value;
+            }
+        }
+
+        public Store SelectedStore
+        {
+            get
+            {
+                return new Store(post.Get<ParseObject>("selectedStore"));
+            }
+            set
+            {
+                post["selectedStore"] = value;
+            }
+        }
+
+        #endregion
+
     }
 }

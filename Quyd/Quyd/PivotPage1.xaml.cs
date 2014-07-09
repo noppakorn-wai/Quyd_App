@@ -30,7 +30,6 @@ namespace Quyd
 
         public async void generatePost()
         {
-
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             var me = await fb.GetTaskAsync("me");

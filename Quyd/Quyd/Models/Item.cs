@@ -19,9 +19,10 @@ namespace Quyd.Models
             itemList = new List<Item>();
         }
 
-        public async Task loadItemListAsync()
+        public async Task loadItemsAsync()
         {
-            imutable = false;
+            itemList.Clear();
+            imutable = true;
 
             try
             {
@@ -41,9 +42,15 @@ namespace Quyd.Models
             }
         }
 
-        public async Task loadUserItemAsync(Post post)
+        public async Task loadUserItemsAsync(Post post)
         {
-            imutable = false;
+            itemList.Clear();
+            imutable = true;
+
+            if (post.PostBy.Equals(ParseUser.CurrentUser))
+            {
+                imutable = false;
+            }
 
             var query = from userItem in ParseObject.GetQuery("UserItem").Include("item")
                         where userItem.ObjectId == post.Object.ObjectId
@@ -65,24 +72,47 @@ namespace Quyd.Models
             }
         }
 
-        public async Task loadStoreItemAsync(Store store)
+        public async Task loadStoreItemsAsync(Store store, DateTime atDateTime = new DateTime())
         {
-            imutable = false;
+            itemList.Clear();
+            imutable = true;
 
             if (store.OwnerId.Equals(ParseUser.CurrentUser))
             {
-                imutable = true;
+                imutable = false;
             }
 
-            var query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
-                        where storeItem.ObjectId == store.Object.ObjectId
-                        select storeItem;
             try
             {
-                var storeItems = await query.FindAsync();
-                foreach (var storeItem in storeItems)
+                IEnumerable<ParseObject> items = await ParseObject.GetQuery("Item").FindAsync();
+
+
+                foreach (var item in items)
                 {
-                    itemList.Add(new StoreItem(storeItem));
+                    ParseObject storeItem_result = null;
+                    try
+                    {
+                        var query = from storeItem in ParseObject.GetQuery("StoreItem")
+                                    where storeItem.ObjectId == store.Object.ObjectId
+                                    where storeItem["item"] == item
+                                    where storeItem.CreatedAt <= atDateTime
+                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                    select storeItem;
+
+                        storeItem_result = await query.FirstAsync();
+                    }
+                    catch (ParseException ex)
+                    {
+                        if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                        {
+                            storeItem_result = new ParseObject("StoreItem");
+                            storeItem_result["store"] = store.Object;
+                            storeItem_result["item"] = item;
+                            storeItem_result["price"] = 0;
+                        }
+                    }
+
+                    itemList.Add(new StoreItem(storeItem_result));
                 }
             }
             catch (ParseException ex)
@@ -94,8 +124,47 @@ namespace Quyd.Models
             }
         }
 
-        public int Size 
-        { 
+        public async Task createStoreItemsAsync(Store store)
+        {
+            itemList.Clear();
+            imutable = true;
+
+            try
+            {
+                IEnumerable<ParseObject> items = await ParseObject.GetQuery("Item").FindAsync();
+
+
+                foreach (var item in items)
+                {
+                    ParseObject storeItem_result = new ParseObject("StoreItem");
+                    storeItem_result["store"] = store.Object;
+                    storeItem_result["item"] = item;
+                    storeItem_result["price"] = 0;
+                    itemList.Add(new StoreItem(storeItem_result));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no data found
+                }
+            }
+        }
+
+        public async Task saveAsync()
+        {
+            if (!imutable)
+            {
+                foreach (var item in itemList)
+                {
+                    await item.saveAsync();
+                }
+            }
+        }
+
+        public int Size
+        {
             get
             {
                 return itemList.Count;
@@ -115,6 +184,10 @@ namespace Quyd.Models
         public Item(ParseObject item)
         {
             this.item = item;
+        }
+        public virtual async Task saveAsync()
+        {
+             await Task.FromResult(true);
         }
 
         #region get set method
@@ -190,7 +263,11 @@ namespace Quyd.Models
                 userItem["quantity"] = value;
             }
         }
-
+        
+        public override sealed async Task saveAsync()
+        {
+            await userItem.SaveAsync();
+        }
     }
 
     class StoreItem : Item, Priceable
@@ -213,6 +290,11 @@ namespace Quyd.Models
             {
                 storeItem["price"] = value;
             }
+        }
+
+        public override sealed async Task saveAsync()
+        {
+            await storeItem.SaveAsync();
         }
     }
 
