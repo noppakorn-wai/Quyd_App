@@ -34,7 +34,7 @@
                     <ScrollViewer Grid.RowSpan="2" Margin="0,160,0,0" Background="#33FFFFFF">
                         <Grid>
                             <StackPanel Name="UserPosts" Height="auto" Width="auto">
-                                <Canvas Margin="5,5,5,5" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
                                     <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
                                 </Canvas>
                             </StackPanel>
@@ -45,13 +45,11 @@
 
             <phone:PivotItem x:Name="Feeds" Header="ข่าว" Margin="0,28,0,0">
                 <ScrollViewer Background="#66FFFFFF">
-                    <Grid Height="553" Width="480" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <StackPanel Height="265" VerticalAlignment="Top" Margin="5,5,5,0">
-                            <toolkit:WrapPanel Height="210">
-                                <Quyd:ControlUserProfile Name="FeedsProfile" VerticalAlignment="Top" Margin="0,0,23,0"/>
-                            </toolkit:WrapPanel>
-                        </StackPanel>
-                    </Grid>
+                    <StackPanel Name="FeedList"  VerticalAlignment="Top">
+                        <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                            <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                        </Canvas>
+                    </StackPanel>
                 </ScrollViewer>
             </phone:PivotItem>
 

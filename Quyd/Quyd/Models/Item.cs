@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using Parse;
 
 namespace Quyd.Models
 {
-    class ItemList
+    public class ItemList : IEnumerable
     {
         public IList<Item> itemList { get; private set; }
 
@@ -42,7 +43,7 @@ namespace Quyd.Models
             }
         }
 
-        public async Task loadUserItemsAsync(Post post)
+        public async Task loadPostItemsAsync(Post post)
         {
             itemList.Clear();
             imutable = true;
@@ -52,15 +53,15 @@ namespace Quyd.Models
                 imutable = false;
             }
 
-            var query = from userItem in ParseObject.GetQuery("UserItem").Include("item")
-                        where userItem.ObjectId == post.Object.ObjectId
-                        select userItem;
+            var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
+                        where postItem.Get<ParseObject>("post") == post.Object
+                        select postItem;
             try
             {
-                var userItems = await query.FindAsync();
-                foreach (var userItem in userItems)
+                var postItems = await query.FindAsync();
+                foreach (var postItem in postItems)
                 {
-                    itemList.Add(new UserItem(userItem));
+                    itemList.Add(new PostItem(postItem));
                 }
             }
             catch (ParseException ex)
@@ -170,11 +171,20 @@ namespace Quyd.Models
                 return itemList.Count;
             }
         }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator)GetEnumerator();
+        }
+
+        public ItemListEnum GetEnumerator()
+        {
+            return new ItemListEnum(itemList);
+        }
     }
 
-    class Item
+    public class Item
     {
-        public ParseObject item { get; private set; }
+        public ParseObject item { get; protected set; }
 
         public Item()
         {
@@ -242,41 +252,43 @@ namespace Quyd.Models
 
     }
 
-    class UserItem : Item, Quantifiable
+    public class PostItem : Item, Quantifiable
     {
-        public ParseObject userItem { get; private set; }
+        public ParseObject postItem { get; private set; }
 
-        public UserItem(ParseObject userItem)
+        public PostItem(ParseObject postItem)
         {
-            this.userItem = userItem;
+            this.postItem = postItem;
+            item = postItem.Get<ParseObject>("item");
         }
 
         public double Quantity
         {
             get
             {
-                return userItem.Get<double>("quantity");
+                return postItem.Get<double>("quantity");
             }
 
             set
             {
-                userItem["quantity"] = value;
+                postItem["quantity"] = value;
             }
         }
         
         public override sealed async Task saveAsync()
         {
-            await userItem.SaveAsync();
+            await postItem.SaveAsync();
         }
     }
 
-    class StoreItem : Item, Priceable
+    public class StoreItem : Item, Priceable
     {
         public ParseObject storeItem { get; private set; }
 
         public StoreItem(ParseObject storeItem)
         {
             this.storeItem = storeItem;
+            item = storeItem.Get<ParseObject>("item");
         }
 
         public double Price
@@ -317,4 +329,53 @@ namespace Quyd.Models
         }
     }
     #endregion
+
+    public class ItemListEnum : IEnumerator
+    {
+        public IList<Item> items { get; private set; }
+
+        // Enumerators are positioned before the first element 
+        // until the first MoveNext() call. 
+        int position = -1;
+
+        public ItemListEnum(IList<Item> list)
+        {
+            items = list;
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < items.Count);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public Item Current
+        {
+            get
+            {
+                try
+                {
+                    return items.ElementAt(position);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+    }
+
 }

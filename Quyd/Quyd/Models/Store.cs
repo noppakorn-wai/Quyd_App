@@ -9,7 +9,7 @@ using Quyd.Resources;
 
 namespace Quyd.Models
 {
-    class Store
+    public class Store
     {
         private ParseObject store;
 

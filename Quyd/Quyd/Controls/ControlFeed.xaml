@@ -8,12 +8,10 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="240" d:DesignWidth="400">
+    d:DesignHeight="240" d:DesignWidth="400" Margin="5,5,5,0">
 
     <Grid x:Name="LayoutRoot">
-
-        <Quyd:ControlUserProfile VerticalAlignment="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Width="Auto" Height="84"/>
-        <Quyd:ControlPost Height="Auto" Width="Auto" Margin="0,89,0,0"/>
-
+        <Quyd:ControlUserProfile x:Name="controlUserProfile" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Width="Auto" Height="84"/>
+        <Quyd:ControlPost x:Name="controlPost" Margin="0,89,0,0"/>
     </Grid>
 </UserControl>

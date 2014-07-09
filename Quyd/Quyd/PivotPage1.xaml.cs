@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Quyd.Models;
+using System.Threading.Tasks;
 
 using Parse;
 
@@ -24,11 +25,16 @@ namespace Quyd
         public void loadComponentAsync()
         {
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
-            FeedsProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
-            generatePost();
+            reloadAll();
         }
 
-        public async void generatePost()
+        public async void reloadAll()
+        {
+            await reloadUserPage();
+            await reloadFeedPage();
+        }
+
+        public async Task reloadUserPage()
         {
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
@@ -38,18 +44,41 @@ namespace Quyd
 
             PostList posts = new PostList();
 
-            await posts.loadAsync(ParseUser.CurrentUser);
+            await posts.loadUserPostAsync(ParseUser.CurrentUser);
 
             if (posts.Size > 0)
             {
                 UserPosts.Children.Clear();
             }
 
-            foreach(var post in posts.posts)
+            foreach (var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
-                controlPost.setLocation("Test1");
+                controlPost.setLocation(post.Description);
+                controlPost.setItems(post.postItems);
                 UserPosts.Children.Add(controlPost);
+            }
+        }
+
+        public async Task reloadFeedPage()
+        {
+            PostList posts = new PostList();
+
+
+            await posts.loadFeedAsync(ParseUser.CurrentUser);
+
+            if (posts.Size > 0)
+            {
+                FeedList.Children.Clear();
+            }
+
+            foreach (var post in posts.posts)
+            {
+                var controlFeed = new Quyd.Controls.ControlFeed();
+                controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
+                controlFeed.controlPost.setLocation(post.Description);
+                controlFeed.controlPost.setItems(post.postItems);
+                FeedList.Children.Add(controlFeed);
             }
         }
     }

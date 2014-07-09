@@ -8,9 +8,9 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="73" d:DesignWidth="48">
-    
+
     <Grid x:Name="LayoutRoot">
-        <Image x:Name="ImageIcon" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="../Resources/Images/appbar.tag.png"/>
-        <TextBlock x:Name="Quantity" HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="14,48,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
+        <Image x:Name="icon" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="../Resources/Images/appbar.tag.png"/>
+        <TextBlock x:Name="quantity" HorizontalAlignment="Left" TextWrapping="Wrap" Text="xx" VerticalAlignment="Top" Foreground="Black" Margin="14,48,0,0" FontFamily="Tahoma" Height="25" Width="20"/>
     </Grid>
 </UserControl>

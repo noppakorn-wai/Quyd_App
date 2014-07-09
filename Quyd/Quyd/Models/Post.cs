@@ -9,9 +9,9 @@ using Quyd.Resources;
 
 namespace Quyd.Models
 {
-    enum postStatus { inProgress, close };
+    public enum postStatus { inProgress, close };
 
-    class PostList
+    public class PostList
     {
 
         public List<Post> posts { get; private set; }
@@ -21,9 +21,9 @@ namespace Quyd.Models
             posts = new List<Post>();
         }
 
-        public async Task loadAsync(ParseUser user)
+        public async Task loadUserPostAsync(ParseUser user)
         {
-            var query = from post in ParseObject.GetQuery("Post")
+            var query = from post in ParseObject.GetQuery("Post").Include("postBy")
                         where post.Get<ParseUser>("postBy") == user
                         select post;
             try
@@ -31,10 +31,40 @@ namespace Quyd.Models
                 IEnumerable<ParseObject> posts_t = await query.FindAsync();
                 foreach (ParseObject post in posts_t)
                 {
-                    posts.Add(new Post(post));
+                    ItemList postItem = new ItemList();
+                    await postItem.loadPostItemsAsync(new Post(post));
+                    posts.Add(new Post(post, postItem));
                 }
             }
-            catch(ParseException ex)
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task loadFeedAsync(ParseUser user)
+        {
+            var query = from post in ParseObject.GetQuery("Post").Include("postBy")
+                        where post.Get<ParseUser>("postBy") != user
+                        select post;
+            try
+            {
+                IEnumerable<ParseObject> posts_t = await query.FindAsync();
+                foreach (ParseObject post in posts_t)
+                {
+                    ItemList postItem = new ItemList();
+                    await postItem.loadPostItemsAsync(new Post(post));
+                    posts.Add(new Post(post, postItem));
+                }
+            }
+            catch (ParseException ex)
             {
                 if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
@@ -56,11 +86,34 @@ namespace Quyd.Models
         }
     }
 
-    class Post
+    public class Post
     {
         public ParseObject post { get; private set; }
 
-        public ItemList userItems { get; private set; }
+        public ItemList postItems;
+
+        public async Task<ItemList> UserItem()
+        {
+            try
+            {
+                if (postItems == null)
+                {
+                    postItems = new ItemList();
+                    await postItems.loadPostItemsAsync(new Post(post));
+                }
+            }
+            catch (ParseException ex)
+            {
+                //not handler ""no more space exception
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no older notification found
+                    post = null;
+                }
+            }
+
+            return postItems;
+        }
 
         public Post()
         {
@@ -70,6 +123,13 @@ namespace Quyd.Models
         public Post(ParseObject post)
         {
             this.post = post;
+            this.postItems = null;
+        }
+
+        public Post(ParseObject post, ItemList postItems)
+        {
+            this.post = post;
+            this.postItems = postItems;
         }
 
         public ParseObject Object
@@ -80,7 +140,7 @@ namespace Quyd.Models
             }
         }
 
-        public async Task loadPostAsync(string postId)
+        public async Task loadAsync(string postId)
         {
             var query = from post in ParseObject.GetQuery("Post").Include("selectedStore")
                         where post.ObjectId == postId
@@ -88,8 +148,7 @@ namespace Quyd.Models
             try
             {
                 post = await query.FirstAsync();
-                userItems = new ItemList();
-                await userItems.loadUserItemsAsync(new Post(post));
+                await postItems.loadPostItemsAsync(new Post(post));
             }
             catch (ParseException ex)
             {
@@ -99,7 +158,7 @@ namespace Quyd.Models
                     //no older notification found
                     post = null;
                 }
-            }            
+            }
         }
 
         #region get set
@@ -120,7 +179,7 @@ namespace Quyd.Models
         {
             get
             {
-                return post.Get<string>("description");
+                return post.Get<string>("description") == null ? "" : post.Get<string>("description");
             }
             set
             {
@@ -144,11 +203,11 @@ namespace Quyd.Models
         {
             get
             {
-                return post.Get<ParseUser>("user");
+                return post.Get<ParseUser>("postBy");
             }
             set
             {
-                post["user"] = value;
+                post["postBy"] = value;
             }
         }
 

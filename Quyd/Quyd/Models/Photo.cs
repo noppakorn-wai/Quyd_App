@@ -8,7 +8,7 @@ using Parse;
 
 namespace Quyd.Models
 {
-    class PhotoList
+    public class PhotoList
     {
         public List<Photo> photos { get; private set; }
 
@@ -49,7 +49,7 @@ namespace Quyd.Models
         }
     }
 
-    class Photo
+    public class Photo
     {
         ParseObject photo;
 

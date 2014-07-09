@@ -11,7 +11,7 @@ namespace Quyd.Models
 {
     enum notificationType {bid, select, confirm, cancle };
 
-     class NotificationList
+     public class NotificationList
     {
         //Don't forget pined post
         private List<Notification> notifications;
@@ -93,7 +93,7 @@ namespace Quyd.Models
         }
     }
 
-    class Notification
+    public class Notification
     {
         ParseObject notification;
         Post post;
@@ -114,7 +114,7 @@ namespace Quyd.Models
         {
             if (post == null)
             {
-                await post.loadPostAsync(notification.Get<string>("fromPost"));
+                await post.loadAsync(notification.Get<string>("fromPost"));
             }
             return post;
         }
