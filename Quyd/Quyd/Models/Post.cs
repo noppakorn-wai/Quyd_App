@@ -85,9 +85,13 @@ namespace Quyd.Models
             try
             {
                 IEnumerable<ParseObject> posts_t = await query.FindAsync();
-                foreach (ParseObject post in posts_t)
+                foreach (ParseObject post_t in posts_t)
                 {
-                    posts.Add(new Post(post));
+                    Post post = new Post(post_t);
+                    if(await post.isBidable(user) == true)
+                    {
+                        posts.Add(post);
+                    }
                 }
             }
             catch (ParseException ex)
@@ -118,7 +122,7 @@ namespace Quyd.Models
 
         private ItemList postItems = null;
 
-        public BidList bidList = null;
+        private BidList bidList = null;
 
         public Post()
         {
@@ -256,7 +260,6 @@ namespace Quyd.Models
                 if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
                     //no older notification found
-                    post = null;
                 }
             }
 
@@ -265,14 +268,51 @@ namespace Quyd.Models
 
         public async Task<BidList> getBidList()
         {
-            if(bidList == null)
+            try
             {
-                await bidList.getBidListAsync(new Post(post));
+                if (bidList == null)
+                {
+                    bidList = new BidList();
+                    await bidList.getBidListAsync(new Post(post));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
             }
 
             return bidList;
         }
-        
+
+        public async Task<bool> isBidable(ParseUser user)
+        {
+            if (PostBy.ObjectId == user.ObjectId)
+            {
+                return false;
+            }
+            else
+            {
+                await getBidList();
+                // if no bidder
+                if (bidList.Size != 0)
+                {
+                    if (await bidList.contain(user))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+
+        }
 
         #endregion
 

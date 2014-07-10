@@ -26,6 +26,16 @@ namespace Quyd.Models
             this.store = store;
         }
 
+        public Store(string storeName, ParseGeoPoint location, List<string> phones)
+        {
+            store = new ParseObject("Store");
+            store["name"] = storeName;
+            var owner = ParseUser.CurrentUser;
+            store["owner"] = owner;
+            store["location"] = location;
+            store["phones"] = phones;
+        }
+
         public async Task createNewStore()
         {
             store = new ParseObject("Store");
@@ -39,9 +49,10 @@ namespace Quyd.Models
             {
                 await this.validAsync();
                 await store.SaveAsync();
+                await getStoreItemsAsync();
                 await storeItems.saveAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -81,9 +92,9 @@ namespace Quyd.Models
                 ParseObject storeObject = await findByNameQuery.FirstAsync();
                 return true;
             }
-            catch(ParseException ex)
+            catch (ParseException ex)
             {
-                if(ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
                     return false;
                 }
@@ -97,26 +108,26 @@ namespace Quyd.Models
         private async Task<bool> validAsync()
         {
             //put validation here
-            if(this.Name.Length==0)
+            if (this.Name.Length == 0)
             {
                 throw new QuydException(QuydException.ErrorCode.store_nameTooShort, "Store name is too short.");
             }
-            else if(this.Location.Equals(new ParseGeoPoint(0,0)))
+            else if (this.Location.Equals(new ParseGeoPoint(0, 0)))
             {
                 throw new QuydException(QuydException.ErrorCode.store_locationInvalid, "Location is invalid.");
             }
-            else if(this.Phones.Count == 0)
+            else if (this.Phones.Count == 0)
             {
                 throw new QuydException(QuydException.ErrorCode.store_phoneInvalid, "Phone number is invalid.");
-            }            
+            }
             else
             {
                 bool nameExist = await isNameExistAsync(store.Get<string>("name"));
-                if(nameExist)
+                if (nameExist)
                 {
                     throw new QuydException(QuydException.ErrorCode.store_nameExist, "Store name is already exist.");
                 }
-                else 
+                else
                 {
                     return true;
                 }
@@ -179,9 +190,19 @@ namespace Quyd.Models
 
         public async Task<ItemList> getStoreItemsAsync()
         {
-            if(storeItems == null)
+            if (storeItems == null)
             {
-                await storeItems.loadStoreItemsAsync(new Store(store));
+                try
+                {
+                    storeItems = new ItemList();
+                    await storeItems.loadStoreItemsAsync(new Store(store));
+                }
+                catch(ParseException ex)
+                {
+                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                    {
+                    }
+                }
             }
 
             return storeItems;

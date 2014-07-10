@@ -17,6 +17,6 @@
             <Quyd:ControlItem Margin="5,0,0,0" Height="73" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </StackPanel>
         <Button x:Name="BtnBid" Content="BID" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="Tahoma" BorderBrush="Black" Foreground="Black" Width="70" Height="50" FontSize="16" Padding="0"/>
-        <TextBlock x:Name="SumBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Margin="10,0,0,10" Height="35" Text="total deal xxx"/>
+        <TextBlock x:Name="SumBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="Black" Margin="10,0,0,10" Height="35" Text="ราคาซื้อ"/>
     </Grid>
 </UserControl>

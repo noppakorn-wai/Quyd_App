@@ -130,6 +130,11 @@ namespace Quyd.Models
                         }
                     }
 
+                    if (storeItem_result.ObjectId == null)
+                    {
+                        await storeItem_result.SaveAsync();
+                    }
+
                     itemList.Add(new StoreItem(storeItem_result));
                 }
             }

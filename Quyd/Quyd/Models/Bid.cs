@@ -27,11 +27,13 @@ namespace Quyd.Models
             if (bidList == null)
             {
                 var query = from bid in ParseObject.GetQuery("Bid")
-                            where bid.Get<ParseObject>("post").ObjectId == post.Object.ObjectId
+                            where bid.Get<ParseObject>("post") == post.Object
                             select bid;
                 try
                 {
                     IEnumerable<ParseObject> bids_t = await query.FindAsync();
+
+                    bidList = new List<Bid>();
 
                     foreach(var bid in bids_t)
                     {
@@ -51,6 +53,26 @@ namespace Quyd.Models
                 }
             }
             return new BidList(bidList);
+        }
+
+        public async Task<bool> contain(ParseUser user)
+        {
+            foreach(var bid in bidList)
+            {
+                if((await bid.getStoreAsync()).OwnerId == user.ObjectId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int Size
+        {
+            get
+            {
+                return bidList.Count;
+            }
         }
     }
 

@@ -12,6 +12,8 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
+using Quyd.Resources;
+
 namespace Quyd
 {
     public partial class PivotPage1 : PhoneApplicationPage
@@ -77,6 +79,7 @@ namespace Quyd
                 controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
                 controlPost.setItems(await post.getUserItem());
                 controlPost.timeBox.Text = post.CreateAt.ToString();
+                controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser))?Visibility.Visible:Visibility.Collapsed;
                 UserPosts.Children.Add(controlPost);
             }
         }
@@ -99,6 +102,7 @@ namespace Quyd
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
                 controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
                 controlFeed.controlPost.setItems(await post.getUserItem());
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
                 FeedList.Children.Add(controlFeed);
@@ -108,7 +112,22 @@ namespace Quyd
         public async Task reloadStorePage()
         {
             Store store = new Store();
-            await store.loadAsync(ParseUser.CurrentUser);
+            try
+            {
+                await store.loadAsync(ParseUser.CurrentUser);
+            }
+            catch(QuydException ex)
+            {
+                if(ex.Code == QuydException.ErrorCode.store_notFound)
+                {
+                    store = new Store(ParseUser.CurrentUser.ObjectId, new ParseGeoPoint(-1, 1), new List<string> { "000 000 0000" });
+                }
+            }
+
+            if(store.Object.ObjectId == null)
+            {
+                await store.saveAsync();
+            }
 
             if ((await store.getStoreItemsAsync()).Size > 0)
             {
@@ -117,7 +136,7 @@ namespace Quyd
 
             foreach (var item in (await store.getStoreItemsAsync()))
             {
-                var controlItemDetail = new Quyd.Controls.ControlItemDetail();
+                var controlItemDetail = new Quyd.Controls.ControlItemDetail(item);
                 controlItemDetail.BoxItemName.Text = item.Name;
                 controlItemDetail.BoxInfo.Text = item.Description;
                 controlItemDetail.BoxValue.Text = (item as Priceable).Price.ToString();
@@ -141,6 +160,7 @@ namespace Quyd
                 controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
                 controlFeed.controlPost.setItems(await post.getUserItem());
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
+                controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
                 StackPost.Children.Add(controlFeed);
             }
         }
