@@ -102,7 +102,7 @@ namespace Quyd
             foreach (var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
-                controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlPost.locationBox.Text = "Bangkok , Thailand";
                 controlPost.setItems(await post.getUserItem());
                 controlPost.timeBox.Text = post.CreateAt.ToString();
                 controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser))?Visibility.Visible:Visibility.Collapsed;
@@ -157,7 +157,7 @@ namespace Quyd
                 controlItemDetail.BoxItemName.Text = item.Name;
                 controlItemDetail.BoxInfo.Text = item.Description;
                 controlItemDetail.BoxValue.Text = (item as Priceable).Price.ToString();
-                controlItemDetail.ImageIcon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
+                controlItemDetail.ImageIcon.Source = new BitmapImage(new Uri("/Resources/Images/" + item.Name + ".jpg", UriKind.Relative));
                 
                 StackItemDetail.Children.Add(controlItemDetail);
             }
