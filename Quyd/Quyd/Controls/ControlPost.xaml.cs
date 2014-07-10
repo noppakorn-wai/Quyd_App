@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-
+using System.Windows.Media.Imaging;
 using Quyd.Models;
 
 namespace Quyd.Controls
@@ -25,6 +25,7 @@ namespace Quyd.Controls
             foreach (Item item in itemList)
             {
                 var controlItem = new Quyd.Controls.ControlItem();
+                controlItem.icon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
                 controlItem.quantity.Text = (item as Quantifiable).Quantity.ToString();
                 StackItem.Children.Add(controlItem);
             }

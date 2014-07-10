@@ -121,6 +121,8 @@ namespace Quyd
                 controlItemDetail.BoxItemName.Text = item.Name;
                 controlItemDetail.BoxInfo.Text = item.Description;
                 controlItemDetail.BoxValue.Text = (item as Priceable).Price.ToString();
+                controlItemDetail.ImageIcon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
+                
                 StackItemDetail.Children.Add(controlItemDetail);
             }
 
