@@ -34,7 +34,7 @@
                         <Grid>
                             <StackPanel Name="UserPosts" Height="auto" Width="auto">
                                 <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                    <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                                    <TextBlock Name="UserLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="152" Canvas.Top="50"/>
                                 </Canvas>
                             </StackPanel>
                         </Grid>
@@ -47,7 +47,7 @@
                     <ScrollViewer Background="#66FFFFFF">
                         <StackPanel Name="FeedList"  VerticalAlignment="Top">
                             <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                                <TextBlock Name="FeedLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="152" Canvas.Top="46"/>
                             </Canvas>
                         </StackPanel>
                     </ScrollViewer>
@@ -63,7 +63,7 @@
                     <TextBlock x:Name="notificationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="583" Width="436" Foreground="Black"/>
                 </Grid>
             </phone:PivotItem>
-            
+
             <!--Unpublish feature
             <phone:PivotItem x:Name="Search" Header="ค้นหา" Margin="0,28,0,0" Background="Transparent">
                 <Grid/>
@@ -75,19 +75,19 @@
                     <StackPanel VerticalAlignment="Top" Margin="10,0">
                         <StackPanel x:Name="StackItemDetail" Margin="10,10,10,5" Background="#19FFFFFF">
                             <Canvas Margin="5,5,5,0" Height="78" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                                <TextBlock Name="StoreItemsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="131" Canvas.Top="24"/>
                             </Canvas>
                         </StackPanel>
                         <StackPanel x:Name="StackPost" Margin="10,5,10,10" Background="#19FFFFFF">
                             <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                                <TextBlock Name="StorePostsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="131" Canvas.Top="48"/>
                             </Canvas>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
 
             </phone:PivotItem>
-            
+
         </phone:Pivot>
         <Image x:Name="AppLogo" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="/Resources/Images/Logo_low.png"/>
         <TextBlock x:Name="Appname" TextWrapping="Wrap" Text="Quyd" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="32" Margin="50,2,346,0" FontWeight="Bold" Foreground="White"/>

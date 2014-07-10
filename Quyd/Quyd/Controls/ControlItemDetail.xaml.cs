@@ -15,10 +15,12 @@ namespace Quyd.Controls
     public partial class ControlItemDetail : UserControl
     {
         private Item item;
+        private int value;
 
         public ControlItemDetail()
         {
             InitializeComponent();
+            this.item = null;
         }
 
         public ControlItemDetail(Item item)
@@ -32,14 +34,22 @@ namespace Quyd.Controls
             try
             {
                 int input = Convert.ToInt32(BoxValue.Text);
-                (item as Priceable).Price = input;
-                await item.saveAsync();
+
+                if (item != null)
+                {
+                    (item as Priceable).Price = input;
+                    await item.saveAsync();
+                }
             }
             catch (System.FormatException)
             {
-               
-                BoxValue.Text = (item as Priceable).Price.ToString();
+                BoxValue.Text = value.ToString();
             }
+        }
+
+        private void BoxValue_GotFocus(object sender, RoutedEventArgs e)
+        {
+            value = Convert.ToInt32(BoxValue.Text);
         }
     }
 }

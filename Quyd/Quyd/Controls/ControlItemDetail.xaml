@@ -15,6 +15,6 @@
             <TextBlock x:Name="BoxItemName" TextWrapping="Wrap" Text="TextBlock" FontFamily="Tahoma" FontSize="20" FontWeight="Bold" Foreground="Black"/>
             <TextBlock x:Name="BoxInfo" TextWrapping="Wrap" Text="TextBlock" FontFamily="Tahoma" FontSize="18" Foreground="Black"/>
         </StackPanel>
-        <TextBox x:Name="BoxValue" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Cost" FontSize="20" VerticalAlignment="Center" Foreground="Black" Padding="0,0,0,0" Margin="0,0,0,0" Width="80" Height="auto" FlowDirection="RightToLeft" LostFocus="BoxValue_LostFocus" />
+        <TextBox x:Name="BoxValue" HorizontalAlignment="Right" TextWrapping="Wrap" Text="Cost" FontSize="20" VerticalAlignment="Center" Foreground="Black" Padding="0,0,0,0" Margin="0,0,0,0" Width="80" Height="auto" FlowDirection="RightToLeft" LostFocus="BoxValue_LostFocus" GotFocus="BoxValue_GotFocus"/>
     </Grid>
 </UserControl>

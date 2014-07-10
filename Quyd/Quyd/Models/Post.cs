@@ -145,6 +145,13 @@ namespace Quyd.Models
             this.bidList = null;
         }
 
+        public Post(ParseGeoPoint location, ParseUser user)
+        {
+            post = new ParseObject("Post");
+            post["location"] = location;
+            post["postBy"] = user;
+        }
+
         public async Task loadAsync(string postId)
         {
             var query = from post in ParseObject.GetQuery("Post").Include("selectedStore")
@@ -164,6 +171,11 @@ namespace Quyd.Models
                     post = null;
                 }
             }
+        }
+
+        public async Task saveAsync()
+        {
+            await post.SaveAsync();
         }
 
         #region get set
