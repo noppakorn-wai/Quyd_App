@@ -84,7 +84,7 @@ namespace Quyd.Models
 
         public Bid()
         {
-
+            bid = new ParseObject("Bid");
         }
 
         public Bid(ParseObject bid)
@@ -105,6 +105,37 @@ namespace Quyd.Models
                 await storeBidItems.loadStoreItemsAsync(store, bid.CreatedAt, userItems);
             }
             return storeBidItems;
+        }
+
+        public async Task saveAsync()
+        {
+            await bid.SaveAsync();
+        }
+
+        public Post Post 
+        {
+            get
+            {
+                return new Post(bid.Get<ParseObject>("post"));
+            }
+
+            set
+            {
+                bid["post"] = value.Object;
+            }
+        }
+
+        public Store bidStore
+        {
+            get
+            {
+                return new Store(bid.Get<ParseObject>("bidStore"));
+            }
+
+            set
+            {
+                bid["bidStore"] = value.Object;
+            }
         }
     }
 }

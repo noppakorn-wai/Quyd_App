@@ -10,10 +10,21 @@ using Microsoft.Phone.Shell;
 using System.Windows.Media.Imaging;
 using Quyd.Models;
 
+using Parse;
+
 namespace Quyd.Controls
 {
     public partial class ControlPost : UserControl
-    {
+    {        
+        Post post;
+        Store store;
+
+        public void setValue(Post post, Store store)
+        {
+            this.post = post;
+            this.store = store;
+        }
+
         public ControlPost()
         {
             InitializeComponent();
@@ -29,6 +40,16 @@ namespace Quyd.Controls
                 controlItem.quantity.Text = (item as Quantifiable).Quantity.ToString();
                 StackItem.Children.Add(controlItem);
             }
+        }
+
+        private async void BtnBid_Click(object sender, RoutedEventArgs e)
+        {
+            Bid bid = new Bid();
+            bid.bidStore = store;
+            bid.Post = post;
+            await bid.saveAsync();
+            Notification notification = new Notification();
+            await notification.sendAsync(post.PostBy, false, post, notificationType.bid, false);
         }
     }
 }
