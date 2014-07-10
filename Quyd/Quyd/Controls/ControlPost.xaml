@@ -11,7 +11,7 @@
 
     <Grid x:Name="LayoutRoot" Background="#CCFFFFFF">
         <Image x:Name="ImagePin" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/pin_map_icon.png" Margin="10,10,0,0"/>
-        <TextBlock x:Name="locationBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="สถานที่" VerticalAlignment="Top" Foreground="Black" Margin="39,10,0,0" FontFamily="Tahoma" Height="25" Width="61"/>
+        <TextBlock x:Name="locationBox" TextWrapping="Wrap" Text="สถานที่" VerticalAlignment="Top" Foreground="Black" Margin="40,10,120,0" FontFamily="Tahoma" Height="25"/>
         <TextBlock x:Name="timeBox" HorizontalAlignment="Right" TextWrapping="Wrap" Text="เวลา" VerticalAlignment="Top" Foreground="Black" FontFamily="Tahoma" Height="25" Width="39" Margin="0,10,10,0"/>
         <StackPanel x:Name="StackItem" Height="76" VerticalAlignment="Top" Margin="0,39,0,0" Orientation="Horizontal">
             <Quyd:ControlItem Margin="5,0,0,0" Height="73" HorizontalAlignment="Left" VerticalAlignment="Top"/>
