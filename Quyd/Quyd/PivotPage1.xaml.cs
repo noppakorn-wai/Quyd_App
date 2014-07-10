@@ -51,9 +51,27 @@ namespace Quyd
 
         public async Task reloadAll()
         {
+            Store store = new Store();
+            try
+            {
+                await store.loadAsync(ParseUser.CurrentUser);
+            }
+            catch (QuydException ex)
+            {
+                if (ex.Code == QuydException.ErrorCode.store_notFound)
+                {
+                    store = new Store(ParseUser.CurrentUser.ObjectId, new ParseGeoPoint(-1, 1), new List<string> { "000 000 0000" });
+                }
+            }
+
+            if (store.Object.ObjectId == null)
+            {
+                await store.saveAsync();
+            }
+
             await reloadUserPage();
-            await reloadFeedPage();
-            await reloadStorePage();
+            await reloadFeedPage(store);
+            await reloadStorePage(store);
         }
 
         public async Task reloadUserPage()
@@ -77,6 +95,10 @@ namespace Quyd
                 UserLoad.Text = "ไม่มีข้อมูล";
             }
 
+            Store store = new Store();
+
+            await store.loadAsync(ParseUser.CurrentUser);
+
             foreach (var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
@@ -88,7 +110,7 @@ namespace Quyd
             }
         }
 
-        public async Task reloadFeedPage()
+        public async Task reloadFeedPage(Store store)
         {
             PostList posts = new PostList();
 
@@ -112,31 +134,14 @@ namespace Quyd
                 controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
                 controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
                 controlFeed.controlPost.setItems(await post.getUserItem());
+                controlFeed.controlPost.setValue(post, store);
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
                 FeedList.Children.Add(controlFeed);
             }
         }
 
-        public async Task reloadStorePage()
+        public async Task reloadStorePage(Store store)
         {
-            Store store = new Store();
-            try
-            {
-                await store.loadAsync(ParseUser.CurrentUser);
-            }
-            catch(QuydException ex)
-            {
-                if(ex.Code == QuydException.ErrorCode.store_notFound)
-                {
-                    store = new Store(ParseUser.CurrentUser.ObjectId, new ParseGeoPoint(-1, 1), new List<string> { "000 000 0000" });
-                }
-            }
-
-            if(store.Object.ObjectId == null)
-            {
-                await store.saveAsync();
-            }
-
             if ((await store.getStoreItemsAsync()).Size > 0)
             {
                 StackItemDetail.Children.Clear();

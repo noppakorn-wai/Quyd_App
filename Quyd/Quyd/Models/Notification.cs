@@ -9,14 +9,12 @@ using Quyd.Resources;
 
 namespace Quyd.Models
 {
-    enum notificationType {bid, select, confirm, cancle };
+    public enum notificationType {bid, select, confirm, cancle };
 
      public class NotificationList
     {
         //Don't forget pined post
         private List<Notification> notifications;
-
-        public enum type { bid, select, confirm, cancle };
 
         public NotificationList()
         {
@@ -98,6 +96,12 @@ namespace Quyd.Models
         ParseObject notification;
         Post post;
 
+        public Notification()
+        {
+            notification = null;
+            post = null;
+        }
+
         public Notification(ParseObject notification_t)
         {
             notification = notification_t;
@@ -124,7 +128,7 @@ namespace Quyd.Models
             await notification.SaveAsync();
         }
 
-        public async void sendAsync(ParseUser toUser, bool isForStore, Post fromPost, NotificationList.type type, bool pined)
+        public async Task sendAsync(ParseUser toUser, bool isForStore, Post fromPost, notificationType type, bool pined)
         {
             ParseObject notification = new ParseObject("Notification"); ;
 
@@ -138,11 +142,11 @@ namespace Quyd.Models
             await notification.SaveAsync();
         }
 
-        public NotificationList.type Type
+        public notificationType Type
         {
             get
             {
-                return notification.Get<NotificationList.type>("type");
+                return notification.Get<notificationType>("type");
             }
         }
 
