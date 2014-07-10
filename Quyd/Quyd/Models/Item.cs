@@ -109,21 +109,21 @@ namespace Quyd.Models
                         ParseQuery<ParseObject> query;
                         if (userItems == null)
                         {
-                            query = from storeItem in ParseObject.GetQuery("StoreItem")
-                                    where storeItem.ObjectId == store.Object.ObjectId
+                            query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
+                                    where storeItem.Get<ParseObject>("store") == store.Object
                                     where storeItem["item"] == item
-                                    where storeItem.CreatedAt <= atDateTime
-                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                    //where storeItem.CreatedAt <= atDateTime
+                                    //where storeItem.Get<DateTime>("validTo") >= atDateTime
                                     orderby storeItem["name"] ascending
                                     select storeItem;
                         }
                         else
                         {
-                            query = from storeItem in ParseObject.GetQuery("StoreItem")
-                                    where storeItem.ObjectId == store.Object.ObjectId
+                            query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
+                                    where storeItem.Get<ParseObject>("store") == store.Object
                                     where userItems.itemList.Contains(storeItem.Get<Item>("item"))
-                                    where storeItem.CreatedAt <= atDateTime
-                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                    //where storeItem.CreatedAt <= atDateTime
+                                    //where storeItem.Get<DateTime>("validTo") >= atDateTime
                                     orderby storeItem["name"] ascending
                                     select storeItem;
                         }
@@ -141,10 +141,10 @@ namespace Quyd.Models
                         }
                     }
 
-                    if (storeItem_result.ObjectId == null)
-                    {
-                        await storeItem_result.SaveAsync();
-                    }
+                    //if (storeItem_result.ObjectId == null)
+                    //{
+                    //    await storeItem_result.SaveAsync();
+                    //}
 
                     itemList.Add(new StoreItem(storeItem_result));
                 }

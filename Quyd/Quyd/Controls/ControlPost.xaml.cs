@@ -49,7 +49,7 @@ namespace Quyd.Controls
             bid.Post = post;
             await bid.saveAsync();
             Notification notification = new Notification();
-            await notification.sendAsync(post.PostBy, false, post, notificationType.bid, false);
+            //await notification.sendAsync(post.PostBy, false, post, notificationType.bid, false);
         }
     }
 }

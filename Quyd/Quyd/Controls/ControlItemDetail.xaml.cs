@@ -38,7 +38,7 @@ namespace Quyd.Controls
                 if (item != null)
                 {
                     (item as Priceable).Price = input;
-                    await item.saveAsync();
+                    await (item as StoreItem).saveAsync();
                 }
             }
             catch (System.FormatException)

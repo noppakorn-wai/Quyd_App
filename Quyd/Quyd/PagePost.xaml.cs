@@ -60,10 +60,14 @@ namespace Quyd
             ItemList itemList = await post.getUserItem();
             foreach (var item in (itemList))
             {
-                (item as PostItem).Quantity = Convert.ToInt32((StackItem.Children.ElementAt<UIElement>(i) as Quyd.Controls.ControlItemDetail).BoxValue.Text);
-                i++;
-                (item as PostItem).Post = post;
-                await (item as PostItem).saveAsync();
+                int q = Convert.ToInt32((StackItem.Children.ElementAt<UIElement>(i) as Quyd.Controls.ControlItemDetail).BoxValue.Text);
+                if (q > 0)
+                {
+                    (item as PostItem).Quantity = q;
+                    i++;
+                    (item as PostItem).Post = post;
+                    await (item as PostItem).saveAsync();
+                }
             }
             
             NavigationService.GoBack();

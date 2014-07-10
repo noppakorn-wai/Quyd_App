@@ -131,7 +131,7 @@ namespace Quyd
                 controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
-                controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlFeed.controlPost.locationBox.Text = "Bangkok , Thailand";
                 controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
                 controlFeed.controlPost.setItems(await post.getUserItem());
                 controlFeed.controlPost.setValue(post, store);
@@ -142,7 +142,8 @@ namespace Quyd
 
         public async Task reloadStorePage(Store store)
         {
-            if ((await store.getStoreItemsAsync()).Size > 0)
+            ItemList itemList = await store.getStoreItemsAsync();
+            if (itemList.Size > 0)
             {
                 StackItemDetail.Children.Clear();
             }
@@ -151,7 +152,7 @@ namespace Quyd
                 StoreItemsLoad.Text = "ไม่มีข้อมูล";
             }
 
-            foreach (var item in (await store.getStoreItemsAsync()))
+            foreach (var item in itemList)
             {
                 var controlItemDetail = new Quyd.Controls.ControlItemDetail(item);
                 controlItemDetail.BoxItemName.Text = item.Name;
@@ -180,7 +181,7 @@ namespace Quyd
                 controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
-                controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlFeed.controlPost.locationBox.Text = "Bangkok , Thailand";
                 controlFeed.controlPost.setItems(await post.getUserItem());
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
                 controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
