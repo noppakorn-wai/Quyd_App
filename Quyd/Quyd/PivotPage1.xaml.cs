@@ -30,8 +30,9 @@ namespace Quyd
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             dynamic me = await fb.GetTaskAsync("me");
-            UserProfile.usernameBox.Text = me.id;
-            UserDetail.BoxMail.Text = me.email;
+            UserProfile.usernameBox.Text = me.name;
+            UserDetail.BoxMail.Text = me.link;
+            UserDetail.BoxFacebook.NavigateUri = new Uri(me.link, UriKind.Absolute);
             dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
             Uri uri = new Uri(photo.data.url, UriKind.Absolute);
             UserProfile.profilePictureBox.Source = new BitmapImage(uri);

@@ -11,8 +11,9 @@
 
     <Grid x:Name="LayoutRoot">
         <Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/phone_2_icon_24.png"/>
+        <HyperlinkButton x:Name="BoxFacebook" Content="facebook" VerticalAlignment="Top" FontSize="20" FontFamily="Tahoma" Background="{x:Null}" Foreground="#FF6161B9" HorizontalContentAlignment="Left" Margin="29,0,0,0"/>
         <Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/mail_icon_24.png" Margin="0,29,0,0"/>
-    	<TextBlock x:Name="BoxTel" HorizontalAlignment="Left" TextWrapping="Wrap" Text="xxxxxxxxxx" VerticalAlignment="Top" Foreground="Black" Margin="29,0,0,0" Height="27" Width="92" FontFamily="Tahoma"/>
-        <TextBlock x:Name="BoxMail" HorizontalAlignment="Left" TextWrapping="Wrap" Text="sample_mail@samplehost.com" VerticalAlignment="Top" Foreground="Black" Margin="29,29,0,0" Height="24" Width="282" FontFamily="Tahoma"/>
+        <TextBlock x:Name="BoxMail" TextWrapping="Wrap" Text="sample_mail@samplehost.com" VerticalAlignment="Top" Foreground="Black" Margin="39,29,0,0" Height="24" FontFamily="Tahoma" Padding="0"/>
+       
     </Grid>
 </UserControl>
