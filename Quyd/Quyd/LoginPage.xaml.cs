@@ -55,6 +55,7 @@ namespace Quyd
                 user = ParseUser.CurrentUser;
 
                 user["name"] = fbData.Name;
+                user["facebookId"] = fbData.Id;
 
                 await user.SaveAsync();
                 
