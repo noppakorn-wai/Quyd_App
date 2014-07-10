@@ -57,8 +57,9 @@ namespace Quyd
                 user["name"] = fbData.Name;
 
                 await user.SaveAsync();
-
+                
                 NavigationService.Navigate(new Uri("/PivotPage1.xaml", UriKind.Relative));
+                NavigationService.RemoveBackEntry();
             }
             catch(Exception)
             {

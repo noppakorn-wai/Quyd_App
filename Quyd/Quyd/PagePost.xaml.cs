@@ -15,6 +15,20 @@ namespace Quyd
         public PagePost()
         {
             InitializeComponent();
+            NavigationInTransition navigateInTransition = new NavigationInTransition();
+            navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
+
+            NavigationOutTransition navigateOutTransition = new NavigationOutTransition();
+            navigateOutTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+            navigateOutTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+            TransitionService.SetNavigationInTransition(this, navigateInTransition);
+            TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
