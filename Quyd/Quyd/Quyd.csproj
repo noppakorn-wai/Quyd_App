@@ -100,6 +100,9 @@
     <Compile Include="Controls\ControlItem.xaml.cs">
       <DependentUpon>ControlItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ControlItemDetail.xaml.cs">
+      <DependentUpon>ControlItemDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ControlPost.xaml.cs">
       <DependentUpon>ControlPost.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,9 @@
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\QuydUser.cs" />
     <Compile Include="Models\Store.cs" />
+    <Compile Include="PagePost.xaml.cs">
+      <DependentUpon>PagePost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PivotPage1.xaml.cs">
       <DependentUpon>PivotPage1.xaml</DependentUpon>
     </Compile>
@@ -146,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ControlItemDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ControlPost.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -163,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagePost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
