@@ -36,11 +36,10 @@ namespace Quyd
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             dynamic me = await fb.GetTaskAsync("me");
-            UserProfile.usernameBox.Text = me.name;
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
             UserDetail.BoxMail.Text = me.email;
-            UserDetail.BoxMail.Text = me.email;
             UserDetail.BoxFacebook.NavigateUri = new Uri(me.link, UriKind.Absolute);
+            UserDetail.BoxFacebook.TargetName = "_blank";
             dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
             string facebookId = ParseUser.CurrentUser.Get<string>("facebookId");
             UserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
@@ -75,8 +74,9 @@ namespace Quyd
             foreach (var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
-                controlPost.setLocation(post.Description);
-                controlPost.setItems(post.postItems);
+                controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlPost.setItems(await post.getUserItem());
+                controlPost.timeBox.Text = post.CreateAt.ToString();
                 UserPosts.Children.Add(controlPost);
             }
         }
@@ -98,8 +98,9 @@ namespace Quyd
                 controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
-                controlFeed.controlPost.setLocation(post.PostBy.Get<string>("name"));
-                controlFeed.controlPost.setItems(post.postItems);
+                controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlFeed.controlPost.setItems(await post.getUserItem());
+                controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
                 FeedList.Children.Add(controlFeed);
             }
         }
@@ -109,16 +110,17 @@ namespace Quyd
             Store store = new Store();
             await store.loadAsync(ParseUser.CurrentUser);
 
-            if (store.storeItems.Size > 0)
+            if ((await store.getStoreItemsAsync()).Size > 0)
             {
                 StackItemDetail.Children.Clear();
             }
 
-            foreach (var item in store.storeItems)
+            foreach (var item in (await store.getStoreItemsAsync()))
             {
                 var controlItemDetail = new Quyd.Controls.ControlItemDetail();
                 controlItemDetail.BoxItemName.Text = item.Name;
                 controlItemDetail.BoxInfo.Text = item.Description;
+                controlItemDetail.BoxValue.Text = (item as Priceable).Price.ToString();
                 StackItemDetail.Children.Add(controlItemDetail);
             }
 
@@ -136,8 +138,9 @@ namespace Quyd
                 controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
-                controlFeed.controlPost.setLocation(post.PostBy.Get<string>("name"));
-                controlFeed.controlPost.setItems(post.postItems);
+                controlFeed.controlPost.locationBox.Text += " (" + post.Location.Latitude + "," + post.Location.Longitude + ")";
+                controlFeed.controlPost.setItems(await post.getUserItem());
+                controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
                 StackPost.Children.Add(controlFeed);
             }
         }

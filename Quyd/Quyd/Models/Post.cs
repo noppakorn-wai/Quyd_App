@@ -25,15 +25,14 @@ namespace Quyd.Models
         {
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")
                         where post.Get<ParseUser>("postBy") == user
+                        orderby post.CreatedAt ascending
                         select post;
             try
             {
                 IEnumerable<ParseObject> posts_t = await query.FindAsync();
                 foreach (ParseObject post in posts_t)
                 {
-                    ItemList postItem = new ItemList();
-                    await postItem.loadPostItemsAsync(new Post(post));
-                    posts.Add(new Post(post, postItem));
+                    posts.Add(new Post(post));
                 }
             }
             catch (ParseException ex)
@@ -53,16 +52,15 @@ namespace Quyd.Models
         {
             var query = from bid in ParseObject.GetQuery("Bid").Include("post").Include("post.postBy")
                         where bid.Get<ParseObject>("bidStore") == store.Object
+                        orderby bid.CreatedAt ascending
                         select bid;
             try
             {
                 IEnumerable<ParseObject> bids_t = await query.FindAsync();
                 foreach (ParseObject bid in bids_t)
                 {
-                    ParseObject post = await bid.Get<ParseObject>("post").FetchIfNeededAsync();
-                    ItemList postItem = new ItemList();
-                    await postItem.loadPostItemsAsync(new Post(post));
-                    posts.Add(new Post(post, postItem));
+                    ParseObject post = bid.Get<ParseObject>("post");
+                    posts.Add(new Post(post));
                 }
             }
             catch (ParseException ex)
@@ -82,15 +80,14 @@ namespace Quyd.Models
         {
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")
                         where post.Get<ParseUser>("postBy") != user
+                        orderby post.CreatedAt ascending
                         select post;
             try
             {
                 IEnumerable<ParseObject> posts_t = await query.FindAsync();
                 foreach (ParseObject post in posts_t)
                 {
-                    ItemList postItem = new ItemList();
-                    await postItem.loadPostItemsAsync(new Post(post));
-                    posts.Add(new Post(post, postItem));
+                    posts.Add(new Post(post));
                 }
             }
             catch (ParseException ex)
@@ -119,54 +116,29 @@ namespace Quyd.Models
     {
         public ParseObject post { get; private set; }
 
-        public ItemList postItems;
+        private ItemList postItems = null;
 
-        public async Task<ItemList> UserItem()
-        {
-            try
-            {
-                if (postItems == null)
-                {
-                    postItems = new ItemList();
-                    await postItems.loadPostItemsAsync(new Post(post));
-                }
-            }
-            catch (ParseException ex)
-            {
-                //not handler ""no more space exception
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    //no older notification found
-                    post = null;
-                }
-            }
-
-            return postItems;
-        }
+        public BidList bidList = null;
 
         public Post()
         {
-            post = null;
+            this.post = null;
+            this.postItems = null;
+            this.bidList = null;
         }
 
         public Post(ParseObject post)
         {
             this.post = post;
             this.postItems = null;
+            this.bidList = null;
         }
 
         public Post(ParseObject post, ItemList postItems)
         {
             this.post = post;
             this.postItems = postItems;
-        }
-
-        public ParseObject Object
-        {
-            get
-            {
-                return post;
-            }
+            this.bidList = null;
         }
 
         public async Task loadAsync(string postId)
@@ -191,6 +163,14 @@ namespace Quyd.Models
         }
 
         #region get set
+
+        public ParseObject Object
+        {
+            get
+            {
+                return post;
+            }
+        }
 
         public postStatus Status
         {
@@ -251,6 +231,38 @@ namespace Quyd.Models
                 post["selectedStore"] = value;
             }
         }
+
+        public DateTime? CreateAt
+        {
+            get
+            {
+                return post.CreatedAt;
+            }
+        }
+
+        public async Task<ItemList> getUserItem()
+        {
+            try
+            {
+                if (postItems == null)
+                {
+                    postItems = new ItemList();
+                    await postItems.loadPostItemsAsync(new Post(post));
+                }
+            }
+            catch (ParseException ex)
+            {
+                //not handler ""no more space exception
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no older notification found
+                    post = null;
+                }
+            }
+
+            return postItems;
+        }
+        
 
         #endregion
 

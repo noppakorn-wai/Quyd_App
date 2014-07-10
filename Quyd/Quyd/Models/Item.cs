@@ -57,6 +57,7 @@ namespace Quyd.Models
 
             var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
                         where postItem.Get<ParseObject>("post") == post.Object
+                        orderby postItem["name"] ascending
                         select postItem;
             try
             {
@@ -75,7 +76,7 @@ namespace Quyd.Models
             }
         }
 
-        public async Task loadStoreItemsAsync(Store store, DateTime atDateTime = new DateTime())
+        public async Task loadStoreItemsAsync(Store store, DateTime? atDateTime = new DateTime?(), ItemList userItems = null)
         {
             itemList.Clear();
             imutable = true;
@@ -89,18 +90,32 @@ namespace Quyd.Models
             {
                 IEnumerable<ParseObject> items = await ParseObject.GetQuery("Item").FindAsync();
 
-
                 foreach (var item in items)
                 {
                     ParseObject storeItem_result = null;
                     try
                     {
-                        var query = from storeItem in ParseObject.GetQuery("StoreItem")
-                                    where storeItem.ObjectId == store.Object.ObjectId
-                                    where storeItem["item"] == item
-                                    where storeItem.CreatedAt <= atDateTime
-                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
-                                    select storeItem;
+                        ParseQuery<ParseObject> query;
+                        if (userItems == null)
+                        {
+                            query = from storeItem in ParseObject.GetQuery("StoreItem")
+                                        where storeItem.ObjectId == store.Object.ObjectId
+                                        where storeItem["item"] == item
+                                        where storeItem.CreatedAt <= atDateTime
+                                        where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                        orderby storeItem["name"] ascending
+                                        select storeItem;
+                        }
+                        else
+                        {
+                            query = from storeItem in ParseObject.GetQuery("StoreItem")
+                                        where storeItem.ObjectId == store.Object.ObjectId
+                                        where userItems.itemList.Contains(storeItem.Get<Item>("item"))
+                                        where storeItem.CreatedAt <= atDateTime
+                                        where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                        orderby storeItem["name"] ascending
+                                        select storeItem;
+                        }
 
                         storeItem_result = await query.FirstAsync();
                     }
@@ -132,10 +147,13 @@ namespace Quyd.Models
             itemList.Clear();
             imutable = true;
 
+            var query = from item in ParseObject.GetQuery("Item")
+                        orderby item["name"]  ascending
+                        select item;
+
             try
             {
-                IEnumerable<ParseObject> items = await ParseObject.GetQuery("Item").FindAsync();
-
+                IEnumerable<ParseObject> items = await query.FindAsync();
 
                 foreach (var item in items)
                 {

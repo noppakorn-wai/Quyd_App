@@ -19,11 +19,6 @@ namespace Quyd.Controls
             InitializeComponent();
         }
 
-        public void setLocation(string location)
-        {
-            locationBox.Text = location;
-        }
-
         public void setItems(ItemList itemList)
         {
             StackItem.Children.Clear();

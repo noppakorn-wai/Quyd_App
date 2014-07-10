@@ -20,7 +20,6 @@
     <Grid x:Name="LayoutRoot" Background="#FFE65101">
         <!--Pivot Control-->
         <phone:Pivot Title="ขอขวดแอปพลิเคชั่น" Background="#33FFFFFF" FontFamily="Tahoma" Margin="0,50,0,0" Foreground="White">
-
             <phone:PivotItem x:Name="User" Header="ผู้ใช้" Margin="0,28,0,0">
                 <Grid Background="#66FFFFFF">
                     <Grid.RowDefinitions>

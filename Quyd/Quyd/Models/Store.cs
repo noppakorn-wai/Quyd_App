@@ -13,7 +13,7 @@ namespace Quyd.Models
     {
         private ParseObject store;
 
-        public ItemList storeItems { get; private set; }
+        private ItemList storeItems;
 
         public Store()
         {
@@ -175,6 +175,16 @@ namespace Quyd.Models
             {
                 return store;
             }
+        }
+
+        public async Task<ItemList> getStoreItemsAsync()
+        {
+            if(storeItems == null)
+            {
+                await storeItems.loadStoreItemsAsync(new Store(store));
+            }
+
+            return storeItems;
         }
 
         #endregion
