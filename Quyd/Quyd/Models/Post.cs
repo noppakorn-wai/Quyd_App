@@ -262,6 +262,16 @@ namespace Quyd.Models
 
             return postItems;
         }
+
+        public async Task<BidList> getBidList()
+        {
+            if(bidList == null)
+            {
+                await bidList.getBidListAsync(new Post(post));
+            }
+
+            return bidList;
+        }
         
 
         #endregion
