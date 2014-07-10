@@ -53,6 +53,8 @@ namespace Quyd.Models
                 imutable = false;
             }
 
+            await post.Object.FetchIfNeededAsync();
+
             var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
                         where postItem.Get<ParseObject>("post") == post.Object
                         select postItem;

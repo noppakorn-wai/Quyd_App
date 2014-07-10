@@ -49,6 +49,35 @@ namespace Quyd.Models
             }
         }
 
+        public async Task loadStorePostAsync(Store store)
+        {
+            var query = from bid in ParseObject.GetQuery("Bid").Include("post").Include("post.postBy")
+                        where bid.Get<ParseObject>("bidStore") == store.Object
+                        select bid;
+            try
+            {
+                IEnumerable<ParseObject> bids_t = await query.FindAsync();
+                foreach (ParseObject bid in bids_t)
+                {
+                    ParseObject post = await bid.Get<ParseObject>("post").FetchIfNeededAsync();
+                    ItemList postItem = new ItemList();
+                    await postItem.loadPostItemsAsync(new Post(post));
+                    posts.Add(new Post(post, postItem));
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public async Task loadFeedAsync(ParseUser user)
         {
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")

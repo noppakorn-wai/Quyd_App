@@ -165,7 +165,7 @@ namespace Quyd.Models
         {
             get
             {
-                return store.Get<string>("owner");
+                return store.Get<ParseUser>("owner").ObjectId;
             }
         }
 

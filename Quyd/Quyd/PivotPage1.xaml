@@ -69,15 +69,14 @@
                 <ScrollViewer Background="#66FFFFFF">
                     <StackPanel VerticalAlignment="Top" Margin="10,0">
                         <StackPanel x:Name="StackItemDetail" Margin="10,10,10,5" Background="#19FFFFFF">
-                            <Quyd:ControlItemDetail/>
-                            <Quyd:ControlItemDetail/>
-                            <Quyd:ControlItemDetail/>
+                            <Canvas Margin="5,5,5,0" Height="78" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                            </Canvas>
                         </StackPanel>
                         <StackPanel x:Name="StackPost" Margin="10,5,10,10" Background="#19FFFFFF">
-                            <Quyd:ControlPost Margin="0" d:LayoutOverrides="Height"/>
-                            <Quyd:ControlPost Margin="0" d:LayoutOverrides="Height"/>
-                            <Quyd:ControlPost Margin="0" d:LayoutOverrides="Height"/>
-                            <Quyd:ControlPost Margin="0" d:LayoutOverrides="Height"/>
+                            <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                            </Canvas>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
