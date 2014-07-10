@@ -20,6 +20,15 @@ namespace Quyd
         {
             InitializeComponent();
             loadComponentAsync();
+            NavigationInTransition navigateInTransition = new NavigationInTransition();
+            navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
+            navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
+
+            NavigationOutTransition navigateOutTransition = new NavigationOutTransition();
+            navigateOutTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
+            navigateOutTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+            TransitionService.SetNavigationInTransition(this, navigateInTransition);
+            TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
         }
 
         public async void loadComponentAsync()
@@ -27,7 +36,9 @@ namespace Quyd
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             dynamic me = await fb.GetTaskAsync("me");
+            UserProfile.usernameBox.Text = me.name;
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
+            UserDetail.BoxMail.Text = me.email;
             UserDetail.BoxMail.Text = me.email;
             UserDetail.BoxFacebook.NavigateUri = new Uri(me.link, UriKind.Absolute);
             dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
@@ -129,6 +140,11 @@ namespace Quyd
                 controlFeed.controlPost.setItems(post.postItems);
                 StackPost.Children.Add(controlFeed);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/PagePost.xaml", UriKind.Relative));
         }
     }
 }

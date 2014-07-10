@@ -44,13 +44,19 @@
             </phone:PivotItem>
 
             <phone:PivotItem x:Name="Feeds" Header="ข่าว" Margin="0,28,0,0">
-                <ScrollViewer Background="#66FFFFFF">
-                    <StackPanel Name="FeedList"  VerticalAlignment="Top">
-                        <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                            <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
-                        </Canvas>
-                    </StackPanel>
-                </ScrollViewer>
+                <Grid>
+                    <ScrollViewer Background="#66FFFFFF">
+                        <StackPanel Name="FeedList"  VerticalAlignment="Top">
+                            <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Text="ไม่มีข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="48"/>
+                            </Canvas>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <Grid Height="75" VerticalAlignment="Bottom" Background="#CCE65101">
+                        <Button Content="New Post" Background="{x:Null}" BorderBrush="White" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Padding="5" Click="Button_Click"/>
+                    </Grid>
+                </Grid>
+
             </phone:PivotItem>
 
             <phone:PivotItem x:Name="Notifications" Header="แจ้งเตือน" Margin="0,28,0,0" Background="Transparent">
