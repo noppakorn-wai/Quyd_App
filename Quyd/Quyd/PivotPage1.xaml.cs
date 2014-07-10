@@ -46,10 +46,10 @@ namespace Quyd
             string facebookId = ParseUser.CurrentUser.Get<string>("facebookId");
             UserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
 
-            reloadAll();
+            await reloadAll();
         }
 
-        public async void reloadAll()
+        public async Task reloadAll()
         {
             await reloadUserPage();
             await reloadFeedPage();
@@ -72,6 +72,10 @@ namespace Quyd
             {
                 UserPosts.Children.Clear();
             }
+            else
+            {
+                UserLoad.Text = "ไม่มีข้อมูล";
+            }
 
             foreach (var post in posts.posts)
             {
@@ -93,6 +97,10 @@ namespace Quyd
             if (posts.Size > 0)
             {
                 FeedList.Children.Clear();
+            }
+            else
+            {
+                FeedLoad.Text = "ไม่มีข้อมูล";
             }
 
             foreach (var post in posts.posts)
@@ -133,6 +141,10 @@ namespace Quyd
             {
                 StackItemDetail.Children.Clear();
             }
+            else
+            {
+                StoreItemsLoad.Text = "ไม่มีข้อมูล";
+            }
 
             foreach (var item in (await store.getStoreItemsAsync()))
             {
@@ -151,6 +163,10 @@ namespace Quyd
             if (posts.Size > 0)
             {
                 StackPost.Children.Clear();
+            }
+            else
+            {
+                StorePostsLoad.Text = "ไม่มีข้อมูล";
             }
 
             foreach (var post in posts.posts)
@@ -171,5 +187,10 @@ namespace Quyd
         {
             NavigationService.Navigate(new Uri("/PagePost.xaml", UriKind.Relative));
         }
+
+        protected void Page_InitComplete(object sender, EventArgs e)
+        {
+            reloadAll();
+        }        
     }
 }

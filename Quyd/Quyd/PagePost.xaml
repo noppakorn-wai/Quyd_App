@@ -21,13 +21,9 @@
         <Button Content="OK" HorizontalAlignment="Right" VerticalAlignment="Top" Height="60" Padding="3" FontSize="14" FontFamily="Tahoma" Margin="0,-5,-5,0" Width="60" Click="Button_Click"/>
         <ScrollViewer HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Margin="0,50,0,0" Background="#19FFFFFF">
             <StackPanel x:Name="StackItem">
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
-                <Controls:ControlItemDetail/>
+                <Canvas Margin="5,5,5,0" Height="78" Width="Auto" Background="#CCFFFFFF">
+                    <TextBlock Text="กำลังโหลดข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="186" Canvas.Top="24"/>
+                </Canvas>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -48,30 +48,41 @@ namespace Quyd.Models
             itemList.Clear();
             imutable = true;
 
-            if (post.PostBy.Equals(ParseUser.CurrentUser))
+            if (post.PostBy.Equals(ParseUser.CurrentUser) && post.Object.ObjectId != null)
             {
                 imutable = false;
             }
-
-            await post.Object.FetchIfNeededAsync();
-
-            var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
-                        where postItem.Get<ParseObject>("post") == post.Object
-                        orderby postItem["name"] ascending
-                        select postItem;
-            try
+            else if (post.Object.ObjectId == null)
             {
-                var postItems = await query.FindAsync();
-                foreach (var postItem in postItems)
+                IEnumerable<ParseObject> items_t = await ParseObject.GetQuery("Item").FindAsync();
+
+                foreach (var item in items_t)
                 {
-                    itemList.Add(new PostItem(postItem));
+                    itemList.Add(new PostItem(item));
                 }
             }
-            catch (ParseException ex)
+            else
             {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                await post.Object.FetchIfNeededAsync();
+
+                var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
+                            where postItem.Get<ParseObject>("post") == post.Object
+                            orderby postItem["name"] ascending
+                            select postItem;
+                try
                 {
-                    //no data found
+                    var postItems = await query.FindAsync();
+                    foreach (var postItem in postItems)
+                    {
+                        itemList.Add(new PostItem(postItem));
+                    }
+                }
+                catch (ParseException ex)
+                {
+                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                    {
+                        //no data found
+                    }
                 }
             }
         }
@@ -99,22 +110,22 @@ namespace Quyd.Models
                         if (userItems == null)
                         {
                             query = from storeItem in ParseObject.GetQuery("StoreItem")
-                                        where storeItem.ObjectId == store.Object.ObjectId
-                                        where storeItem["item"] == item
-                                        where storeItem.CreatedAt <= atDateTime
-                                        where storeItem.Get<DateTime>("validTo") >= atDateTime
-                                        orderby storeItem["name"] ascending
-                                        select storeItem;
+                                    where storeItem.ObjectId == store.Object.ObjectId
+                                    where storeItem["item"] == item
+                                    where storeItem.CreatedAt <= atDateTime
+                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                    orderby storeItem["name"] ascending
+                                    select storeItem;
                         }
                         else
                         {
                             query = from storeItem in ParseObject.GetQuery("StoreItem")
-                                        where storeItem.ObjectId == store.Object.ObjectId
-                                        where userItems.itemList.Contains(storeItem.Get<Item>("item"))
-                                        where storeItem.CreatedAt <= atDateTime
-                                        where storeItem.Get<DateTime>("validTo") >= atDateTime
-                                        orderby storeItem["name"] ascending
-                                        select storeItem;
+                                    where storeItem.ObjectId == store.Object.ObjectId
+                                    where userItems.itemList.Contains(storeItem.Get<Item>("item"))
+                                    where storeItem.CreatedAt <= atDateTime
+                                    where storeItem.Get<DateTime>("validTo") >= atDateTime
+                                    orderby storeItem["name"] ascending
+                                    select storeItem;
                         }
 
                         storeItem_result = await query.FirstAsync();
@@ -153,7 +164,7 @@ namespace Quyd.Models
             imutable = true;
 
             var query = from item in ParseObject.GetQuery("Item")
-                        orderby item["name"]  ascending
+                        orderby item["name"] ascending
                         select item;
 
             try
@@ -222,7 +233,7 @@ namespace Quyd.Models
         }
         public virtual async Task saveAsync()
         {
-             await Task.FromResult(true);
+            await Task.FromResult(true);
         }
 
         #region get set method
@@ -273,6 +284,14 @@ namespace Quyd.Models
                 return item.Get<string>("icon");
             }
         }
+
+        public ParseObject Object
+        {
+            get
+            {
+                return item;
+            }
+        }
         #endregion
 
     }
@@ -283,8 +302,18 @@ namespace Quyd.Models
 
         public PostItem(ParseObject postItem)
         {
-            this.postItem = postItem;
-            item = postItem.Get<ParseObject>("item");
+            if (postItem.ClassName == "PostItem")
+            {
+                this.postItem = postItem;
+                item = postItem.Get<ParseObject>("item");
+            }
+            else if(postItem.ClassName == "Item")
+            {
+                item = postItem;
+                this.postItem = new ParseObject("PostItem");
+                Quantity = 0;
+                Item = new Item(postItem);
+            }
         }
 
         public double Quantity
@@ -299,6 +328,33 @@ namespace Quyd.Models
                 postItem["quantity"] = value;
             }
         }
+
+        public Item Item
+        {
+            get
+            {
+                return new Item(postItem.Get<ParseObject>("item"));
+            }
+
+            set
+            {
+                postItem["item"] = value.Object;
+            }
+        }
+
+        public Post Post
+        {
+            get
+            {
+                return new Post(postItem.Get<ParseObject>("post"));
+            }
+
+            set
+            {
+                postItem["post"] = value.Object;
+            }
+        }
+
         public override sealed async Task saveAsync()
         {
             await postItem.SaveAsync();
