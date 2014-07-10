@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-
 using Parse;
 using Quyd.Models;
 
@@ -38,6 +37,7 @@ namespace Quyd.Controls
             }
             catch (System.FormatException)
             {
+               
                 BoxValue.Text = (item as Priceable).Price.ToString();
             }
         }

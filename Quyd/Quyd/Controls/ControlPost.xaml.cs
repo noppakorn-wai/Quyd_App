@@ -25,7 +25,7 @@ namespace Quyd.Controls
             foreach (Item item in itemList)
             {
                 var controlItem = new Quyd.Controls.ControlItem();
-                controlItem.icon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
+                controlItem.icon.Source = new BitmapImage(new Uri("/Resources/Images/"+item.Name+".jpg", UriKind.Relative));//new BitmapImage(new Uri(@"/Resources/Images/"+item.Name+".png", UriKind.Absolute));
                 controlItem.quantity.Text = (item as Quantifiable).Quantity.ToString();
                 StackItem.Children.Add(controlItem);
             }
