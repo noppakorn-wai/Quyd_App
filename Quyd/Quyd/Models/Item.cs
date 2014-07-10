@@ -299,7 +299,6 @@ namespace Quyd.Models
                 postItem["quantity"] = value;
             }
         }
-        
         public override sealed async Task saveAsync()
         {
             await postItem.SaveAsync();
