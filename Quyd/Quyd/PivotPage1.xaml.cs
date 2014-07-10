@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using Parse;
+using Quyd.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using Quyd.Models;
-using System.Threading.Tasks;
-
-using Parse;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace Quyd
 {
@@ -28,14 +27,16 @@ namespace Quyd
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             dynamic me = await fb.GetTaskAsync("me");
-            UserProfile.usernameBox.Text = me.name;
+            UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
             UserDetail.BoxMail.Text = me.link;
             UserDetail.BoxFacebook.NavigateUri = new Uri(me.link, UriKind.Absolute);
             dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
-            Uri uri = new Uri(photo.data.url, UriKind.Absolute);
-            UserProfile.profilePictureBox.Source = new BitmapImage(uri);
+            string facebookId = ParseUser.CurrentUser.Get<string>("facebookId");
+            UserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
+
             reloadAll();
         }
+
         public async void reloadAll()
         {
             await reloadUserPage();
@@ -72,7 +73,6 @@ namespace Quyd
         {
             PostList posts = new PostList();
 
-
             await posts.loadFeedAsync(ParseUser.CurrentUser);
 
             if (posts.Size > 0)
@@ -84,7 +84,9 @@ namespace Quyd
             {
                 var controlFeed = new Quyd.Controls.ControlFeed();
                 controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
-                controlFeed.controlPost.setLocation(post.Description);
+                string facebookId = post.PostBy.Get<string>("facebookId");
+                controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
+                controlFeed.controlPost.setLocation(post.PostBy.Get<string>("name"));
                 controlFeed.controlPost.setItems(post.postItems);
                 FeedList.Children.Add(controlFeed);
             }
