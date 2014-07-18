@@ -57,6 +57,12 @@ namespace Quyd
                 user["name"] = fbData.Name;
                 user["facebookId"] = fbData.Id;
 
+                dynamic parameters = new System.Dynamic.ExpandoObject();
+                parameters.access_token = ParseFacebookUtils.AccessToken;
+                parameters.fields = "email";
+                dynamic result = await fb.GetTaskAsync("me", parameters);
+                user["email"] = result.email;
+
                 await user.SaveAsync();
                 
                 NavigationService.Navigate(new Uri("/PivotPage1.xaml", UriKind.Relative));

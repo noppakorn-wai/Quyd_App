@@ -14,7 +14,7 @@ namespace Quyd.Controls
 {
     public partial class ControlItemDetail : UserControl
     {
-        private Item item;
+        public Item item;
         private int value;
 
         public ControlItemDetail()

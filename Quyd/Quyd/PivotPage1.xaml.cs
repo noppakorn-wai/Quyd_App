@@ -39,17 +39,17 @@ namespace Quyd
             fb.AccessToken = ParseFacebookUtils.AccessToken;
             dynamic me = await fb.GetTaskAsync("me");
             UserProfile.usernameBox.Text = ParseUser.CurrentUser.Get<string>("name");
-            UserDetail.BoxMail.Text = me.email;
+            UserDetail.BoxMail.Text = ParseUser.CurrentUser.Email;
             UserDetail.BoxFacebook.NavigateUri = new Uri(me.link, UriKind.Absolute);
             UserDetail.BoxFacebook.TargetName = "_blank";
             dynamic photo = await fb.GetTaskAsync("me/picture?redirect=false");
             string facebookId = ParseUser.CurrentUser.Get<string>("facebookId");
             UserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
 
-            await reloadAll();
+            Init();
         }
 
-        public async Task reloadAll()
+        public async void Init()
         {
             Store store = new Store();
             try
@@ -69,19 +69,13 @@ namespace Quyd
                 await store.saveAsync();
             }
 
-            await reloadUserPage();
-            await reloadFeedPage(store);
-            await reloadStorePage(store);
+            reloadUserPage();
+            reloadFeedPage(store);
+            reloadStorePage(store);
         }
 
-        public async Task reloadUserPage()
+        public async void reloadUserPage()
         {
-            var fb = new Facebook.FacebookClient();
-            fb.AccessToken = ParseFacebookUtils.AccessToken;
-            var me = await fb.GetTaskAsync("me");
-
-            var fbData = new Facebook.Client.GraphUser(me);
-
             PostList posts = new PostList();
 
             await posts.loadUserPostAsync(ParseUser.CurrentUser);
@@ -95,23 +89,21 @@ namespace Quyd
                 UserLoad.Text = "ไม่มีข้อมูล";
             }
 
-            Store store = new Store();
-
-            await store.loadAsync(ParseUser.CurrentUser);
-
             foreach (var post in posts.posts)
             {
                 var controlPost = new Quyd.Controls.ControlPost();
                 controlPost.locationBox.Text = "Bangkok , Thailand";
-                controlPost.setItems(await post.getUserItem());
+                controlPost.setItems(post);
                 controlPost.timeBox.Text = post.CreateAt.ToString();
-                controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser))?Visibility.Visible:Visibility.Collapsed;
+                controlPost.BtnBid.Visibility = Visibility.Collapsed;
                 UserPosts.Children.Add(controlPost);
             }
         }
 
-        public async Task reloadFeedPage(Store store)
+        public async void reloadFeedPage(Store store)
         {
+            FeedList.Children.Clear();
+
             PostList posts = new PostList();
 
             await posts.loadFeedAsync(ParseUser.CurrentUser);
@@ -124,7 +116,7 @@ namespace Quyd
             {
                 FeedLoad.Text = "ไม่มีข้อมูล";
             }
-
+            int i = 0;
             foreach (var post in posts.posts)
             {
                 var controlFeed = new Quyd.Controls.ControlFeed();
@@ -132,15 +124,17 @@ namespace Quyd
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
                 controlFeed.controlPost.locationBox.Text = "Bangkok , Thailand";
-                controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
-                controlFeed.controlPost.setItems(await post.getUserItem());
+                controlFeed.controlPost.BtnBid.Visibility = Visibility.Visible;
+                controlFeed.controlPost.setItems(post);
                 controlFeed.controlPost.setValue(post, store);
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
+                controlFeed.controlPost.parent = this;
+                controlFeed.controlPost.num = i++;
                 FeedList.Children.Add(controlFeed);
             }
         }
 
-        public async Task reloadStorePage(Store store)
+        public async void reloadStorePage(Store store)
         {
             ItemList itemList = await store.getStoreItemsAsync();
             if (itemList.Size > 0)
@@ -159,7 +153,7 @@ namespace Quyd
                 controlItemDetail.BoxInfo.Text = item.Description;
                 controlItemDetail.BoxValue.Text = (item as Priceable).Price.ToString();
                 controlItemDetail.ImageIcon.Source = new BitmapImage(new Uri("/Resources/Images/" + item.Name + ".jpg", UriKind.Relative));
-                
+
                 StackItemDetail.Children.Add(controlItemDetail);
             }
 
@@ -182,11 +176,26 @@ namespace Quyd
                 string facebookId = post.PostBy.Get<string>("facebookId");
                 controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
                 controlFeed.controlPost.locationBox.Text = "Bangkok , Thailand";
-                controlFeed.controlPost.setItems(await post.getUserItem());
+                controlFeed.controlPost.setItems(post);
                 controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
-                controlFeed.controlPost.BtnBid.Visibility = (await post.isBidable(ParseUser.CurrentUser)) ? Visibility.Visible : Visibility.Collapsed;
+                controlFeed.controlPost.BtnBid.Visibility = Visibility.Collapsed;
                 StackPost.Children.Add(controlFeed);
             }
+        }
+
+        public void bidEvent(int num, Post post)
+        {
+            FeedList.Children.RemoveAt(num);
+
+            var controlFeed = new Quyd.Controls.ControlFeed();
+            controlFeed.controlUserProfile.usernameBox.Text = post.PostBy.Get<string>("name");
+            string facebookId = post.PostBy.Get<string>("facebookId");
+            controlFeed.controlUserProfile.profilePictureBox.Source = new BitmapImage(new Uri("http://graph.facebook.com/" + facebookId + "/picture", UriKind.Absolute));
+            controlFeed.controlPost.locationBox.Text = "Bangkok , Thailand";
+            controlFeed.controlPost.setItems(post);
+            controlFeed.controlPost.timeBox.Text = post.CreateAt.ToString();
+            controlFeed.controlPost.BtnBid.Visibility = Visibility.Collapsed;
+            StackPost.Children.Add(controlFeed);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -194,9 +203,9 @@ namespace Quyd
             NavigationService.Navigate(new Uri("/PagePost.xaml", UriKind.Relative));
         }
 
-        protected void Page_InitComplete(object sender, EventArgs e)
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            reloadAll();
-        }        
+            reloadUserPage();
+        }
     }
 }

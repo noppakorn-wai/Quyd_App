@@ -58,16 +58,28 @@ namespace Quyd
             await post.saveAsync();
             int i = 0;
             ItemList itemList = await post.getUserItem();
-            foreach (var item in (itemList))
+            List<Item> saveList = new List<Item>();
+            foreach (UIElement controlItemDetail in StackItem.Children)
             {
-                int q = Convert.ToInt32((StackItem.Children.ElementAt<UIElement>(i) as Quyd.Controls.ControlItemDetail).BoxValue.Text);
+                int q = Convert.ToInt32((controlItemDetail as Quyd.Controls.ControlItemDetail).BoxValue.Text);
                 if (q > 0)
                 {
+                    Item item = itemList.itemList.ElementAt(i);
                     (item as PostItem).Quantity = q;
                     i++;
                     (item as PostItem).Post = post;
-                    await (item as PostItem).saveAsync();
+                    saveList.Add(item);
                 }
+            }
+
+            foreach (var item in (saveList))
+            {
+                await (item as PostItem).saveAsync();
+            }
+
+            if(saveList.Count<Item>() == 0)
+            {
+                await post.Object.DeleteAsync();
             }
             
             NavigationService.GoBack();

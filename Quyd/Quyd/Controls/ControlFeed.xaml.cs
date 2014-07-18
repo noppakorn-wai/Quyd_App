@@ -15,6 +15,6 @@ namespace Quyd.Controls
         public ControlFeed()
         {
             InitializeComponent();
-        }
+        } 
     }
 }

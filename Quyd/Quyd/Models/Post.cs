@@ -25,7 +25,7 @@ namespace Quyd.Models
         {
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")
                         where post.Get<ParseUser>("postBy") == user
-                        orderby post.CreatedAt ascending
+                        orderby post.CreatedAt descending
                         select post;
             try
             {
@@ -52,7 +52,7 @@ namespace Quyd.Models
         {
             var query = from bid in ParseObject.GetQuery("Bid").Include("post").Include("post.postBy")
                         where bid.Get<ParseObject>("bidStore") == store.Object
-                        orderby bid.CreatedAt ascending
+                        orderby bid.CreatedAt descending
                         select bid;
             try
             {
@@ -80,7 +80,7 @@ namespace Quyd.Models
         {
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")
                         where post.Get<ParseUser>("postBy") != user
-                        orderby post.CreatedAt ascending
+                        orderby post.CreatedAt descending
                         select post;
             try
             {

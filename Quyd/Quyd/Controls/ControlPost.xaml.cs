@@ -15,9 +15,11 @@ using Parse;
 namespace Quyd.Controls
 {
     public partial class ControlPost : UserControl
-    {        
+    {
+        public PivotPage1 parent; 
         Post post;
         Store store;
+        public int num;
 
         public void setValue(Post post, Store store)
         {
@@ -30,13 +32,14 @@ namespace Quyd.Controls
             InitializeComponent();
         }
 
-        public void setItems(ItemList itemList)
+        public async void setItems(Post post)
         {
+            ItemList itemList = await post.getUserItem();
             StackItem.Children.Clear();
             foreach (Item item in itemList)
             {
                 var controlItem = new Quyd.Controls.ControlItem();
-                controlItem.icon.Source = new BitmapImage(new Uri("/Resources/Images/"+item.Name+".jpg", UriKind.Relative));//new BitmapImage(new Uri(@"/Resources/Images/"+item.Name+".png", UriKind.Absolute));
+                controlItem.icon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
                 controlItem.quantity.Text = (item as Quantifiable).Quantity.ToString();
                 StackItem.Children.Add(controlItem);
             }
@@ -50,6 +53,8 @@ namespace Quyd.Controls
             await bid.saveAsync();
             Notification notification = new Notification();
             //await notification.sendAsync(post.PostBy, false, post, notificationType.bid, false);
+            
+            parent.bidEvent(num, post);
         }
     }
 }
