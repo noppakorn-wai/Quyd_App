@@ -119,7 +119,20 @@ namespace Quyd.Models
 
         public static bool operator ==(ParseObject parseObject, Store store)
         {
-            return (parseObject == store.data);
+            ParseObject _data = null;
+            try
+            {
+                _data = store.data;
+            }
+            catch(NullReferenceException)
+            {
+                if(parseObject==null)
+                {
+                    return true;
+                }
+            }
+
+            return (parseObject == _data);
         }
 
         public override int GetHashCode()

@@ -19,6 +19,7 @@ namespace Quyd
     public partial class PivotPage1 : PhoneApplicationPage
     {
         User user;
+        Store userStore;
 
         public PivotPage1()
         {
@@ -61,9 +62,9 @@ namespace Quyd
         {
             //initial user store data
             user = (User)ParseUser.CurrentUser;
-            Store userStore = await user.Store();
+            userStore = await user.Store();
 
-            if (userStore.data == null)
+            if (userStore == null)
             {
                 storeItemDetails.Visibility = Visibility.Collapsed;
                 StorePosts.Visibility = Visibility.Collapsed;

@@ -160,6 +160,13 @@ namespace Quyd.Models
             ItemData.ObjectId = postItem.Get<ParseObject>("item").ObjectId;
         }
 
+        public PostItem(Item item, double quantity)
+        {
+            this.postItemData = new ParseObject("PostItem");
+            ItemData = item.ItemData;
+            this.Quantity = quantity;
+        }
+
         public override sealed async Task saveAsync()
         {
             await postItemData.SaveAsync();
@@ -211,6 +218,15 @@ namespace Quyd.Models
         public StoreItem(ParseObject storeItem)
         {
             this.storeItemData = storeItem;
+            ItemData = new ParseObject("Item");
+            ItemData.ObjectId = storeItem.Get<ParseObject>("item").ObjectId;
+        }
+
+        public StoreItem(Item item, double price)
+        {
+            this.storeItemData = new ParseObject("StoreItem");
+            ItemData = item.ItemData;
+            this.Price = price;
         }
 
         public override sealed async Task saveAsync()

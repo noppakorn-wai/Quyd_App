@@ -14,6 +14,7 @@ namespace Quyd.Models
     public class User
     {
         public ParseUser data { get; private set; }
+        private Store store = null;
 
         public User()
         {
@@ -74,18 +75,22 @@ namespace Quyd.Models
 
         public async Task<Store> Store()
         {
+            if(store!=null)
+            {
+                return store;
+            }
+
             try
             {
-                return (Store) (await (data.Get<ParseObject>("store")).FetchIfNeededAsync());
+                ParseQuery<ParseObject> query = ParseObject.GetQuery("Store").WhereEqualTo("owner", this.data);
+                store = (Store) (await query.FirstAsync());
+                return store;
             }
             catch(ParseException ex)
             {
                 if(ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
                 }
-            }
-            catch(System.Collections.Generic.KeyNotFoundException)
-            {
             }
 
             return new Store();

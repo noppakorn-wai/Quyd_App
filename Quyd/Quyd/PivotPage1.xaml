@@ -74,7 +74,7 @@
                     <StackPanel VerticalAlignment="Top">
                         <StackPanel x:Name="storeItemDetails" Margin="5,5,5,0" Background="#CCFFFFFF">
                             <Canvas Margin="5,0,0,0" Height="78" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Name="StoreItemsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,27"/>
+                                <TextBlock Name="storeItemDetailsStatus" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,27"/>
                             </Canvas>
                         </StackPanel>
                         <StackPanel x:Name="StorePosts" Margin="5,5,5,0" Background="#CCFFFFFF">
