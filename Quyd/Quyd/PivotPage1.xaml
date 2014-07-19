@@ -16,81 +16,83 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="#FFE65101">
+
+        <Image x:Name="AppLogo" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="/Resources/Images/Logo_low.png"/>
+        <TextBlock x:Name="Appname" TextWrapping="Wrap" Text="Quyd" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="32" Margin="50,2,346,0" FontWeight="Bold" Foreground="White"/>
+
         <!--Pivot Control-->
         <phone:Pivot Title="ขอขวดแอปพลิเคชั่น" Background="#33FFFFFF" FontFamily="Tahoma" Margin="0,50,0,0" Foreground="White">
-            <phone:PivotItem x:Name="User" Header="ผู้ใช้" Margin="0,28,0,0">
+
+            <phone:PivotItem x:Name="UserPivot" Header="ผู้ใช้" Margin="0,28,0,0">
                 <Grid Background="#66FFFFFF">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0*"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="160" />
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.RowSpan="2" VerticalAlignment="Top" Height="160">
-                        <Quyd:ControlUserProfile Name="UserProfile" VerticalAlignment="Top" Margin="10,10,10,0" Height="84"/>
-                        <Quyd:ControlUserDetail Name="UserDetail" Margin="105,0,10,0" VerticalAlignment="Top"/>
+                    <StackPanel Grid.Row="0" Name="top" Orientation="Vertical" Grid.RowSpan="2" VerticalAlignment="Top" Height="140">
+                        <Quyd:ControlUserProfile Name="userProfle" VerticalAlignment="Top" Margin="5,5,5,0" Height="84"/>
+                        <Quyd:ControlUserDetail Name="userDetail" Margin="90,0,5,0" VerticalAlignment="Top"/>
                     </StackPanel>
-                    <ScrollViewer Grid.RowSpan="2" Margin="0,160,0,0" Background="#33FFFFFF">
-                        <Grid>
-                            <StackPanel Name="UserPosts" Height="auto" Width="auto">
-                                <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                    <TextBlock Name="UserLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="152" Canvas.Top="50"/>
-                                </Canvas>
-                            </StackPanel>
-                        </Grid>
+                    <ScrollViewer Grid.Row="1" Background="#33FFFFFF" Margin="5,0,5,0">
+                        <StackPanel x:Name="userPosts">
+                            <Canvas Margin="0,5,0,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Name="userPostsStatus" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,45"/>
+                            </Canvas>
+                        </StackPanel>
                     </ScrollViewer>
                 </Grid>
             </phone:PivotItem>
 
-            <phone:PivotItem x:Name="Feeds" Header="ข่าว" Margin="0,28,0,0">
+            <phone:PivotItem x:Name="FeedsPivot" Header="ข่าว" Margin="0,28,0,0">
                 <Grid>
                     <ScrollViewer Background="#66FFFFFF">
                         <StackPanel Name="FeedList"  VerticalAlignment="Top">
                             <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Name="FeedLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="152" Canvas.Top="46"/>
+                                <TextBlock Name="FeedListStatus" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,45"/>
                             </Canvas>
                         </StackPanel>
                     </ScrollViewer>
                     <Grid Height="75" VerticalAlignment="Bottom" Background="#CCE65101">
-                        <Button Content="New Post" Background="{x:Null}" BorderBrush="White" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Padding="5" Click="Button_Click"/>
+                        <Button Content="New Post" BorderBrush="White" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Height="75" Padding="5" Click="newPost_Click"/>
                     </Grid>
                 </Grid>
-
             </phone:PivotItem>
 
-            <!--phone:PivotItem x:Name="Notifications" Header="แจ้งเตือน" Margin="0,28,0,0" Background="Transparent">
+            <phone:PivotItem x:Name="NotificationsPivot" Header="แจ้งเตือน" Margin="0,28,0,0" Background="Transparent">
                 <Grid Background="#66FFFFFF">
                     <TextBlock x:Name="notificationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="583" Width="436" Foreground="Black"/>
                 </Grid>
-            </-->
+            </phone:PivotItem>
 
-            <!--Unpublish feature
             <phone:PivotItem x:Name="Search" Header="ค้นหา" Margin="0,28,0,0" Background="Transparent">
                 <Grid/>
             </phone:PivotItem>
-            -->
 
-            <phone:PivotItem x:Name="Store" Header="ร้าน" Margin="0,28,0,0" Background="Transparent">
-                <ScrollViewer Background="#66FFFFFF">
-                    <StackPanel VerticalAlignment="Top" Margin="10,0">
-                        <StackPanel x:Name="StackItemDetail" Margin="10,10,10,5" Background="#19FFFFFF">
-                            <Canvas Margin="5,5,5,0" Height="78" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Name="StoreItemsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="131" Canvas.Top="24"/>
+            <phone:PivotItem x:Name="StorePivot" Header="ร้าน" Margin="0,28,0,0" Background="Transparent">
+                <ScrollViewer Background="#66FFFFFF" Margin="10,0">
+                    <StackPanel VerticalAlignment="Top">
+                        <StackPanel x:Name="storeItemDetails" Margin="5,5,5,0" Background="#CCFFFFFF">
+                            <Canvas Margin="5,0,0,0" Height="78" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Name="StoreItemsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,27"/>
                             </Canvas>
                         </StackPanel>
-                        <StackPanel x:Name="StackPost" Margin="10,5,10,10" Background="#19FFFFFF">
-                            <Canvas Margin="5,5,5,0" Height="125" Width="Auto" Background="#CCFFFFFF">
-                                <TextBlock Name="StorePostsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="131" Canvas.Top="48"/>
+                        <StackPanel x:Name="StorePosts" Margin="5,5,5,0" Background="#CCFFFFFF">
+                            <Canvas Margin="5,0,0,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <TextBlock Name="StorePostsLoad" Text="กำลังค้นหาข้อมูล" Foreground="black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,45"/>
+                            </Canvas>
+                        </StackPanel>
+                        <StackPanel x:Name="StoreCreate" Margin="5,5,5,0" Background="#CCFFFFFF">
+                            <Canvas Margin="5,0,0,0" Height="125" Width="Auto" Background="#CCFFFFFF">
+                                <Button FontSize="24" FontFamily="Tahoma" Content="+ สร้างร้านใหม่" Foreground="Black" BorderBrush="Black" Margin="0,25"/>
                             </Canvas>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
-
             </phone:PivotItem>
 
         </phone:Pivot>
-        <Image x:Name="AppLogo" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Source="/Resources/Images/Logo_low.png"/>
-        <TextBlock x:Name="Appname" TextWrapping="Wrap" Text="Quyd" VerticalAlignment="Top" FontFamily="Tahoma" FontSize="32" Margin="50,2,346,0" FontWeight="Bold" Foreground="White"/>
+
     </Grid>
 
 </phone:PhoneApplicationPage>

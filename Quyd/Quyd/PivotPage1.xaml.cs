@@ -18,10 +18,15 @@ namespace Quyd
 {
     public partial class PivotPage1 : PhoneApplicationPage
     {
+        User user;
+
         public PivotPage1()
         {
             InitializeComponent();
-            loadComponentAsync();
+
+            init();
+
+            #region set page transition
             NavigationInTransition navigateInTransition = new NavigationInTransition();
             navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
             navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
@@ -29,11 +34,137 @@ namespace Quyd
             NavigationOutTransition navigateOutTransition = new NavigationOutTransition();
             navigateOutTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
             navigateOutTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+
             TransitionService.SetNavigationInTransition(this, navigateInTransition);
             TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
+            #endregion set page transition
         }
 
-        public async void loadComponentAsync()
+        public async void init()
+        {
+            // initial user data
+            user = (User)ParseUser.CurrentUser;
+            userProfle.DataContext = user;
+            userDetail.DataContext = user;
+            userDetail.BoxFacebook.NavigateUri = new Uri("https://www.facebook.com/" + user.FacebookId, UriKind.Absolute);
+
+            //initial defaultItemList for defaultItemList
+            ParseQuery<ParseObject> query = ParseObject.GetQuery("Item");
+            Item.setDefaultItemList(await query.FindAsync());
+            
+            loadUserPostData();
+            loadStore();
+            loadFeed();
+        }
+
+        private async void loadStore()
+        {
+            //initial user store data
+            try
+            {
+                user = (User)ParseUser.CurrentUser;
+                Store userStore = await user.Store();
+            }
+            catch (QuydException ex)
+            {
+                if (ex.Code == QuydException.ErrorCode.store_notFound)
+                {
+                    storeItemDetails.Visibility = Visibility.Collapsed;
+                    StorePosts.Visibility = Visibility.Collapsed;
+                    StoreCreate.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private async void loadUserPostData()
+        {
+            //init user posts data
+            var query = from post in ParseObject.GetQuery("Post").Include("postBy")
+                    where post.Get<ParseObject>("postBy") == user.data
+                    orderby post.CreatedAt descending
+                    select post;
+            try
+            {
+                IEnumerable<ParseObject> posts = await query.FindAsync();
+
+                if (posts.Count<ParseObject>() > 0)
+                {
+                    userPosts.Children.Clear();
+                }
+                else
+                {
+                    userPostsStatus.Text = "ไม่มีข้อมูล";
+                }
+
+                foreach (Post post in posts)
+                {
+                    var controlPost = new Quyd.Controls.ControlPost();
+                    controlPost.DataContext = post;
+                    controlPost.SumBox.Visibility = Visibility.Collapsed;
+                    userPosts.Children.Add(controlPost);
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        private async void loadFeed()
+        {
+            //init user posts data
+            var query = from post in ParseObject.GetQuery("Post").Include("postBy")
+                        where post.Get<ParseObject>("postBy") != user.data
+                        orderby post.CreatedAt descending
+                        select post;
+            try
+            {
+                IEnumerable<ParseObject> posts = await query.FindAsync();
+
+                if (posts.Count<ParseObject>() > 0)
+                {
+                    FeedList.Children.Clear();
+                }
+                else
+                {
+                    FeedListStatus.Text = "ไม่มีข้อมูล";
+                }
+
+                foreach (Post post in posts)
+                {
+                    var controlFeed = new Quyd.Controls.ControlFeed();
+                    controlFeed.controlUserProfile.DataContext = post.PostBy;
+                    controlFeed.controlPost.DataContext = post;
+                    controlFeed.controlPost.SumBox.Visibility = Visibility.Collapsed;
+                    FeedList.Children.Add(controlFeed);
+                }
+            }
+            catch (ParseException ex)
+            {
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                {
+                    //no post found
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        private void newPost_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/PagePost.xaml", UriKind.Relative));
+        }
+
+        /*public async void loadComponentAsync()
         {
             var fb = new Facebook.FacebookClient();
             fb.AccessToken = ParseFacebookUtils.AccessToken;
@@ -189,14 +320,9 @@ namespace Quyd
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/PagePost.xaml", UriKind.Relative));
-        }
-
         protected void Page_InitComplete(object sender, EventArgs e)
         {
             reloadAll();
-        }        
+        } */
     }
 }

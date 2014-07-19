@@ -11,7 +11,7 @@ namespace Quyd.Models
 {
     public enum postStatus { inProgress, close };
 
-    public class PostList
+    /*public class PostList
     {
 
         public List<Post> posts { get; private set; }
@@ -114,89 +114,44 @@ namespace Quyd.Models
                 return posts.Count;
             }
         }
-    }
+    }*/
 
     public class Post
     {
-        public ParseObject post { get; private set; }
-
-        private ItemList postItems = null;
-
-        private BidList bidList = null;
+        public ParseObject data { get; private set; }
 
         public Post()
         {
-            this.post = null;
-            this.postItems = null;
-            this.bidList = null;
         }
-
+       
         public Post(ParseObject post)
         {
-            this.post = post;
-            this.postItems = null;
-            this.bidList = null;
-        }
-
-        public Post(ParseObject post, ItemList postItems)
-        {
-            this.post = post;
-            this.postItems = postItems;
-            this.bidList = null;
+            this.data = post;
         }
 
         public Post(ParseGeoPoint location, ParseUser user)
         {
-            post = new ParseObject("Post");
-            post["location"] = location;
-            post["postBy"] = user;
-        }
-
-        public async Task loadAsync(string postId)
-        {
-            var query = from post in ParseObject.GetQuery("Post").Include("selectedStore")
-                        where post.ObjectId == postId
-                        select post;
-            try
-            {
-                post = await query.FirstAsync();
-                await postItems.loadPostItemsAsync(new Post(post));
-            }
-            catch (ParseException ex)
-            {
-                //not handler ""no more space exception
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    //no older notification found
-                    post = null;
-                }
-            }
+            data = new ParseObject("Post");
+            data["location"] = location;
+            data["postBy"] = user;
         }
 
         public async Task saveAsync()
         {
-            await post.SaveAsync();
+            await data.SaveAsync();
         }
 
         #region get set
-
-        public ParseObject Object
-        {
-            get
-            {
-                return post;
-            }
-        }
-
+        
         public postStatus Status
         {
             get
             {
-                return post.Get<postStatus>("status");
+                return data.Get<postStatus>("status");
             }
             set
             {
-                post["status"] = value;
+                data["status"] = value;
             }
         }
 
@@ -204,35 +159,35 @@ namespace Quyd.Models
         {
             get
             {
-                return post.Get<string>("description") == null ? "" : post.Get<string>("description");
+                return data.Get<string>("description") == null ? "" : data.Get<string>("description");
             }
             set
             {
-                post["description"] = value;
+                data["description"] = value;
             }
         }
 
-        public ParseGeoPoint Location
+        public string Location
         {
             get
             {
-                return post.Get<ParseGeoPoint>("location");
+                return "Bangkok, Thailand";//data.Get<ParseGeoPoint>("location");
             }
             set
             {
-                post["location"] = value;
+                data["location"] = value;
             }
         }
 
-        public ParseUser PostBy
+        public User PostBy
         {
             get
             {
-                return post.Get<ParseUser>("postBy");
+                return (User) data.Get<ParseUser>("postBy");
             }
             set
             {
-                post["postBy"] = value;
+                data["postBy"] = value.data;
             }
         }
 
@@ -240,44 +195,82 @@ namespace Quyd.Models
         {
             get
             {
-                return new Store(post.Get<ParseObject>("selectedStore"));
+                return (Store) data.Get<ParseObject>("selectedStore");
             }
             set
             {
-                post["selectedStore"] = value;
+                data["selectedStore"] = value;
             }
         }
 
-        public DateTime? CreateAt
+        public DateTime? CreatedAt
         {
             get
             {
-                return post.CreatedAt;
+                return data.CreatedAt;
             }
         }
 
-        public async Task<ItemList> getUserItem()
+        public async Task<IEnumerable<PostItem>> getItemsAsync()
         {
             try
             {
-                if (postItems == null)
-                {
-                    postItems = new ItemList();
-                    await postItems.loadPostItemsAsync(new Post(post));
-                }
+                 ParseQuery<ParseObject>  query =  ParseObject.GetQuery("PostItem").WhereEqualTo("post", data);
+                 return (await query.FindAsync()).Select(item => new PostItem(item));
+                
             }
             catch (ParseException ex)
             {
                 //not handler ""no more space exception
                 if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
-                    //no older notification found
+                    //no item found
                 }
             }
 
-            return postItems;
+            return new List<PostItem>();
         }
 
+        public async Task<bool> isBidableAsync()
+        {
+            if(this.PostBy == User.CurrentUser)
+            {
+                return false;
+            }
+            else
+            {
+                Store userStore = null;
+
+                try
+                {
+                    userStore = await User.CurrentUser.Store();
+                }
+                catch (QuydException ex)
+                {
+                    if (ex.Code == QuydException.ErrorCode.store_notFound)
+                    {
+                        return false;
+                    }
+                }
+
+                ParseQuery<ParseObject> query = ParseObject.GetQuery("Bid").WhereEqualTo("post", data).WhereEqualTo("bidStore", userStore);
+
+                try
+                {
+                    await query.FirstAsync();
+                    return false;
+                }
+                catch(ParseException ex)
+                {
+                    if(ex.Code == ParseException.ErrorCode.ObjectNotFound)
+                    {
+                    }
+                }
+            }
+
+            return true;
+        }
+        /*
         public async Task<BidList> getBidList()
         {
             try
@@ -324,9 +317,45 @@ namespace Quyd.Models
 
             return true;
 
-        }
+        }*/
 
         #endregion
+
+        # region operator
+        public static explicit operator Post(ParseObject parseObject)
+        {
+            Post result = new Post();
+
+            result.data = parseObject;
+
+            return result;
+        }
+
+        public static implicit operator ParseObject(Post post)
+        {
+            return post.data;
+        }
+
+        public static bool operator ==(ParseObject parseObject, Post post)
+        {
+            return (parseObject == post.data);
+        }
+
+        public override int GetHashCode()
+        {
+            return data.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public static bool operator !=(ParseObject parseObject, Post post)
+        {
+            return (parseObject != post.data);
+        }
+        #endregion operator
 
     }
 }

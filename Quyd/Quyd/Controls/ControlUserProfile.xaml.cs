@@ -8,6 +8,9 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
+using Parse;
+using System.Windows.Media.Imaging;
+
 namespace Quyd.Controls
 {
     public partial class ControlUserProfile : UserControl
@@ -15,16 +18,6 @@ namespace Quyd.Controls
         public ControlUserProfile()
         {
             InitializeComponent();
-        }
-        
-        public void setUsername(string username)
-        {
-            usernameBox.Text = username;
-        }
-
-        public void setProfilePicture()
-        {
-
         }
     }
 }

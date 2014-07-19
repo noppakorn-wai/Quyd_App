@@ -15,41 +15,38 @@ using Parse;
 namespace Quyd.Controls
 {
     public partial class ControlPost : UserControl
-    {        
-        Post post;
-        Store store;
-
-        public void setValue(Post post, Store store)
-        {
-            this.post = post;
-            this.store = store;
-        }
-
+    {
         public ControlPost()
         {
             InitializeComponent();
         }
 
-        public void setItems(ItemList itemList)
+        private async void StackItem_Loaded(object sender, RoutedEventArgs e)
         {
-            StackItem.Children.Clear();
-            foreach (Item item in itemList)
+            try
             {
-                var controlItem = new Quyd.Controls.ControlItem();
-                controlItem.icon.Source = new BitmapImage(new Uri("/Resources/Images/"+item.Name+".jpg", UriKind.Relative));//new BitmapImage(new Uri(@"/Resources/Images/"+item.Name+".png", UriKind.Absolute));
-                controlItem.quantity.Text = (item as Quantifiable).Quantity.ToString();
-                StackItem.Children.Add(controlItem);
+                Post post = this.DataContext as Post;
+                IEnumerable<PostItem> items = await post.getItemsAsync();
+                if (items.Count<PostItem>() > 0)
+                {
+                    StackItem.Children.Clear();
+                    foreach (PostItem item in items)
+                    {
+                        var controlItem = new Quyd.Controls.ControlItem();
+                        controlItem.icon.Source = new BitmapImage(new Uri(item.Icon, UriKind.Absolute));
+                        controlItem.quantity.Text = item.Quantity.ToString();
+                        StackItem.Children.Add(controlItem);
+                    }
+                }
+                else
+                {
+                    StackItemStatus.Text = "ไม่พบข้อมูล";
+                }
             }
-        }
+            catch(NullReferenceException)
+            {
 
-        private async void BtnBid_Click(object sender, RoutedEventArgs e)
-        {
-            Bid bid = new Bid();
-            bid.bidStore = store;
-            bid.Post = post;
-            await bid.saveAsync();
-            Notification notification = new Notification();
-            //await notification.sendAsync(post.PostBy, false, post, notificationType.bid, false);
+            }
         }
     }
 }

@@ -14,42 +14,9 @@ namespace Quyd.Controls
 {
     public partial class ControlItemDetail : UserControl
     {
-        private Item item;
-        private int value;
-
         public ControlItemDetail()
         {
             InitializeComponent();
-            this.item = null;
-        }
-
-        public ControlItemDetail(Item item)
-        {
-            InitializeComponent();
-            this.item = item;
-        }
-
-        private async void BoxValue_LostFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int input = Convert.ToInt32(BoxValue.Text);
-
-                if (item != null)
-                {
-                    (item as Priceable).Price = input;
-                    await (item as StoreItem).saveAsync();
-                }
-            }
-            catch (System.FormatException)
-            {
-                BoxValue.Text = value.ToString();
-            }
-        }
-
-        private void BoxValue_GotFocus(object sender, RoutedEventArgs e)
-        {
-            value = Convert.ToInt32(BoxValue.Text);
         }
     }
 }

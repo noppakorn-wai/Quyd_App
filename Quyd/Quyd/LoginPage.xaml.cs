@@ -22,6 +22,7 @@ namespace Quyd
         {
             InitializeComponent();
 
+            #region set page transition
             NavigationInTransition navigateInTransition = new NavigationInTransition();
             navigateInTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeIn };
             navigateInTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeIn };
@@ -29,8 +30,10 @@ namespace Quyd
             NavigationOutTransition navigateOutTransition = new NavigationOutTransition();
             navigateOutTransition.Backward = new SlideTransition { Mode = SlideTransitionMode.SlideLeftFadeOut };
             navigateOutTransition.Forward = new SlideTransition { Mode = SlideTransitionMode.SlideRightFadeOut };
+
             TransitionService.SetNavigationInTransition(this, navigateInTransition);
             TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
+            #endregion set page transition
         }
 
         private async void loginFace_Click(object sender, RoutedEventArgs e)
@@ -46,7 +49,7 @@ namespace Quyd
                 browserGrid.Visibility = Visibility.Collapsed;
                 loginFace.Visibility = Visibility.Collapsed;
 
-                var fb = new Facebook.FacebookClient();
+                FacebookClient fb = new Facebook.FacebookClient();
                 fb.AccessToken = ParseFacebookUtils.AccessToken;
                 var me = await fb.GetTaskAsync("me");
 
@@ -56,6 +59,13 @@ namespace Quyd
 
                 user["name"] = fbData.Name;
                 user["facebookId"] = fbData.Id;
+
+                dynamic parameters = new System.Dynamic.ExpandoObject();
+                parameters.access_token = ParseFacebookUtils.AccessToken;
+                parameters.fields = "email";
+                dynamic result = await fb.GetTaskAsync("me", parameters);
+                user["email"] = result.email;
+
 
                 await user.SaveAsync();
                 

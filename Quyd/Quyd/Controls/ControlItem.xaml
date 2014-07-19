@@ -9,8 +9,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="73" d:DesignWidth="48">
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Margin="0,0,5,0">
         <Image x:Name="icon" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="48" Source="../Resources/Images/appbar.tag.png"/>
-        <TextBlock x:Name="quantity" TextWrapping="Wrap" Text="xx" VerticalAlignment="Bottom" Foreground="Black" Margin="0,48,0,0" FontFamily="Tahoma" Height="25" TextAlignment="Center"/>
+        <TextBlock x:Name="quantity" TextWrapping="Wrap" Text="load" VerticalAlignment="Bottom" Foreground="Black" Margin="0,48,0,0" FontFamily="Tahoma" Height="25" TextAlignment="Center"/>
     </Grid>
+    
 </UserControl>

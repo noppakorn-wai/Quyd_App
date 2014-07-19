@@ -11,8 +11,9 @@
     d:DesignWidth="250"  d:DesignHeight="84" >
 
     <Grid x:Name="LayoutRoot">
-        <TextBlock x:Name="usernameBox" Margin="89,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" Foreground="Black" Height="40" FontFamily="Tahoma" RenderTransformOrigin="0.496,0.889" Text="ชื่อผู้ใช้"/>
-        <Image x:Name="profilePictureBox" HorizontalAlignment="Left" Height="84" VerticalAlignment="Top" Width="84" Source="../Resources/Images/user1.png" />
+        <TextBlock x:Name="username" Margin="89,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" Foreground="Black" Height="40" FontFamily="Tahoma" Text="{Binding Path = Name, FallbackValue='ชื่อผู้ใช้'}"/>
+        <Image x:Name="profilePicture" HorizontalAlignment="Left" Height="84" VerticalAlignment="Top" Width="84" Source="{Binding Path = ProfilePicture, FallbackValue='../Resources/Images/user1.png'}"/>
         <Quyd:ControlStar HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,55,0,0"/>
     </Grid>
+    
 </UserControl>

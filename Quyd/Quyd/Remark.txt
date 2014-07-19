@@ -1,0 +1,17 @@
+﻿#store must be instantiate with default item list first
+
+#always use user.store with try catch
+            try
+            {
+                Store store = await User.CurrentUser.Store();
+            }
+            catch(QuydException ex)
+            {
+                if(ex.Code == QuydException.ErrorCode.store_notFound)
+                {
+                    userProfle.username.Text = "Store not found";
+                }
+            }
+
+
+

@@ -64,6 +64,7 @@ namespace Quyd
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            //ParseClient.Initialize("KjyBCHfndknduYsUeb9RifFgFgvxnwomCHwPWZz7", "mMw1i5jxOGiIpefPx3AgF2WpQT9dbWJNklB6JQTU");
             ParseClient.Initialize("anQaLYUxbX5EwHnxh7RRBlB2nOrUnSSbHZ6mmGea", "RAZIspOPdIdMSJp9o7OxA2ZY2LHzN3nBw0knhVy5");
             ParseFacebookUtils.Initialize("211798985656755");
         }

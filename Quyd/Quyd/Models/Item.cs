@@ -9,384 +9,226 @@ using Parse;
 
 namespace Quyd.Models
 {
-    public class ItemList : IEnumerable
-    {
-        public IList<Item> itemList { get; private set; }
-
-        public bool imutable { get; private set; }
-
-        public ItemList()
-        {
-            itemList = new List<Item>();
-        }
-
-        public async Task loadItemsAsync()
-        {
-            itemList.Clear();
-            imutable = true;
-
-            try
-            {
-                IEnumerable<ParseObject> items_t = await ParseObject.GetQuery("Item").FindAsync();
-
-                foreach (var item in items_t)
-                {
-                    itemList.Add(new Item(item));
-                }
-            }
-            catch (ParseException ex)
-            {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    //no data found
-                }
-            }
-        }
-
-        public async Task loadPostItemsAsync(Post post)
-        {
-            itemList.Clear();
-            imutable = true;
-
-            if (post.PostBy.Equals(ParseUser.CurrentUser) && post.Object.ObjectId != null)
-            {
-                imutable = false;
-            }
-            else if (post.Object.ObjectId == null)
-            {
-                IEnumerable<ParseObject> items_t = await ParseObject.GetQuery("Item").FindAsync();
-
-                foreach (var item in items_t)
-                {
-                    itemList.Add(new PostItem(item));
-                }
-            }
-            else
-            {
-                await post.Object.FetchIfNeededAsync();
-
-                var query = from postItem in ParseObject.GetQuery("PostItem").Include("item")
-                            where postItem.Get<ParseObject>("post") == post.Object
-                            orderby postItem["name"] ascending
-                            select postItem;
-                try
-                {
-                    var postItems = await query.FindAsync();
-                    foreach (var postItem in postItems)
-                    {
-                        itemList.Add(new PostItem(postItem));
-                    }
-                }
-                catch (ParseException ex)
-                {
-                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                    {
-                        //no data found
-                    }
-                }
-            }
-        }
-
-        public async Task loadStoreItemsAsync(Store store, DateTime? atDateTime = new DateTime?(), ItemList userItems = null)
-        {
-            itemList.Clear();
-            imutable = true;
-
-            if (store.OwnerId.Equals(ParseUser.CurrentUser))
-            {
-                imutable = false;
-            }
-
-            try
-            {
-                IEnumerable<ParseObject> items = await ParseObject.GetQuery("Item").FindAsync();
-
-                foreach (var item in items)
-                {
-                    ParseObject storeItem_result = null;
-                    try
-                    {
-                        ParseQuery<ParseObject> query;
-                        if (userItems == null)
-                        {
-                            query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
-                                    where storeItem.Get<ParseObject>("store") == store.Object
-                                    where storeItem["item"] == item
-                                    //where storeItem.CreatedAt <= atDateTime
-                                    //where storeItem.Get<DateTime>("validTo") >= atDateTime
-                                    orderby storeItem["name"] ascending
-                                    select storeItem;
-                        }
-                        else
-                        {
-                            query = from storeItem in ParseObject.GetQuery("StoreItem").Include("item")
-                                    where storeItem.Get<ParseObject>("store") == store.Object
-                                    where userItems.itemList.Contains(storeItem.Get<Item>("item"))
-                                    //where storeItem.CreatedAt <= atDateTime
-                                    //where storeItem.Get<DateTime>("validTo") >= atDateTime
-                                    orderby storeItem["name"] ascending
-                                    select storeItem;
-                        }
-
-                        storeItem_result = await query.FirstAsync();
-                    }
-                    catch (ParseException ex)
-                    {
-                        if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                        {
-                            storeItem_result = new ParseObject("StoreItem");
-                            storeItem_result["store"] = store.Object;
-                            storeItem_result["item"] = item;
-                            storeItem_result["price"] = 0;
-                        }
-                    }
-
-                    //if (storeItem_result.ObjectId == null)
-                    //{
-                    //    await storeItem_result.SaveAsync();
-                    //}
-
-                    itemList.Add(new StoreItem(storeItem_result));
-                }
-            }
-            catch (ParseException ex)
-            {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    //no data found
-                }
-            }
-        }
-
-        public async Task createStoreItemsAsync(Store store)
-        {
-            itemList.Clear();
-            imutable = true;
-
-            var query = from item in ParseObject.GetQuery("Item")
-                        orderby item["name"] ascending
-                        select item;
-
-            try
-            {
-                IEnumerable<ParseObject> items = await query.FindAsync();
-
-                foreach (var item in items)
-                {
-                    ParseObject storeItem_result = new ParseObject("StoreItem");
-                    storeItem_result["store"] = store.Object;
-                    storeItem_result["item"] = item;
-                    storeItem_result["price"] = 0;
-                    itemList.Add(new StoreItem(storeItem_result));
-                }
-            }
-            catch (ParseException ex)
-            {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    //no data found
-                }
-            }
-        }
-
-        public async Task saveAsync()
-        {
-            if (!imutable)
-            {
-                foreach (var item in itemList)
-                {
-                    await item.saveAsync();
-                }
-            }
-        }
-
-        public int Size
-        {
-            get
-            {
-                return itemList.Count;
-            }
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (IEnumerator)GetEnumerator();
-        }
-
-        public ItemListEnum GetEnumerator()
-        {
-            return new ItemListEnum(itemList);
-        }
-    }
-
     public class Item
     {
-        public ParseObject item { get; protected set; }
+        static public IEnumerable<Item> defaultItemList;
+
+        public ParseObject ItemData { get; protected set; }
 
         public Item()
         {
-            item = null;
         }
 
         public Item(ParseObject item)
         {
-            this.item = item;
+            this.ItemData = item;
         }
+
         public virtual async Task saveAsync()
         {
             await Task.FromResult(true);
         }
 
-        #region get set method
-        public string Type
+        #region get set method (normalObject)
+        public virtual string Type
         {
             get
             {
-                return item.Get<string>("type");
+                //return ItemData.Get<string>("type");
+                return getItemBy(ItemId).ItemData.Get<string>("type");
             }
         }
 
-        public string Name
+        public virtual string Name
         {
             get
             {
-                return item.Get<string>("name");
+                //return ItemData.Get<string>("name"); 
+                return getItemBy(ItemId).ItemData.Get<string>("name");
             }
         }
 
-        public string Description
+        public virtual string Description
         {
             get
             {
-                return item.Get<string>("description");
+                //return ItemData.Get<string>("description"); 
+                return getItemBy(ItemId).ItemData.Get<string>("description");
             }
         }
 
-        public string Material
+        public virtual string Material
         {
             get
             {
-                return item.Get<string>("material");
+                //return ItemData.Get<string>("material");
+                return getItemBy(ItemId).ItemData.Get<string>("material");
             }
         }
 
-        public string MaterialType
+        public virtual string MaterialType
         {
             get
             {
-                return item.Get<string>("materialType");
+                //return ItemData.Get<string>("materialType");
+                return getItemBy(ItemId).ItemData.Get<string>("materialType");
             }
         }
 
-        public string Icon
+        public virtual string Icon
         {
             get
             {
-                return item.Get<string>("icon");
+                //return ItemData.Get<string>("icon");
+                return getItemBy(ItemId).ItemData.Get<string>("icon");
             }
         }
 
-        public ParseObject Object
+        public virtual string ItemId
         {
             get
             {
-                return item;
+                return ItemData.ObjectId;
             }
+        }
+        
+        public static void setDefaultItemList(IEnumerable<ParseObject> _defaultItemList)
+        {
+            defaultItemList = _defaultItemList.Select(item => new Item(item));
         }
         #endregion
 
+        #region static get set method (defaultObjectList support)
+        public static Item getItemBy(string itemId)
+        {
+            return defaultItemList.Where(item => item.ItemId == itemId).First<Item>();
+        }
+        #endregion
+
+        # region operator
+        public static explicit operator Item(ParseObject parseObject)
+        {
+            Item result = new Item();
+
+            result.ItemData = parseObject;
+
+            return result;
+        }
+
+        public static explicit operator ParseObject(Item item)
+        {
+            return item.ItemData;
+        }
+
+        public static bool operator ==(ParseObject parseObject, Item item)
+        {
+            return (parseObject.ObjectId == item.ItemId);
+        }
+
+        public override int GetHashCode()
+        {
+            return ItemData.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Item objAsItem = obj as Item;
+            if (objAsItem == null) return false;
+            return ItemData.ObjectId == objAsItem.ItemData.ObjectId;
+        }
+
+        public static bool operator !=(ParseObject parseObject, Item item)
+        {
+            return (parseObject.ObjectId != item.ItemId);
+        }
+        #endregion operator
     }
 
     public class PostItem : Item, Quantifiable
     {
-        public ParseObject postItem { get; private set; }
+        public ParseObject postItemData { get; private set; }
+
+        public PostItem()
+        {
+        }
 
         public PostItem(ParseObject postItem)
         {
-            if (postItem.ClassName == "PostItem")
+            this.postItemData = postItem;
+            ItemData = new ParseObject("Item");
+            ItemData.ObjectId = postItem.Get<ParseObject>("item").ObjectId;
+        }
+
+        public override sealed async Task saveAsync()
+        {
+            await postItemData.SaveAsync();
+        }
+
+        #region get set method (simple)
+
+        public async Task<Post> getPostAsync()
+        {
+            return new Post(await postItemData.Get<ParseObject>("post").FetchIfNeededAsync<ParseObject>());
+        }
+
+        public Post Post
+        {
+            set
             {
-                this.postItem = postItem;
-                item = postItem.Get<ParseObject>("item");
-            }
-            else if(postItem.ClassName == "Item")
-            {
-                item = postItem;
-                this.postItem = new ParseObject("PostItem");
-                Quantity = 0;
-                Item = new Item(postItem);
+                postItemData["post"] = value;
             }
         }
+
+        #endregion
+
+        #region get set method (Interface)
 
         public double Quantity
         {
             get
             {
-                return postItem.Get<double>("quantity");
+                return postItemData.Get<double>("quantity");
             }
 
             set
             {
-                postItem["quantity"] = value;
+                postItemData["quantity"] = value;
             }
         }
 
-        public Item Item
-        {
-            get
-            {
-                return new Item(postItem.Get<ParseObject>("item"));
-            }
-
-            set
-            {
-                postItem["item"] = value.Object;
-            }
-        }
-
-        public Post Post
-        {
-            get
-            {
-                return new Post(postItem.Get<ParseObject>("post"));
-            }
-
-            set
-            {
-                postItem["post"] = value.Object;
-            }
-        }
-
-        public override sealed async Task saveAsync()
-        {
-            await postItem.SaveAsync();
-        }
+        #endregion
     }
 
     public class StoreItem : Item, Priceable
     {
-        public ParseObject storeItem { get; private set; }
+        public ParseObject storeItemData { get; private set; }
+
+        public StoreItem()
+        {
+        }
 
         public StoreItem(ParseObject storeItem)
         {
-            this.storeItem = storeItem;
-            item = storeItem.Get<ParseObject>("item");
+            this.storeItemData = storeItem;
+        }
+
+        public override sealed async Task saveAsync()
+        {
+            await storeItemData.SaveAsync();
         }
 
         public double Price
         {
             get
             {
-                return storeItem.Get<double>("price");
+                return storeItemData.Get<double>("price");
             }
 
             set
             {
-                storeItem["price"] = value;
+                storeItemData["price"] = value;
             }
-        }
-
-        public override sealed async Task saveAsync()
-        {
-            await storeItem.SaveAsync();
         }
     }
 
@@ -409,53 +251,4 @@ namespace Quyd.Models
         }
     }
     #endregion
-
-    public class ItemListEnum : IEnumerator
-    {
-        public IList<Item> items { get; private set; }
-
-        // Enumerators are positioned before the first element 
-        // until the first MoveNext() call. 
-        int position = -1;
-
-        public ItemListEnum(IList<Item> list)
-        {
-            items = list;
-        }
-
-        public bool MoveNext()
-        {
-            position++;
-            return (position < items.Count);
-        }
-
-        public void Reset()
-        {
-            position = -1;
-        }
-
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
-
-        public Item Current
-        {
-            get
-            {
-                try
-                {
-                    return items.ElementAt(position);
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-        }
-    }
-
 }

@@ -7,13 +7,14 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="54" d:DesignWidth="339">
+    d:DesignWidth="385"
+    Width="385" Height="70" Margin="5,5,5,0">
 
     <Grid x:Name="LayoutRoot">
         <Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/phone_2_icon_24.png"/>
-        <HyperlinkButton x:Name="BoxFacebook" Content="facebook" VerticalAlignment="Top" FontSize="20" FontFamily="Tahoma" Background="{x:Null}" Foreground="#FF6161B9" HorizontalContentAlignment="Left" Margin="29,0,0,0"/>
+        <HyperlinkButton x:Name="BoxFacebook" Content="facebook" TargetName="_blank" VerticalAlignment="Top" FontSize="20" FontFamily="Tahoma" Foreground="#FF6161B9" HorizontalContentAlignment="Left" Margin="29,0,0,0"/>
         <Image HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="24" Source="../Resources/Images/mail_icon_24.png" Margin="0,29,0,0"/>
-        <TextBlock x:Name="BoxMail" TextWrapping="Wrap" Text="sample_mail@samplehost.com" VerticalAlignment="Top" Foreground="Black" Margin="39,29,0,0" Height="24" FontFamily="Tahoma" Padding="0"/>
-       
+        <TextBlock x:Name="BoxMail" TextWrapping="Wrap"  Text="{Binding Path = Email, FallbackValue='example@example.com'}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" Margin="39,29,0,0" Height="31" FontFamily="Tahoma" Padding="0" Width="336"/>
     </Grid>
+
 </UserControl>

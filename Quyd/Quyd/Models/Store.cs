@@ -11,140 +11,27 @@ namespace Quyd.Models
 {
     public class Store
     {
-        private ParseObject store;
-
-        private ItemList storeItems;
+        public ParseObject data { get; private set; }
 
         public Store()
         {
-            store = null;
-            storeItems = null;
+
         }
 
-        public Store(ParseObject store)
+        public Store(Store store)
         {
-            this.store = store;
+            this.data = store.data;
         }
-
-        public Store(string storeName, ParseGeoPoint location, List<string> phones)
-        {
-            store = new ParseObject("Store");
-            store["name"] = storeName;
-            var owner = ParseUser.CurrentUser;
-            store["owner"] = owner;
-            store["location"] = location;
-            store["phones"] = phones;
-        }
-
-        public async Task createNewStore()
-        {
-            store = new ParseObject("Store");
-            storeItems = new ItemList();
-            await storeItems.createStoreItemsAsync(new Store(store));
-        }
-
-        public async Task saveAsync()
-        {
-            try
-            {
-                await this.validAsync();
-                await store.SaveAsync();
-                await getStoreItemsAsync();
-                await storeItems.saveAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task loadAsync(ParseUser owner)
-        {
-            var query = from store_t in ParseObject.GetQuery("Store")
-                        where store_t.Get<ParseUser>("owner").Equals(owner)
-                        select store_t;
-            try
-            {
-                store = await query.FirstAsync();
-                storeItems = new ItemList();
-                await storeItems.loadStoreItemsAsync(new Store(store));
-            }
-            catch (ParseException ex)
-            {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    throw new QuydException(QuydException.ErrorCode.store_notFound, "Store not found");
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        private async Task<bool> isNameExistAsync(string storeName)
-        {
-            try
-            {
-                var findByNameQuery = from store_t in ParseObject.GetQuery("Store")
-                                      where store_t.Get<string>("name").Equals(storeName)
-                                      select store_t;
-                ParseObject storeObject = await findByNameQuery.FirstAsync();
-                return true;
-            }
-            catch (ParseException ex)
-            {
-                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                {
-                    return false;
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        private async Task<bool> validAsync()
-        {
-            //put validation here
-            if (this.Name.Length == 0)
-            {
-                throw new QuydException(QuydException.ErrorCode.store_nameTooShort, "Store name is too short.");
-            }
-            else if (this.Location.Equals(new ParseGeoPoint(0, 0)))
-            {
-                throw new QuydException(QuydException.ErrorCode.store_locationInvalid, "Location is invalid.");
-            }
-            else if (this.Phones.Count == 0)
-            {
-                throw new QuydException(QuydException.ErrorCode.store_phoneInvalid, "Phone number is invalid.");
-            }
-            else
-            {
-                bool nameExist = await isNameExistAsync(store.Get<string>("name"));
-                if (nameExist)
-                {
-                    throw new QuydException(QuydException.ErrorCode.store_nameExist, "Store name is already exist.");
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-
-        #region Store Getter Setter
 
         public string Name
         {
             get
             {
-                return store.Get<string>("name");
+                return data.Get<string>("name");
             }
             set
             {
-                store["name"] = value;
+                data["name"] = value;
             }
         }
 
@@ -152,63 +39,103 @@ namespace Quyd.Models
         {
             get
             {
-                return store.Get<ParseGeoPoint>("location");
+                return data.Get<ParseGeoPoint>("location");
             }
             set
             {
-                store["location"] = value;
+                data["location"] = value;
             }
         }
 
-        public IList<string> Phones
+        public List<string> Phones
         {
             get
             {
-                return store.Get<IList<string>>("phones");
+                return data.Get<List<string>>("phones");
             }
             set
             {
-                store["phones"] = value;
+                data["phones"] = value;
             }
         }
 
-        public string OwnerId
+        public User Owner
         {
             get
             {
-                return store.Get<ParseUser>("owner").ObjectId;
+                return data.Get<User>("owner");
+            }
+            private set
+            {
+                data["owner"] = value;
             }
         }
 
-        public ParseObject Object
+        public async Task<IEnumerable<Item>> StoreItemsAsync()
         {
-            get
+            IEnumerable<Item> items = null;
+            try
             {
-                return store;
+                ParseQuery<ParseObject> query = data.GetRelation<ParseObject>("storeItem").Query;
+                items = (await query.FindAsync()).Cast<Item>();
             }
-        }
-
-        public async Task<ItemList> getStoreItemsAsync()
-        {
-            if (storeItems == null)
+            catch (ParseException ex)
             {
-                try
+                if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
-                    storeItems = new ItemList();
-                    await storeItems.loadStoreItemsAsync(new Store(store));
-                }
-                catch(ParseException ex)
-                {
-                    if (ex.Code == ParseException.ErrorCode.ObjectNotFound)
-                    {
-                    }
+                    items =  new List<Item>();
                 }
             }
-
-            return storeItems;
+            return items;
         }
 
-        #endregion
+        #region async method
+        public async Task<Store> LoadAsync(User owner)
+        {
+            ParseQuery<ParseObject> query = from store_q in ParseObject.GetQuery("Store")
+                                            where store_q.Get<ParseUser>("owner") == (ParseUser)owner
+                                            select store_q;
 
+            Store store = (Store)await query.FirstAsync();
+
+            return this;
+        }
+        #endregion async method
+
+        # region operator
+        public static explicit operator Store(ParseObject parseObject)
+        {
+            Store result = new Store();
+
+            result.data = parseObject;
+
+            return result;
+        }
+
+        public static implicit operator ParseObject(Store store)
+        {
+            return store.data;
+        }
+
+        public static bool operator ==(ParseObject parseObject, Store store)
+        {
+            return (parseObject == store.data);
+        }
+
+        public override int GetHashCode()
+        {
+            return data.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public static bool operator !=(ParseObject parseObject, Store store)
+        {
+            return (parseObject != store.data);
+        }
+        #endregion operator
     }
 }

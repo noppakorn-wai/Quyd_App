@@ -15,8 +15,7 @@
     <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>
-    </SupportedCultures>
+    <SupportedCultures>th-TH</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>Quyd_$(Configuration)_$(Platform).xap</XapFilename>
@@ -47,6 +46,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -119,12 +119,12 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Photo.cs" />
+    <Compile Include="Models\Item.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Post.cs" />
-    <Compile Include="Models\QuydUser.cs" />
     <Compile Include="Models\Store.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="PagePost.xaml.cs">
       <DependentUpon>PagePost.xaml</DependentUpon>
     </Compile>
@@ -186,7 +186,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Bid.cs" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
@@ -198,6 +197,7 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Remark.txt" />
     <Content Include="Resources\Images\HDPE.jpg" />
     <Content Include="Resources\Images\LDPE.jpg" />
     <Content Include="Resources\Images\Logo.jpg" />
@@ -239,6 +239,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AppResources.th-TH.resx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, processorArchitecture=MSIL">

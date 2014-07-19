@@ -16,7 +16,7 @@ namespace Quyd
 {
     public partial class PagePost : PhoneApplicationPage
     {
-        Post post;
+        //Post post;
 
         public PagePost()
         {
@@ -31,10 +31,10 @@ namespace Quyd
             TransitionService.SetNavigationInTransition(this, navigateInTransition);
             TransitionService.SetNavigationOutTransition(this, navigateOutTransition);
 
-            loadData();
+            //loadData();
         }
 
-        public async void loadData()
+        /*public async void loadData()
         {
             post = new Post(new ParseGeoPoint(-1, 1), ParseUser.CurrentUser);
             
@@ -71,6 +71,6 @@ namespace Quyd
             }
             
             NavigationService.GoBack();
-        }
+        }*/
     }
 }
