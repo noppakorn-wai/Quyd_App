@@ -51,7 +51,7 @@ namespace Quyd
             //initial defaultItemList for defaultItemList
             ParseQuery<ParseObject> query = ParseObject.GetQuery("Item");
             Item.setDefaultItemList(await query.FindAsync());
-            
+
             loadUserPostData();
             loadStore();
             loadFeed();
@@ -60,29 +60,54 @@ namespace Quyd
         private async void loadStore()
         {
             //initial user store data
-            try
+            user = (User)ParseUser.CurrentUser;
+            Store userStore = await user.Store();
+
+            if (userStore.data == null)
             {
-                user = (User)ParseUser.CurrentUser;
-                Store userStore = await user.Store();
+                storeItemDetails.Visibility = Visibility.Collapsed;
+                StorePosts.Visibility = Visibility.Collapsed;
+                StoreCreate.Visibility = Visibility.Visible;
             }
-            catch (QuydException ex)
+            else
             {
-                if (ex.Code == QuydException.ErrorCode.store_notFound)
-                {
-                    storeItemDetails.Visibility = Visibility.Collapsed;
-                    StorePosts.Visibility = Visibility.Collapsed;
-                    StoreCreate.Visibility = Visibility.Visible;
-                }
+                StoreCreate.Visibility = Visibility.Collapsed;
+                loadStoreItems();
+                loadStorePost();
             }
+        }
+
+        private async void loadStoreItems()
+        {
+            await Task.FromResult(true);
+            /*foreach (Item item in Item.defaultItemList)
+            {
+                var controlPost = new Quyd.Controls.ControlPost();
+                controlPost.DataContext = post;
+                controlPost.SumBox.Visibility = Visibility.Collapsed;
+                userPosts.Children.Add(controlPost);
+            }*/
+        }
+
+        private async void loadStorePost()
+        {
+            await Task.FromResult(true);
+            /*foreach (Item item in Item.defaultItemList)
+            {
+                var controlPost = new Quyd.Controls.ControlPost();
+                controlPost.DataContext = post;
+                controlPost.SumBox.Visibility = Visibility.Collapsed;
+                userPosts.Children.Add(controlPost);
+            }*/
         }
 
         private async void loadUserPostData()
         {
             //init user posts data
             var query = from post in ParseObject.GetQuery("Post").Include("postBy")
-                    where post.Get<ParseObject>("postBy") == user.data
-                    orderby post.CreatedAt descending
-                    select post;
+                        where post.Get<ParseObject>("postBy") == user.data
+                        orderby post.CreatedAt descending
+                        select post;
             try
             {
                 IEnumerable<ParseObject> posts = await query.FindAsync();

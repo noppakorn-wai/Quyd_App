@@ -74,25 +74,21 @@ namespace Quyd.Models
 
         public async Task<Store> Store()
         {
-            Store result = null;
-
             try
             {
-                result = (Store)(await (data.Get<ParseObject>("store")).FetchIfNeededAsync());
+                return (Store) (await (data.Get<ParseObject>("store")).FetchIfNeededAsync());
             }
             catch(ParseException ex)
             {
                 if(ex.Code == ParseException.ErrorCode.ObjectNotFound)
                 {
-                    result = null;
                 }
             }
             catch(System.Collections.Generic.KeyNotFoundException)
             {
-                result = null;
             }
 
-            return result;
+            return new Store();
         }
 
         #region async method

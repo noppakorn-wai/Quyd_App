@@ -18,7 +18,7 @@ namespace Quyd.Models
 
         }
 
-        public Store(Store store)
+        public Store(Store store=null)
         {
             this.data = store.data;
         }
